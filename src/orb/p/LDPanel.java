@@ -75,7 +75,7 @@ public class LDPanel extends LevelPanel {
             int selectedTile = Integer.parseInt(hudOb.getAction().substring(3));
             Tile toReplace = new Tile(godsTile.getXMin(), godsTile.getYMin());
             String selectedTileS = String.format("%03d", selectedTile);
-            toReplace.setGraphic("levels/tilepic/tile" + selectedTileS + ".png");
+            toReplace.setGraphic(ORBP.libraryPath + "pics/tiles/tile" + selectedTileS + ".png");
             toReplace.setID(selectedTile);
             setGodsTile(toReplace);
         }
@@ -96,11 +96,12 @@ public class LDPanel extends LevelPanel {
         output.add("<bgidef>pics/backgrounds/gamePanel.png</bgidef>");
 
         ArrayList<String> defPaths = new ArrayList();
-        defPaths.add("levels/tilepic/tile000.png");
+        defPaths.add("pics/tiles/tile000.png");
 
         //adding defpaths
         for (int i = 0; i < tiles.size(); i++) {
             String tilePath = tiles.get(i).getGraphPath();
+            tilePath = tilePath.substring(ORBP.libraryPath.length());
             boolean found = false;
             for (int j = 0; j < defPaths.size(); j++) {
                 if (tilePath.compareToIgnoreCase(defPaths.get(j)) == 0) {
@@ -137,10 +138,12 @@ public class LDPanel extends LevelPanel {
             output.add("<overwrite>");
             output.add("<type>" + i + "</type>");
             for (int j = 0; j < tiles.size(); j++) {
-                if (tiles.get(j).getGraphPath().compareToIgnoreCase(defPaths.get(i)) == 0) {
+                if (tiles.get(j).getGraphPath().compareToIgnoreCase(ORBP.libraryPath + defPaths.get(i)) == 0) {
                     String tileAdd = tiles.get(j).getLoc();
                     tileAdd = "<tile>" + tileAdd + "</tile>";
                     output.add(tileAdd);
+                } else {
+                    System.out.println(tiles.get(j).getGraphPath() + " " + ORBP.libraryPath+defPaths.get(i));
                 }
             }
             output.add("</overwrite>");
@@ -151,7 +154,7 @@ public class LDPanel extends LevelPanel {
 
     protected void saveOutput() {
         try {
-            PrintWriter writer = new PrintWriter(outputTxt, "UTF-8");//for output file
+            PrintWriter writer = new PrintWriter(ORBP.libraryPath + "levels/" +outputTxt, "UTF-8");//for output file
 
             for (int i = 0; i < output.size(); i++) {
                 writer.println(output.get(i));
@@ -170,21 +173,27 @@ public class LDPanel extends LevelPanel {
     }
 
     private void loadTileLib() {
-        tileLibrary = new ArrayList();
+        tileLibrary = new ArrayList();//to store the different TYPES of tiles
+        //folder where tiles are stored
         File tileFolder = new File(ORBP.libraryPath+"pics/tiles");
         File[] tilePics = tileFolder.listFiles();
         holeTile = new Tile(0, 0);
         holeTile.setGraphic(ORBP.libraryPath+"pics/tiles/tile000.png");
         for (int i = 0; i < tilePics.length; i++) {
             String path = tilePics[i].getName();
+            //System.out.println(path);
             Tile libTile = new Tile(0, 0);
-            libTile.setGraphic(ORBP.libraryPath+"pics/tiles/" + path);
+            libTile.setGraphic("pics/tiles/" + path);
             libTile.setID(i);
             tileLibrary.add(libTile);
         }
+        System.out.println("tilelib size:" + tileLibrary.size());
+        for(int i=0; i<tileLibrary.size();i++){
+            System.out.println(tileLibrary.get(i).graphPath);
+        }
 
         godsTile = tileLibrary.get(1);
-        System.out.println(godsTile.getGraphPath());
+        System.out.println("god tile:" + godsTile.getGraphPath());
         tilePreview = new hudObject(130, 345, 160, 100, godsTile.getGraphPath(), "");
         hudObjects.add(tilePreview);
         tilePrevLoc = hudObjects.size() - 1;

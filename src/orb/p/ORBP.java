@@ -20,7 +20,7 @@ import javax.swing.JFrame;
 public class ORBP {
 
     static boolean developerMode = false;
-    static String libraryPath = "library/";
+    static String libraryPath = "../testLibrary/";
     static String paneStatus = "menu";
     static int screenHeight = 0;
     static int screenWidth = 0;
@@ -46,13 +46,15 @@ public class ORBP {
 
     private static void configureLibrary() {
         String launchLoc = System.getProperty("user.dir");
-        launchLoc = launchLoc.substring(launchLoc.length() - 9, launchLoc.length());
+        launchLoc = launchLoc.substring(launchLoc.length() - 6, launchLoc.length());
 
-        if (launchLoc.compareToIgnoreCase("pacalypse") == 0) {
+        if (launchLoc.compareToIgnoreCase("\\ORB-P") == 0) {
             developerMode = true;
-            System.out.println("in IDE");
-        } else {
             libraryPath = "library/";
+            System.out.println("in IDE, library at:" + libraryPath);
+        } else {
+            System.out.println(launchLoc);
+            
             System.out.println("in jar");
         }
 
@@ -76,11 +78,11 @@ public class ORBP {
     }
 
     private static void buildCanvas() {
+        determineCanvas();
         frame = new JFrame("Mike's Awesome Game, yo!");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(screenWidth-50, screenHeight-50);
         frame.setResizable(false);//lock game resolution
-        determineCanvas();
         frame.setContentPane(canvas);
         frame.setVisible(true);
         canvas.requestFocusInWindow();
@@ -93,7 +95,6 @@ public class ORBP {
             pause();
         }
         currentCanvas = canvas.update();
-        determineCanvas();
         frame.dispose();
         frame = null;
         buildCanvas();
