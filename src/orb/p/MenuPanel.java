@@ -15,10 +15,10 @@ public class MenuPanel extends MPanel{
 
 @Override
     protected void buildHUD() {
-        hudObject chars = new hudObject(canvasWidth/2-200, 0, 400, 200, ORBP.libraryPath + "pics/hud/titlemenu/options/Characters.png", "chars");
-        hudObject ld = new hudObject(canvasWidth/2-200, 200, 400, 200, ORBP.libraryPath + "pics/hud/titlemenu/options/LevelDesigner.png", "ld");
-        hudObject play = new hudObject(canvasWidth/2-200,400, 400, 200, ORBP.libraryPath + "pics/hud/titlemenu/options/Play.png", "play");
-        hudObject shop = new hudObject(canvasWidth/2-200,600, 400, 200, ORBP.libraryPath + "pics/hud/titlemenu/options/Shop.png", "shop");
+        hudObject chars = new hudObject(canvasWidth/2-200, 0, 400, 200,"pics/hud/titlemenu/options/Characters.png", "chars");
+        hudObject ld = new hudObject(canvasWidth/2-200, 200, 400, 200,"pics/hud/titlemenu/options/LevelDesigner.png", "ld");
+        hudObject play = new hudObject(canvasWidth/2-200,400, 400, 200,"pics/hud/titlemenu/options/Play.png", "play");
+        hudObject shop = new hudObject(canvasWidth/2-200,600, 400, 200,"pics/hud/titlemenu/options/Shop.png", "shop");
         
         hudObjects.add(ld);
         hudObjects.add(chars);

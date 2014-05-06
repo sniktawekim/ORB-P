@@ -78,11 +78,11 @@ public abstract class MPanel extends JPanel {
             hudObject current = hudObjects.get(i);
             current.paint(0, 0, g, this, myClick);
         }
-        /**
+        
         for (int i = 0; i < hudFonts.size(); i++) {
             hudString current = hudFonts.get(i);
             current.paint(0, 17, g, this);
-        }*/
+        }
     }
 
     protected void checkClick() {

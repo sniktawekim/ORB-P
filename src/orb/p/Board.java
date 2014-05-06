@@ -176,7 +176,7 @@ class Board {
             }
             if (cLine.contains("<path>")) {
                 cLine = removeXML(cLine);
-                toadd.setGraphic(ORBP.libraryPath + cLine);
+                toadd.setGraphic(cLine);
             }
             i++;
             cLine = currentFile.get(i);

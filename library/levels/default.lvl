@@ -12,7 +12,7 @@
 </tiledef>
 </def>
 <board>
-<title>finaltest</title>
+<title>default</title>
 <width>50</width>
 <height>50</height>
 <default>0</default>
@@ -20,5 +20,16 @@
 <overwrite>
 <type>1</type>
 <tile>1,50</tile>
+<tile>3,49</tile>
+<tile>3,47</tile>
+<tile>4,49</tile>
+<tile>4,48</tile>
+<tile>4,46</tile>
+<tile>5,49</tile>
+<tile>5,47</tile>
+<tile>6,48</tile>
+<tile>6,47</tile>
+<tile>6,46</tile>
+<tile>6,45</tile>
 </overwrite>
 </board>

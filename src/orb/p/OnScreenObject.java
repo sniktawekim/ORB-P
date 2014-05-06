@@ -145,7 +145,7 @@ public abstract class OnScreenObject {
         try {
             Toolkit toolkit = Toolkit.getDefaultToolkit();
            
-            g = toolkit.getImage(graphPath);
+            g = toolkit.getImage(ORBP.libraryPath + graphPath);
         } catch (Exception e) {
             System.out.print("OnScreenObject setGraphic caught: ");
             System.out.print(e);
