@@ -62,6 +62,7 @@ public class LDPanel extends LevelPanel {
         if (hudOb.matches("delete")) {
             System.out.println("DELETING SELECTED");
             deleteSelection();
+            Music test = new Music("bebop");
         }
         if (hudOb.matches("fill")) {
             System.out.println("FILLING SELECTED");

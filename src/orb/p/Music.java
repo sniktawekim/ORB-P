@@ -11,6 +11,7 @@ import org.newdawn.easyogg.OggClip;
  */
 public class Music {
 	private OggClip ogg;
+         
 	
 	/**
 	 * File must be inside of the music.jar
@@ -19,11 +20,11 @@ public class Music {
 	public Music(String fileName)
 	{
 		try {
-			ogg = new OggClip("bebop.ogg");
+			ogg = new OggClip(ORBP.libraryPath+"bebop.ogg");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
+	}     
 	
 	/**
 	 * Play

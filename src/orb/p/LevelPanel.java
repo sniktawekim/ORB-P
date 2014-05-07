@@ -30,7 +30,7 @@ public abstract class LevelPanel extends MPanel {
     
     public void playMusic()
     {
-    	Music music = new Music("bebop.ogg");
+    	Music music = new Music("bebop");
     	music.play();
     }
     protected void paintObjects(Graphics g) {
