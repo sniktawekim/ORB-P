@@ -248,37 +248,37 @@ public class LDPanel extends LevelPanel {
         hudObject clearSelection = new hudObject(buttonBg.getXMin() + 281, 396, 100, 40, "pics/hud/leveldesigner/clearButton.png", "clear");
 
         //this section calculates how many different tiles there are:
-        File folder = new File("your/path");
+        File folder = new File(ORBP.libraryPath + "pics/tiles");
         File[] listOfFiles = folder.listFiles();
         int numTileTypes = listOfFiles.length;
-
-//this for loop adds a row for every tile inside the tiles folder
-        //in the picture's library. it should auto-detect each new addition.
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
                 System.out.println("File " + listOfFiles[i].getName());
             }
-
-            for (int rows = 0; rows < tileRows; rows++) {
-                //again, these constants are delicate numbers based off of the actual files
-                hudObject newRow = new hudObject(3, ypos, 381, 17, "pics/hud/leveldesigner/row0" + ((rows % 2) + 1) + ".png", "row" + rows);
-                hudString rowTileText = new hudString("Tile " + (rows + tileLibOffset), 7, ypos - 2);
-                // rowTileText = 
-                ypos += 16;
-                hudObjects.add(newRow);
-                hudFonts.add(rowTileText);
-            }
-            Tile temp = new Tile(0, 0);
-            temp.setGraphic("pics/tiles/tile001.png");
-            godsTile = temp;
-            holeTile = temp;
-            hudObjects.add(buttonBg);
-            hudObjects.add(saveMap);
-            hudObjects.add(newMap);
-            hudObjects.add(clearSelection);
-            hudObjects.add(fillSelection);
-            hudObjects.add(deleteSelection);
-            hudObjects.add(tilesTab);
         }
 
+//this for loop adds a row for every tile inside the tiles folder
+        //in the picture's library. it should auto-detect each new addition.
+        for (int rows = 0; rows < tileRows; rows++) {
+            //again, these constants are delicate numbers based off of the actual files
+            hudObject newRow = new hudObject(3, ypos, 381, 17, "pics/hud/leveldesigner/row0" + ((rows % 2) + 1) + ".png", "row" + rows);
+            hudString rowTileText = new hudString("Tile " + (rows + tileLibOffset), 7, ypos - 2);
+            // rowTileText = 
+            ypos += 16;
+            hudObjects.add(newRow);
+            hudFonts.add(rowTileText);
+        }
+        Tile temp = new Tile(0, 0);
+        temp.setGraphic("pics/tiles/tile001.png");
+        godsTile = temp;
+        holeTile = temp;
+        hudObjects.add(buttonBg);
+        hudObjects.add(saveMap);
+        hudObjects.add(newMap);
+        hudObjects.add(clearSelection);
+        hudObjects.add(fillSelection);
+        hudObjects.add(deleteSelection);
+        hudObjects.add(tilesTab);
     }
+
+}
