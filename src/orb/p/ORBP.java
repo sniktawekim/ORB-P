@@ -108,6 +108,9 @@ public class ORBP {
         if (currentCanvas.compareToIgnoreCase("ld") == 0) {
             canvas = new LDPanel();
         }
+        if (currentCanvas.compareToIgnoreCase("play") == 0) {
+            canvas = new GamePanel();
+        }
     }
 
     private static void changeCursor() {
