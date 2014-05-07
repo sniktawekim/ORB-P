@@ -280,8 +280,5 @@ public class LDPanel extends LevelPanel {
         hudObjects.add(deleteSelection);
         hudObjects.add(tilesTab);
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> e7858796c3e2bf87eb61ad6b0b230b32be248e88
 }
