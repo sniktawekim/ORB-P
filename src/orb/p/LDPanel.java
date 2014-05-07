@@ -1,7 +1,5 @@
 package orb.p;
 
-
-
 import java.io.File;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -43,11 +41,9 @@ public class LDPanel extends LevelPanel {
 
     @Override
     protected void buildHUD() {
-        
 
         super.buildHUD();
         buildTileCommander();
-
 
     }
 
@@ -73,6 +69,7 @@ public class LDPanel extends LevelPanel {
         }
         if (hudOb.contains("row")) {
             int selectedTile = Integer.parseInt(hudOb.getAction().substring(3));
+            System.out.println("CLICKEDONROW:" + hudOb.getAction());
             Tile toReplace = new Tile(godsTile.getXMin(), godsTile.getYMin());
             String selectedTileS = String.format("%03d", selectedTile);
             toReplace.setGraphic("pics/tiles/tile" + selectedTileS + ".png");
@@ -145,7 +142,7 @@ public class LDPanel extends LevelPanel {
                     output.add(tileAdd);
                 } else {
                     //for debugging:
-                   // System.out.println(tiles.get(j).getGraphPath() + " " + ORBP.libraryPath+defPaths.get(i));
+                    // System.out.println(tiles.get(j).getGraphPath() + " " + ORBP.libraryPath+defPaths.get(i));
                 }
             }
             output.add("</overwrite>");
@@ -156,7 +153,7 @@ public class LDPanel extends LevelPanel {
 
     protected void saveOutput() {
         try {
-            PrintWriter writer = new PrintWriter(ORBP.libraryPath + "levels/" +outputTxt, "UTF-8");//for output file
+            PrintWriter writer = new PrintWriter(ORBP.libraryPath + "levels/" + outputTxt, "UTF-8");//for output file
 
             for (int i = 0; i < output.size(); i++) {
                 writer.println(output.get(i));
@@ -190,13 +187,13 @@ public class LDPanel extends LevelPanel {
             tileLibrary.add(libTile);
         }
         System.out.println("tilelib size:" + tileLibrary.size());
-        for(int i=0; i<tileLibrary.size();i++){
+        for (int i = 0; i < tileLibrary.size(); i++) {
             System.out.println(tileLibrary.get(i).graphPath);
         }
 
         godsTile = tileLibrary.get(1);
         System.out.println("god tile:" + godsTile.getGraphPath());
-        tilePreview = new hudObject(130, 345, 160, 100,godsTile.getGraphPath(), "");
+        tilePreview = new hudObject(130, 345, 160, 100, godsTile.getGraphPath(), "");
         hudObjects.add(tilePreview);
         tilePrevLoc = hudObjects.size() - 1;
     }
@@ -233,7 +230,7 @@ public class LDPanel extends LevelPanel {
 
     private void setGodsTile(Tile replaceTo) {
         godsTile.replaceWith(replaceTo);
-        tilePreview = new hudObject(130, 345, 160, 100,godsTile.getGraphPath(), "");
+        tilePreview = new hudObject(130, 345, 160, 100, godsTile.getGraphPath(), "");
         hudObjects.set(tilePrevLoc, tilePreview);
     }
 
@@ -241,33 +238,47 @@ public class LDPanel extends LevelPanel {
         hudObject tilesTab = new hudObject(0, 0, 388, 316, "pics/hud/leveldesigner/tilesTab.png", "");
         int tileRows = 18;//how many rows can be displayed at a time
         int ypos = 22;//starting y position of first row
-        hudObject buttonBg = new hudObject(4, 316, 381, 157,"pics/hud/leveldesigner/buttonBg.png", "");
+
+        //hardcoded sizes: I got these from looking at the actual images used.
+        hudObject buttonBg = new hudObject(4, 316, 381, 157, "pics/hud/leveldesigner/buttonBg.png", "");
         hudObject saveMap = new hudObject(buttonBg.getXMin(), 316, 100, 40, "pics/hud/leveldesigner/saveButton.png", "save");
         hudObject newMap = new hudObject(buttonBg.getXMin(), 356, 100, 40, "pics/hud/leveldesigner/newButton.png", "new");
-        hudObject deleteSelection = new hudObject(buttonBg.getXMin()+281, 316, 100, 40, "pics/hud/leveldesigner/deleteButton.png", "delete");
-        hudObject fillSelection = new hudObject(buttonBg.getXMin()+281, 356, 100, 40, "pics/hud/leveldesigner/fillButton.png", "fill");
-        hudObject clearSelection = new hudObject(buttonBg.getXMin()+281, 396, 100, 40, "pics/hud/leveldesigner/clearButton.png", "clear");
-        
-           
-        
-        for (int rows = 0; rows < tileRows; rows++) {
-            hudObject newRow = new hudObject(3, ypos, 381, 17, "pics/hud/leveldesigner/row0" + ((rows % 2) + 1) + ".png", "row" + rows);
-            hudString rowTileText = new hudString("Tile " + (rows + tileLibOffset), 7, ypos-2);
-            ypos += 16;
-            hudObjects.add(newRow);
-            hudFonts.add(rowTileText);
-        }
-        Tile temp = new Tile(0, 0);
-        temp.setGraphic("pics/tiles/tile001.png");
-        godsTile = temp;
-        holeTile = temp;
-        hudObjects.add(buttonBg);
-        hudObjects.add(saveMap);
-        hudObjects.add(newMap);
-        hudObjects.add(clearSelection);
-        hudObjects.add(fillSelection);
-        hudObjects.add(deleteSelection);
-        hudObjects.add(tilesTab);
-    }
+        hudObject deleteSelection = new hudObject(buttonBg.getXMin() + 281, 316, 100, 40, "pics/hud/leveldesigner/deleteButton.png", "delete");
+        hudObject fillSelection = new hudObject(buttonBg.getXMin() + 281, 356, 100, 40, "pics/hud/leveldesigner/fillButton.png", "fill");
+        hudObject clearSelection = new hudObject(buttonBg.getXMin() + 281, 396, 100, 40, "pics/hud/leveldesigner/clearButton.png", "clear");
 
-}
+        //this section calculates how many different tiles there are:
+        File folder = new File("your/path");
+        File[] listOfFiles = folder.listFiles();
+        int numTileTypes = listOfFiles.length;
+
+//this for loop adds a row for every tile inside the tiles folder
+        //in the picture's library. it should auto-detect each new addition.
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                System.out.println("File " + listOfFiles[i].getName());
+            }
+
+            for (int rows = 0; rows < tileRows; rows++) {
+                //again, these constants are delicate numbers based off of the actual files
+                hudObject newRow = new hudObject(3, ypos, 381, 17, "pics/hud/leveldesigner/row0" + ((rows % 2) + 1) + ".png", "row" + rows);
+                hudString rowTileText = new hudString("Tile " + (rows + tileLibOffset), 7, ypos - 2);
+                // rowTileText = 
+                ypos += 16;
+                hudObjects.add(newRow);
+                hudFonts.add(rowTileText);
+            }
+            Tile temp = new Tile(0, 0);
+            temp.setGraphic("pics/tiles/tile001.png");
+            godsTile = temp;
+            holeTile = temp;
+            hudObjects.add(buttonBg);
+            hudObjects.add(saveMap);
+            hudObjects.add(newMap);
+            hudObjects.add(clearSelection);
+            hudObjects.add(fillSelection);
+            hudObjects.add(deleteSelection);
+            hudObjects.add(tilesTab);
+        }
+
+    }
