@@ -14,6 +14,7 @@ public class GamePanel extends LevelPanel {
         ItemBox test = new ItemBox(tiles.get(i).getXMin(),tiles.get(5).getYMin());
         tiles.get(i).setOnTop(test);
         }
+        playMusic();
     }
 
     @Override

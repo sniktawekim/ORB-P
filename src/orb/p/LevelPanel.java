@@ -26,10 +26,9 @@ public abstract class LevelPanel extends MPanel {
         currentBoard = new Board(ORBP.libraryPath + "levels/default.lvl");          
         tiles = new ArrayList<>();
         loadBoard(currentBoard);
-        playMusic();
     }
     
-    private void playMusic()
+    public void playMusic()
     {
     	Music music = new Music("bebop.ogg");
     	music.play();
