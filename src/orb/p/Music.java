@@ -20,7 +20,7 @@ public class Music {
 	public Music(String fileName)
 	{
 		try {
-			ogg = new OggClip(ORBP.libraryPath+"bebop.ogg");
+			ogg = new OggClip(fileName + ".ogg");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

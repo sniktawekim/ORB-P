@@ -105,11 +105,16 @@ public class ORBP {
         if (currentCanvas.compareToIgnoreCase("menu") == 0) {
             canvas = new MenuPanel();
         }
-        if (currentCanvas.compareToIgnoreCase("ld") == 0) {
+        else if (currentCanvas.compareToIgnoreCase("ld") == 0) {
             canvas = new LDPanel();
         }
-        if (currentCanvas.compareToIgnoreCase("play") == 0) {
+        else if (currentCanvas.compareToIgnoreCase("play") == 0) {
             canvas = new GamePanel();
+        }
+        else if (currentCanvas.compareToIgnoreCase("shop") == 0) {
+            canvas = new PreGamePanel();
+        } else {
+            System.out.println(currentCanvas);
         }
     }
 
