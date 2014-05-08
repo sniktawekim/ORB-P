@@ -1,7 +1,5 @@
 package orb.p;
 
-
-
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -23,16 +21,16 @@ public abstract class LevelPanel extends MPanel {
     LevelPanel() {
         super();
 
-        currentBoard = new Board(ORBP.libraryPath + "levels/default.lvl");          
+        currentBoard = new Board(ORBP.libraryPath + "levels/default.lvl");
         tiles = new ArrayList<>();
         loadBoard(currentBoard);
     }
-    
-    public void playMusic()
-    {
-    	Music music = new Music("bebop");
-    	music.play();
+
+    public void playMusic() {
+        Music music = new Music("bebop");
+        music.play();
     }
+
     protected void paintObjects(Graphics g) {
         for (int i = 0; i < tiles.size(); i++) {
             Tile current = tiles.get(i);
@@ -43,37 +41,37 @@ public abstract class LevelPanel extends MPanel {
     }
 
     protected void checkClick() {
-        if (!myClick.getClicked()) {
-            return;
-        }       
-        super.checkClick();//checks hud clicking
-        if (!hudclicked) {
-            int xClicked = myClick.getEX() - xOffset;
-            int yClicked = myClick.getEY() - yOffset;
-            for (int i = 0; i < tiles.size(); i++) {
-                Tile current = tiles.get(i);
-                if (current.isWithin(xClicked, yClicked)) {
-                    handleClickedTile(current);
-                    return;
+        if (clearOldClickStatus()) {
+            super.checkClick();//checks hud clicking
+            if (!hudclicked) {
+                int xClicked = myClick.getEX() - xOffset;
+                int yClicked = myClick.getEY() - yOffset;
+                for (int i = 0; i < tiles.size(); i++) {
+                    Tile current = tiles.get(i);
+                    if (current.isWithin(xClicked, yClicked)) {
+                        handleClickedTile(current);
+                        return;
+                    }
                 }
             }
         }
     }
-     protected void checkKey() {
-        if(myPress.getKeyPressed("left")){
+
+    protected void checkKey() {
+        if (myPress.getKeyPressed("left")) {
             shift(10, 0);
         }
-        if(myPress.getKeyPressed("right")){
+        if (myPress.getKeyPressed("right")) {
             shift(-10, 0);
         }
-        if(myPress.getKeyPressed("up")){
+        if (myPress.getKeyPressed("up")) {
             shift(0, 10);
         }
-        if(myPress.getKeyPressed("down")){
+        if (myPress.getKeyPressed("down")) {
             shift(0, -10);
         }
-                
-     }
+
+    }
 
     @Override
     protected void buildHUD() {
@@ -83,9 +81,9 @@ public abstract class LevelPanel extends MPanel {
         hudObject downArrow = new hudObject(canvasWidth / 2 - 25, canvasHeight - 40, 50, 40, "pics/hud/arrows/dha.png", "dha");
 
        // hudObjects.add(leftArrow);
-      //  hudObjects.add(rightArrow);
-       // hudObjects.add(upArrow);
-       // hudObjects.add(downArrow);
+        //  hudObjects.add(rightArrow);
+        // hudObjects.add(upArrow);
+        // hudObjects.add(downArrow);
     }
 
     protected abstract void handleClickedTile(Tile clicked);

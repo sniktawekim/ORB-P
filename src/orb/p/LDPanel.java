@@ -26,6 +26,7 @@ public class LDPanel extends LevelPanel {
         output = new ArrayList();
         loadTileLib();
         //now load tile library
+        //countTiles();
     }
 
     @Override
@@ -49,7 +50,7 @@ public class LDPanel extends LevelPanel {
 
     @Override
     protected void hudAction(hudObject hudOb) {
-        //System.out.println(hudOb.getAction());
+        System.out.println(hudOb.getAction());
         super.hudAction(hudOb);
         if (hudOb.matches("save")) {
             System.out.println("SAVING");
@@ -246,17 +247,9 @@ public class LDPanel extends LevelPanel {
         hudObject deleteSelection = new hudObject(buttonBg.getXMin() + 281, 316, 100, 40, "pics/hud/leveldesigner/deleteButton.png", "delete");
         hudObject fillSelection = new hudObject(buttonBg.getXMin() + 281, 356, 100, 40, "pics/hud/leveldesigner/fillButton.png", "fill");
         hudObject clearSelection = new hudObject(buttonBg.getXMin() + 281, 396, 100, 40, "pics/hud/leveldesigner/clearButton.png", "clear");
+       // hudObject clearSelection = new hudObject(buttonBg.getXMin() + 281, 396, 100, 40, "pics/hud/charSetup/bar.png", "clear");
 
         //this section calculates how many different tiles there are:
-        File folder = new File(ORBP.libraryPath + "pics/tiles");
-        File[] listOfFiles = folder.listFiles();
-        int numTileTypes = listOfFiles.length;
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()) {
-                System.out.println("File " + listOfFiles[i].getName());
-            }
-        }
-
 //this for loop adds a row for every tile inside the tiles folder
         //in the picture's library. it should auto-detect each new addition.
         for (int rows = 0; rows < tileRows; rows++) {
@@ -279,6 +272,17 @@ public class LDPanel extends LevelPanel {
         hudObjects.add(fillSelection);
         hudObjects.add(deleteSelection);
         hudObjects.add(tilesTab);
+    }
+
+    private void countTiles() {
+        File folder = new File(ORBP.libraryPath + "pics/tiles");
+        File[] listOfFiles = folder.listFiles();
+        int numTileTypes = listOfFiles.length;
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                System.out.println("File " + listOfFiles[i].getName());
+            }
+        }
     }
 
 }

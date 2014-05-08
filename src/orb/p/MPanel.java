@@ -73,6 +73,13 @@ public abstract class MPanel extends JPanel {
         checkKey();
     }
 
+    protected boolean clearOldClickStatus(){       
+        if (!myClick.getClicked()) {
+            return false;
+        }    else {
+            return true;
+        }
+    }
     protected void paintObjects(Graphics g) {
         for (int i = 0; i < hudObjects.size(); i++) {
             hudObject current = hudObjects.get(i);
@@ -85,7 +92,7 @@ public abstract class MPanel extends JPanel {
         }
     }
 
-    protected void checkClick() {
+    protected void checkClick() {       
         hudclicked = false;
         int xClicked = myClick.getEX();
         int yClicked = myClick.getEY();
@@ -93,9 +100,11 @@ public abstract class MPanel extends JPanel {
             hudObject current = hudObjects.get(i);
             if (current.isWithin(xClicked, yClicked) && !(current.getAction().compareToIgnoreCase("") == 0)) {
                 hudAction(current);
+                //System.out.println("action hud clicked");
                 hudclicked = true;
                 return;
             } else if (current.isWithin(xClicked, yClicked)) {
+               // System.out.println("lame hud clicked");
                 hudclicked = true;            
             }
         }

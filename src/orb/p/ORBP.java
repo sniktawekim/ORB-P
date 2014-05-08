@@ -113,6 +113,9 @@ public class ORBP {
         }
         else if (currentCanvas.compareToIgnoreCase("shop") == 0) {
             canvas = new PreGamePanel();
+        } 
+        else if (currentCanvas.compareToIgnoreCase("chars") == 0) {
+            canvas = new charSetupPanel();
         } else {
             System.out.println(currentCanvas);
         }
