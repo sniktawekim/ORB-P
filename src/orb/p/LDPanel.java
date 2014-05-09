@@ -100,7 +100,6 @@ public class LDPanel extends LevelPanel {
         //adding defpaths
         for (int i = 0; i < tiles.size(); i++) {
             String tilePath = tiles.get(i).getGraphPath();
-            tilePath = tilePath.substring(ORBP.libraryPath.length());
             boolean found = false;
             for (int j = 0; j < defPaths.size(); j++) {
                 if (tilePath.compareToIgnoreCase(defPaths.get(j)) == 0) {
