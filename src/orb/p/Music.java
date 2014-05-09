@@ -33,6 +33,8 @@ public class Music {
 	{
 		ogg.play();
 	}
-	
+	public boolean isPlaying(){
+            return !ogg.stopped();
+        }
 	
 }

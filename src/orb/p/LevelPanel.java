@@ -17,6 +17,8 @@ public abstract class LevelPanel extends MPanel {
     int xOffset = 0;
     int yOffset = 0;
     static String prePath = "";
+    Music music;
+    boolean repeatMusic = true;
 
     LevelPanel() {
         super();
@@ -27,11 +29,14 @@ public abstract class LevelPanel extends MPanel {
     }
 
     public void playMusic() {
-        Music music = new Music("bebop");
+        music = new Music("test");
         music.play();
     }
 
     protected void paintObjects(Graphics g) {
+        if(repeatMusic){
+            checkMusic();
+        }
         for (int i = 0; i < tiles.size(); i++) {
             Tile current = tiles.get(i);
             current.paint(xOffset, yOffset, g, this, myClick);
@@ -126,5 +131,11 @@ public abstract class LevelPanel extends MPanel {
             yOffset += y;
         }
 
+    }
+
+    private void checkMusic() {
+       if(!music.isPlaying()){
+           playMusic();
+       }
     }
 }
