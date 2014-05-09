@@ -73,8 +73,8 @@ public class ORBP {
         screenWidth = width;
         //in the future, once we have background images, 
         //we can test and implement supporting multpile resolutions
-        screenWidth = 1366;
-        screenHeight = 768;
+        screenWidth = 1300;
+        screenHeight = 800;
     }
 
     private static void buildCanvas() {
