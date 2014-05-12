@@ -9,7 +9,9 @@ public class GamePanel extends LevelPanel {
 
     private Tile selected = null;
     private boolean selectMode = false;
-
+    //TEST
+    Character currentPlayer;
+    
     GamePanel() {
         super();
         for(int i=0;i<6;i++){
@@ -17,6 +19,7 @@ public class GamePanel extends LevelPanel {
         tiles.get(i).setOnTop(test);
         }
         playMusic();
+        testCharacter();
     }
 
     @Override
@@ -35,13 +38,36 @@ public class GamePanel extends LevelPanel {
         super.hudAction(hudOb);
 
     }
-
+    
     protected void handleClickedTile(Tile clicked) {
-        if (selected == null&&selectMode) {
-            System.out.println("Tile ID: " + clicked.getID() + " " + clicked.getLoc() + " " + clicked.getGraphPath());
-            clicked.setHighlight(true);
-            selected = clicked;
+
+        int pX = currentPlayer.getCurrentTile().xLoc;
+        int pY = currentPlayer.getCurrentTile().yLoc;
+        
+        boolean movePlayer = false;
+        if (((clicked.xLoc + 1 == pX) || (clicked.xLoc - 1 == pX)) && clicked.yLoc == pY) {
+
+            movePlayer = true;
+        } else if (((clicked.yLoc + 1 == pY) || (clicked.yLoc - 1 == pY)) && clicked.xLoc == pX) {
+            movePlayer = true;
         }
+        if (movePlayer) {
+            //Two way reference
+            currentPlayer.setCurrentTile(clicked);
+            clicked.setOnTop(currentPlayer);
+        }
+    }
+    
+    private void testCharacter()
+    {  
+      Tile startingTile = currentBoard.getTile(4, 49);
+      currentPlayer = new Character(startingTile);
+      startingTile.setOnTop(currentPlayer);
+    }
+    
+    private void handleCharacterMove()
+    {
+        
     }
 
 }
