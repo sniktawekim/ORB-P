@@ -12,25 +12,37 @@ package orb.p;
 public class Character extends OnScreenObject {
 
     //TODO Character stats
-    Tile currentTile;    
-    //String direction;
-    
-  public Character(Tile currentTile) {        
+    Tile currentTile;
+    private int moves = 5;
+    private String direction;
+
+    public Character(Tile currentTile) {
         //TODO Display position is off
         super(currentTile.xLoc, currentTile.yLoc, 120, 140);
         this.currentTile = currentTile;
-        
+
         //TODO AC
         setGraphic("pics/character/dr.png");
     }
 
-  public Tile getCurrentTile()
-  {
-     return currentTile; 
-  }
-  public void setCurrentTile(Tile currentTile)
-  {
-      this.currentTile = currentTile;
-  }
+    public Tile getCurrentTile() {
+        return currentTile;
+    }
+
+    public void setCurrentTile(Tile currentTile) {
+        this.currentTile = currentTile;
+    }
+
+    public void resetMoves() {
+        moves = 5;
+    }
+
+    public void handleMove(int Direction) {
+        moves--;
+    }
+
+    public int getMoves() {
+        return moves;
+    }
 
 }
