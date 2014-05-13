@@ -58,9 +58,10 @@ public class GamePanel extends LevelPanel {
         if (clicked.terrainCost != 0) {
             if (movePlayer) {
                 //Two way reference
+                currentPlayer.handleMove(0);
                 currentPlayer.setCurrentTile(clicked);
                 clicked.setOnTop(currentPlayer);
-                currentPlayer.handleMove(0);
+                
 
                 if (currentPlayer.getMoves() == 0) {
                     int index = players.indexOf(currentPlayer);
@@ -80,12 +81,12 @@ public class GamePanel extends LevelPanel {
 
     private void testCharacter() {
         Tile startingTile = currentBoard.getTile(3, 48);
-        Character newChar = new Character(startingTile);
+        Character newChar = new Character(startingTile, "pics/character/testLady/");
         startingTile.setOnTop(newChar);
         players.add(newChar);
 
         startingTile = currentBoard.getTile(4, 50);
-        newChar = new Character(startingTile);
+        newChar = new Character(startingTile, "pics/character/testLady/");
         startingTile.setOnTop(newChar);
         players.add(newChar);
 

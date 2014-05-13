@@ -24,6 +24,7 @@ public abstract class OnScreenObject {
     Image g;
     Image h;
     Image o;
+    int xOffset = 0;
     protected int xmin;//left bound of object
     protected int ymin;//right bound of object
     protected int xsize;//horizontal size of object

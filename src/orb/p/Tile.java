@@ -21,7 +21,7 @@ public class Tile extends OnScreenObject {
     int xLoc;
     int yLoc;
     int id;
-    OnScreenObject onTop = null;
+    OnScreenObject onTop = null;   
   
 
     //tile width is 120 and height is 60
@@ -77,6 +77,12 @@ public class Tile extends OnScreenObject {
     public String getLoc() {
         return xLoc + "," + yLoc;
     }
+    public int getNESWLoc(){
+        return xLoc;
+    }
+    public int getNWSELoc(){
+        return yLoc;
+    }
 
     public void setLoc(int x, int y) {
         xLoc = x;
@@ -116,8 +122,8 @@ public class Tile extends OnScreenObject {
 
     protected void setOnTop(OnScreenObject toPlace){
         onTop = toPlace;
-        toPlace.setXMin(xmin);
-        toPlace.setYMin(ymin+ysize - onTop.getYSize());
+        onTop.setXMin(xmin+toPlace.xOffset);
+        onTop.setYMin(ymin+ysize - toPlace.getYSize());
     }
     public void paint(int xOffset, int yOffset, Graphics g, ImageObserver lulz, IClick mouse){
         super.paint(xOffset, yOffset, g, lulz, mouse);
