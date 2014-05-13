@@ -16,7 +16,7 @@ import java.awt.image.ImageObserver;
  */
 public class Tile extends OnScreenObject {
 
-    OnScreenObject onTile;
+    boolean empty;
     int terrainCost;
     int xLoc;
     int yLoc;
@@ -32,6 +32,7 @@ public class Tile extends OnScreenObject {
         setGraphic(ORBP.libraryPath + "pics/tiles/tile001.png");
         setHighGraphic(ORBP.libraryPath +"pics/highlights/tileHighlight.png");
         setHoverGraphic(ORBP.libraryPath +"pics/highlights/tileHover.png");
+        empty = true;
     }
 
     @Override
@@ -121,6 +122,7 @@ public class Tile extends OnScreenObject {
     }
 
     protected void setOnTop(OnScreenObject toPlace){
+        empty = false;
         onTop = toPlace;
         onTop.setXMin(xmin+toPlace.xOffset);
         onTop.setYMin(ymin+ysize - toPlace.getYSize());

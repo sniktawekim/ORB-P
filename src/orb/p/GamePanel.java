@@ -45,23 +45,12 @@ public class GamePanel extends LevelPanel {
 
     protected void handleClickedTile(Tile clicked) {
 
-        int pX = currentPlayer.getCurrentTile().xLoc;
-        int pY = currentPlayer.getCurrentTile().yLoc;
-
-        boolean movePlayer = false;
-        if (((clicked.xLoc + 1 == pX) || (clicked.xLoc - 1 == pX)) && clicked.yLoc == pY) {
-
-            movePlayer = true;
-        } else if (((clicked.yLoc + 1 == pY) || (clicked.yLoc - 1 == pY)) && clicked.xLoc == pX) {
-            movePlayer = true;
-        }
         if (clicked.terrainCost != 0) {
-            if (movePlayer) {
+            if (checkMoveLegal(clicked)) {
                 //Two way reference
                 currentPlayer.handleMove(0);
                 currentPlayer.setCurrentTile(clicked);
                 clicked.setOnTop(currentPlayer);
-                
 
                 if (currentPlayer.getMoves() == 0) {
                     int index = players.indexOf(currentPlayer);
@@ -76,6 +65,30 @@ public class GamePanel extends LevelPanel {
                 }
 
             }
+        }
+    }
+
+    public boolean checkMoveLegal(Tile clicked) {
+        int pX = currentPlayer.getCurrentTile().getNESWLoc();
+        int pY = currentPlayer.getCurrentTile().getNWSELoc();
+
+        boolean NESWaxis = false;
+        boolean NWSEaxis = false;
+        boolean legalDestination = true;
+
+        if (((clicked.getNESWLoc() + 1 == pX) || (clicked.getNESWLoc() - 1 == pX)) && clicked.getNWSELoc() == pY) {
+
+            NESWaxis = true;
+        } else if (((clicked.getNWSELoc() + 1 == pY) || (clicked.getNWSELoc() - 1 == pY)) && clicked.getNESWLoc() == pX) {
+            NWSEaxis = true;
+        }
+        if (clicked.empty == false) {
+            legalDestination = false;
+        }
+        if ((NESWaxis || NWSEaxis) && legalDestination) {
+            return true;
+        } else {
+            return false;
         }
     }
 
