@@ -33,10 +33,8 @@ public abstract class LevelPanel extends MPanel {
         music.play();
     }
 
-    protected void paintObjects(Graphics g) {
-        if(repeatMusic){
-            checkMusic();
-        }
+    protected void paintObjects(Graphics g) {    
+        
         for (int i = 0; i < tiles.size(); i++) {
             Tile current = tiles.get(i);
             current.paint(xOffset, yOffset, g, this, myClick);
@@ -133,7 +131,7 @@ public abstract class LevelPanel extends MPanel {
 
     }
 
-    private void checkMusic() {
+    protected void checkMusic() {
        if(!music.isPlaying()){
            playMusic();
        }
