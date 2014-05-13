@@ -1,7 +1,5 @@
 package orb.p;
 
-import java.awt.Graphics;
-
 /**
  * @author MWatkins
  */
@@ -24,13 +22,7 @@ public class GamePanel extends LevelPanel {
         super.buildHUD();
 
     }
-@Override
-protected void paintObjects(Graphics g) { 
-    if(repeatMusic){
-            checkMusic();
-        }
-    super.paintObjects(g);
-}
+
     @Override
     protected void hudAction(hudObject hudOb) {
         super.hudAction(hudOb);
