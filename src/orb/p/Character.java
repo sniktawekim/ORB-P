@@ -62,6 +62,7 @@ public class Character extends OnScreenObject {
     }
 
     public void resetMoves() {
+        System.out.println("Reset moves");
         moves = 5;
         
     }
@@ -82,10 +83,11 @@ public class Character extends OnScreenObject {
             setDirection(4);
             System.out.println("AI D4 move");
         }else{
-            System.out.println("CHARACTER ERROR: invalid move direction");
+            System.out.println("AI ERROR: Invalid direction code: " + Direction);
             return;
         }
         moves--;
+        System.out.println(moves + " moves remain");
         
     }
 

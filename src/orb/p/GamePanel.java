@@ -45,12 +45,14 @@ public class GamePanel extends LevelPanel {
 
     protected void handleClickedTile(Tile clicked) {
 
-        if (clicked.terrainCost != 0) {
+  
             if (checkMoveLegal(clicked)) {
                 //Two way reference
                 currentPlayer.handleMove(0);
                 currentPlayer.setCurrentTile(clicked);
+                currentPlayer.prevTile.removeFromTop();
                 clicked.setOnTop(currentPlayer);
+                
 
                 if (currentPlayer.getMoves() == 0) {
                     int index = players.indexOf(currentPlayer);
@@ -65,7 +67,7 @@ public class GamePanel extends LevelPanel {
                 }
 
             }
-        }
+        
     }
 
     public boolean checkMoveLegal(Tile clicked) {
@@ -74,7 +76,8 @@ public class GamePanel extends LevelPanel {
 
         boolean NESWaxis = false;
         boolean NWSEaxis = false;
-        boolean legalDestination = true;
+        boolean tileIsEmpty = true;
+        boolean okTerrain = clicked.terrainCost!=0;
 
         if (((clicked.getNESWLoc() + 1 == pX) || (clicked.getNESWLoc() - 1 == pX)) && clicked.getNWSELoc() == pY) {
 
@@ -82,12 +85,23 @@ public class GamePanel extends LevelPanel {
         } else if (((clicked.getNWSELoc() + 1 == pY) || (clicked.getNWSELoc() - 1 == pY)) && clicked.getNESWLoc() == pX) {
             NWSEaxis = true;
         }
-        if (clicked.empty == false) {
-            legalDestination = false;
+        if (clicked.checkEmpty() == false) {
+            tileIsEmpty = false;
         }
-        if ((NESWaxis || NWSEaxis) && legalDestination) {
+        if ((NESWaxis || NWSEaxis) && tileIsEmpty && okTerrain) {
+            System.out.println("legal move");
             return true;
         } else {
+            if(NESWaxis)
+                System.out.print("(NESWaxis ");
+            if(NWSEaxis)
+                System.out.print("|| NWSEaxis)");
+            if(tileIsEmpty)
+                System.out.print("&&tileIsEmpty ");
+            if(okTerrain)
+                System.out.println("&& okTerrain");
+            
+            System.out.println("");
             return false;
         }
     }

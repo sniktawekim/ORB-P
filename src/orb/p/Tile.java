@@ -5,8 +5,6 @@ package orb.p;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 import java.awt.Graphics;
 import java.awt.image.ImageObserver;
 
@@ -16,13 +14,11 @@ import java.awt.image.ImageObserver;
  */
 public class Tile extends OnScreenObject {
 
-    boolean empty;
     int terrainCost;
     int xLoc;
     int yLoc;
     int id;
-    OnScreenObject onTop = null;   
-  
+    OnScreenObject onTop = null;
 
     //tile width is 120 and height is 60
     public Tile(int xLocation, int yLocation) {
@@ -30,9 +26,8 @@ public class Tile extends OnScreenObject {
         containerXMin = -120;
         containerYMin = -85;
         setGraphic(ORBP.libraryPath + "pics/tiles/tile001.png");
-        setHighGraphic(ORBP.libraryPath +"pics/highlights/tileHighlight.png");
-        setHoverGraphic(ORBP.libraryPath +"pics/highlights/tileHover.png");
-        empty = true;
+        setHighGraphic(ORBP.libraryPath + "pics/highlights/tileHighlight.png");
+        setHoverGraphic(ORBP.libraryPath + "pics/highlights/tileHover.png");
     }
 
     @Override
@@ -78,10 +73,12 @@ public class Tile extends OnScreenObject {
     public String getLoc() {
         return xLoc + "," + yLoc;
     }
-    public int getNESWLoc(){
+
+    public int getNESWLoc() {
         return xLoc;
     }
-    public int getNWSELoc(){
+
+    public int getNWSELoc() {
         return yLoc;
     }
 
@@ -110,29 +107,40 @@ public class Tile extends OnScreenObject {
         }
     }
 
-    protected boolean calcHoveredStatus(int xOffset, int yOffset, IClick mouse) {  
+    protected boolean calcHoveredStatus(int xOffset, int yOffset, IClick mouse) {
         boolean inThisTile = isWithin(mouse.getX() - xOffset, mouse.getY() - yOffset);
-        if(ORBP.currentCanvas.compareToIgnoreCase("ld") == 0){
+        if (ORBP.currentCanvas.compareToIgnoreCase("ld") == 0) {
             return inThisTile;
-        } else{
-            return (inThisTile && !mouse.getPress()&&terrainCost>0);
+        } else {
+            return (inThisTile && !mouse.getPress() && terrainCost > 0);
         }
-        
-            
+
     }
 
-    protected void setOnTop(OnScreenObject toPlace){
-        empty = false;
+    protected void setOnTop(OnScreenObject toPlace) {
         onTop = toPlace;
-        onTop.setXMin(xmin+toPlace.xOffset);
-        onTop.setYMin(ymin+ysize - toPlace.getYSize());
+        onTop.setXMin(xmin + toPlace.xOffset);
+        onTop.setYMin(ymin + ysize - toPlace.getYSize());
     }
-    public void paint(int xOffset, int yOffset, Graphics g, ImageObserver lulz, IClick mouse){
+
+    public void removeFromTop() {
+        onTop = null;
+    }
+
+    public void paint(int xOffset, int yOffset, Graphics g, ImageObserver lulz, IClick mouse) {
         super.paint(xOffset, yOffset, g, lulz, mouse);
-        if(onTop!=null){
-            if(terrainCost!=0){
-            onTop.paint(xOffset, yOffset, g, lulz, mouse);
+        if (onTop != null) {
+            if (terrainCost != 0) {
+                onTop.paint(xOffset, yOffset, g, lulz, mouse);
             }
+        }
+    }
+
+    public boolean checkEmpty() {
+        if (onTop == null) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
