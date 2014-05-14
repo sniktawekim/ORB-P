@@ -8,7 +8,7 @@
 <tiledef>
 <id>1</id>
 <cost>1</cost>
-<path>pics/tiles/tile001 - Copy (2).png</path>
+<path>pics/tiles/tile004.png</path>
 </tiledef>
 <tiledef>
 <id>2</id>
