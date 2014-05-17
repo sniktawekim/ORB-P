@@ -16,6 +16,7 @@ public class GamePanel extends LevelPanel {
     private Tile selected = null;
     private boolean selectMode = false;
     private boolean isClient = true;
+    private boolean isLocal = false;
     private String localPlayerId;
     Character localPlayer;
     Communicator comm;
@@ -77,7 +78,9 @@ public class GamePanel extends LevelPanel {
 
     protected void handleClickedTile(Tile clicked) {
         moveCharacter(localPlayerId, clicked.xLoc, clicked.yLoc);
-        comm.sendMessage(localPlayerId + "," + clicked.xLoc + "," + clicked.yLoc);
+        if (!isLocal) {
+            comm.sendMessage(localPlayerId + "," + clicked.xLoc + "," + clicked.yLoc);
+        }
     }
 
     public boolean checkMoveLegal(Character currentPlayer, Tile clicked) {
@@ -133,6 +136,9 @@ public class GamePanel extends LevelPanel {
                 comm = new Server(this);
                 comm.start();
                 isClient = false;
+                testCharacter(localPlayerId, 3, 48);
+            } else {
+                isLocal = true;
                 testCharacter(localPlayerId, 3, 48);
             }
         } else {
