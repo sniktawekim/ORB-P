@@ -5,8 +5,6 @@
  */
 package orb.p;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author blainezor
@@ -16,20 +14,21 @@ public class Character extends OnScreenObject {
     //TODO Character stats
     Tile currentTile;
     Tile prevTile; //previous tile, for direction calculations
+    
     private int moves = 5;
     private int direction;
     private int prevDirection;
     
     private String charPath;
+    private String charId;
     
 
-    public Character(Tile startTile, String characterPath) {
+    public Character(String charId, Tile startTile, String characterPath) {
         //TODO Display position is off
         super(startTile.xLoc, startTile.yLoc, 120, 140);
         xOffset = 30;
         currentTile = startTile;
-
-        //TODO AC
+        this.charId = charId;
         direction = 4;
         charPath = characterPath;
         changeDirection(4);
@@ -86,7 +85,7 @@ public class Character extends OnScreenObject {
             System.out.println("AI ERROR: Invalid direction code: " + Direction);
             return;
         }
-        moves--;
+        //moves--;
         System.out.println(moves + " moves remain");
         
     }

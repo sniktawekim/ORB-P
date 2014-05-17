@@ -2,6 +2,11 @@ package orb.p;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.JOptionPane;
+import orb.p.network.Client;
+import orb.p.network.Server;
+import orb.p.network.Communicator;
 
 /**
  * @author MWatkins
@@ -10,10 +15,12 @@ public class GamePanel extends LevelPanel {
 
     private Tile selected = null;
     private boolean selectMode = false;
-    //TEST
-    ArrayList<Character> players = new ArrayList<Character>();
+    private boolean isClient = true;
+    private String localPlayerId;
+    Character localPlayer;
+    Communicator comm;
 
-    Character currentPlayer;
+    HashMap<String, Character> onlinePlayers = new HashMap<>();
 
     GamePanel() {
         super();
@@ -22,7 +29,10 @@ public class GamePanel extends LevelPanel {
             tiles.get(i).setOnTop(test);
         }
         playMusic();
-        testCharacter();
+
+        //Obviously for testing
+        getInput();
+        //Load Communicator     
     }
 
     @Override
@@ -43,41 +53,41 @@ public class GamePanel extends LevelPanel {
 
     }
 
-    protected void handleClickedTile(Tile clicked) {
-
-  
-            if (checkMoveLegal(clicked)) {
+    /**
+     *
+     * @param characterId
+     * @param tileX
+     * @param tileY
+     */
+    public void moveCharacter(String characterId, int tileX, int tileY) {
+        Character characterToMove = onlinePlayers.get(characterId);
+        Tile currentTile = currentBoard.getTile(tileX, tileY);
+        if (characterToMove.getMoves() != 0) {
+            if (checkMoveLegal(characterToMove, currentTile)) {
                 //Two way reference
-                currentPlayer.handleMove(0);
-                currentPlayer.setCurrentTile(clicked);
-                currentPlayer.prevTile.removeFromTop();
-                clicked.setOnTop(currentPlayer);
-                
-
-                if (currentPlayer.getMoves() == 0) {
-                    int index = players.indexOf(currentPlayer);
-
-                    if (index == players.size() - 1) {
-                        index = 0;
-                    } else {
-                        index++;
-                    }
-                    currentPlayer = players.get(index);
-                    currentPlayer.resetMoves();
-                }
-
+                characterToMove.handleMove(0);
+                characterToMove.setCurrentTile(currentTile);
+                characterToMove.prevTile.removeFromTop();
+                //Get Tile
+                currentTile.setOnTop(characterToMove);
             }
-        
+        }
+
     }
 
-    public boolean checkMoveLegal(Tile clicked) {
+    protected void handleClickedTile(Tile clicked) {
+        moveCharacter(localPlayerId, clicked.xLoc, clicked.yLoc);
+        comm.sendMessage(localPlayerId + "," + clicked.xLoc + "," + clicked.yLoc);
+    }
+
+    public boolean checkMoveLegal(Character currentPlayer, Tile clicked) {
         int pX = currentPlayer.getCurrentTile().getNESWLoc();
         int pY = currentPlayer.getCurrentTile().getNWSELoc();
 
         boolean NESWaxis = false;
         boolean NWSEaxis = false;
         boolean tileIsEmpty = true;
-        boolean okTerrain = clicked.terrainCost!=0;
+        boolean okTerrain = clicked.terrainCost != 0;
 
         if (((clicked.getNESWLoc() + 1 == pX) || (clicked.getNESWLoc() - 1 == pX)) && clicked.getNWSELoc() == pY) {
 
@@ -92,36 +102,62 @@ public class GamePanel extends LevelPanel {
             System.out.println("legal move");
             return true;
         } else {
-            if(NESWaxis)
+            if (NESWaxis) {
                 System.out.print("(NESWaxis ");
-            if(NWSEaxis)
+            }
+            if (NWSEaxis) {
                 System.out.print("|| NWSEaxis)");
-            if(tileIsEmpty)
+            }
+            if (tileIsEmpty) {
                 System.out.print("&&tileIsEmpty ");
-            if(okTerrain)
+            }
+            if (okTerrain) {
                 System.out.println("&& okTerrain");
-            
+            }
+
             System.out.println("");
             return false;
         }
     }
 
-    private void testCharacter() {
-        Tile startingTile = currentBoard.getTile(3, 48);
-        Character newChar = new Character(startingTile, "pics/character/testLady/");
-        startingTile.setOnTop(newChar);
-        players.add(newChar);
+    private void getInput() {
+        String host = JOptionPane.showInputDialog("Host (Leave Empty for Local)");
+        localPlayerId = JOptionPane.showInputDialog("Player ID: ");
 
-        startingTile = currentBoard.getTile(4, 50);
-        newChar = new Character(startingTile, "pics/character/testLady/");
-        startingTile.setOnTop(newChar);
-        players.add(newChar);
+        if (host == null || host.isEmpty()) {
 
-        currentPlayer = players.get(0);
+            int hostGame = JOptionPane.showConfirmDialog(null,
+                    "Would you like to host a game?", "Please select",
+                    JOptionPane.YES_NO_OPTION);
+            if (hostGame == JOptionPane.YES_OPTION) {
+                comm = new Server(this);
+                comm.start();
+                isClient = false;
+                testCharacter(localPlayerId, 3, 48);
+            }
+        } else {
+            comm = new Client(this, host);
+            comm.sendMessage(localPlayerId);
+            comm.start();
+            testCharacter(localPlayerId, 3, 49);
+        }
+
     }
 
-    private void handleCharacterMove() {
+    public void testCharacter(String playerId, int x, int y) {
 
+        Tile startingTile;
+
+        startingTile = currentBoard.getTile(x, y);
+
+        Character newChar = new Character(playerId, startingTile, "pics/character/testLady/");
+        startingTile.setOnTop(newChar);
+        onlinePlayers.put(playerId, newChar);
+
+    }
+
+    public String getLocalPlayerId() {
+        return localPlayerId;
     }
 
 }
