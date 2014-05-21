@@ -79,7 +79,7 @@ public class ORBP {
 
     private static void buildCanvas() {
         determineCanvas();
-        frame = new JFrame("Mike's Awesome Game, yo!");
+        frame = new JFrame("ORB-P");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(screenWidth-50, screenHeight-50);
         frame.setResizable(false);//lock game resolution
