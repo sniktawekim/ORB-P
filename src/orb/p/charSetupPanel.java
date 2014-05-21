@@ -68,30 +68,44 @@ public class charSetupPanel extends MPanel {
     }
 
     protected void buildStatTable() {
+        //settings for left/right arrow buttons
+        int arrowXSize = 15;
+        int arrowYSize = 30;
+        int lArrowXLoc = 410;
+        int rArrowXLoc = 435;
+        String lArrowPath = "pics/hud/charSetup/la.png";
+        String rArrowPath = "pics/hud/charSetup/ra.png";
+        
+        //settings for vertical stat bars
+        int vBarXStart = 120;
+        int vBarXSize = 15;
+        int vBarYSize = 30;
+        String vBarPath = "pics/hud/charSetup/bar.png";
+        
         hudObject buttonBg = new hudObject(4, 4, 400, 300, "pics/hud/charSetup/statTable.png", "");
         hudObject remStatBin = new hudObject(460, 60, 50, 200, "pics/hud/charSetup/remStatBin.png", "");
         hudObjects.add(buttonBg);
         hudObjects.add(remStatBin);
 
         for (int offset = 0; offset < moveStat; offset++) {
-            hudObject movementBar = new hudObject(120 + (15 * offset), 60, 15, 30, "pics/hud/charSetup/bar.png", "");
+            hudObject movementBar = new hudObject(vBarXStart + (vBarXSize * offset), 60, vBarXSize, vBarYSize, vBarPath, "");
             hudObjects.add(movementBar);
         }
 
         for (int offset = 0; offset < attackStat; offset++) {
-            hudObject attackBar = new hudObject(120 + (15 * offset), 104, 15, 30, "pics/hud/charSetup/bar.png", "");
+            hudObject attackBar = new hudObject(vBarXStart + (vBarXSize * offset), 104, vBarXSize, vBarYSize, vBarPath, "");
             hudObjects.add(attackBar);
         }
         for (int offset = 0; offset < defenseStat; offset++) {
-            hudObject defenseBar = new hudObject(120 + (15 * offset), 150, 15, 30, "pics/hud/charSetup/bar.png", "");
+            hudObject defenseBar = new hudObject(vBarXStart + (vBarXSize * offset), 150, vBarXSize, vBarYSize, vBarPath, "");
             hudObjects.add(defenseBar);
         }
         for (int offset = 0; offset < drawStat; offset++) {
-            hudObject drawBar = new hudObject(120 + (15 * offset), 193, 15, 30, "pics/hud/charSetup/bar.png", "");
+            hudObject drawBar = new hudObject(vBarXStart + (vBarXSize * offset), 193, vBarXSize, vBarYSize, vBarPath, "");
             hudObjects.add(drawBar);
         }
         for (int offset = 0; offset < hpStat; offset++) {
-            hudObject hpBar = new hudObject(120 + (15 * offset), 235, 15, 30, "pics/hud/charSetup/bar.png", "");
+            hudObject hpBar = new hudObject(vBarXStart + (vBarXSize * offset), 235, vBarXSize, vBarYSize, vBarPath, "");
             hudObjects.add(hpBar);
         }
         for (int offset = 0; offset < remainingBars; offset++) {
@@ -99,28 +113,28 @@ public class charSetupPanel extends MPanel {
             hudObjects.add(remBar);
         }
 
-        hudObject movementRemove = new hudObject(410, 60, 15, 30, "pics/hud/charSetup/la.png", "remmove");
-        hudObject movementAdd = new hudObject(435, 60, 15, 30, "pics/hud/charSetup/ra.png", "addmove");
+        hudObject movementRemove = new hudObject(lArrowXLoc, 60, arrowXSize, arrowYSize, lArrowPath, "remmove");
+        hudObject movementAdd = new hudObject(rArrowXLoc, 60, arrowXSize, arrowYSize, rArrowPath, "addmove");
         hudObjects.add(movementRemove);
         hudObjects.add(movementAdd);
 
-        hudObject attackRemove = new hudObject(410, 104, 15, 30, "pics/hud/charSetup/la.png", "remattack");
-        hudObject attackAdd = new hudObject(435, 104, 15, 30, "pics/hud/charSetup/ra.png", "addattack");
+        hudObject attackRemove = new hudObject(lArrowXLoc, 104, arrowXSize, arrowYSize, lArrowPath, "remattack");
+        hudObject attackAdd = new hudObject(rArrowXLoc, 104, arrowXSize, arrowYSize, rArrowPath, "addattack");
         hudObjects.add(attackRemove);
         hudObjects.add(attackAdd);
 
-        hudObject defenseRemove = new hudObject(410, 150, 15, 30, "pics/hud/charSetup/la.png", "remdefense");
-        hudObject defenseAdd = new hudObject(435, 150, 15, 30, "pics/hud/charSetup/ra.png", "adddefense");
+        hudObject defenseRemove = new hudObject(lArrowXLoc, 150, arrowXSize, arrowYSize, lArrowPath, "remdefense");
+        hudObject defenseAdd = new hudObject(rArrowXLoc, 150, arrowXSize, arrowYSize, rArrowPath, "adddefense");
         hudObjects.add(defenseRemove);
         hudObjects.add(defenseAdd);
 
-        hudObject drawRemove = new hudObject(410, 193, 15, 30, "pics/hud/charSetup/la.png", "remdraw");
-        hudObject drawAdd = new hudObject(435, 193, 15, 30, "pics/hud/charSetup/ra.png", "adddraw");
+        hudObject drawRemove = new hudObject(lArrowXLoc, 193, arrowXSize, arrowYSize, lArrowPath, "remdraw");
+        hudObject drawAdd = new hudObject(rArrowXLoc, 193, arrowXSize, arrowYSize, rArrowPath, "adddraw");
         hudObjects.add(drawRemove);
         hudObjects.add(drawAdd);
 
-        hudObject hpRemove = new hudObject(410, 235, 15, 30, "pics/hud/charSetup/la.png", "remhp");
-        hudObject hpAdd = new hudObject(435, 235, 15, 30, "pics/hud/charSetup/ra.png", "addhp");
+        hudObject hpRemove = new hudObject(lArrowXLoc, 235, arrowXSize, arrowYSize, lArrowPath, "remhp");
+        hudObject hpAdd = new hudObject(rArrowXLoc, 235, arrowXSize, arrowYSize, rArrowPath, "addhp");
         hudObjects.add(hpRemove);
         hudObjects.add(hpAdd);
 
