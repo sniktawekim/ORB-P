@@ -1,4 +1,4 @@
-package orb.p;
+package orb.p.panels;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -6,6 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
+import orb.p.ORBP;
+import orb.p.core.Tile;
+import orb.p.core.HudObject;
+import orb.p.core.HudString;
 
 /**
  * @author MWatkins
@@ -17,11 +21,11 @@ public class LDPanel extends LevelPanel {
     int tileLibOffset = 1;
     ArrayList<Tile> tileLibrary;
     Tile godsTile;
-    hudObject tilePreview;
+    HudObject tilePreview;
     int tilePrevLoc;
     Tile holeTile;
 
-    LDPanel() {
+    public LDPanel() {
         super();
         output = new ArrayList();
         loadTileLib();
@@ -49,7 +53,7 @@ public class LDPanel extends LevelPanel {
     }
 
     @Override
-    protected void hudAction(hudObject hudOb) {
+    protected void hudAction(HudObject hudOb) {
         System.out.println(hudOb.getAction());
         super.hudAction(hudOb);
         if (hudOb.matches("save")) {
@@ -193,7 +197,7 @@ public class LDPanel extends LevelPanel {
 
         godsTile = tileLibrary.get(1);
         System.out.println("god tile:" + godsTile.getGraphPath());
-        tilePreview = new hudObject(130, 345, 160, 100, godsTile.getGraphPath(), "");
+        tilePreview = new HudObject(130, 345, 160, 100, godsTile.getGraphPath(), "");
         hudObjects.add(tilePreview);
         tilePrevLoc = hudObjects.size() - 1;
     }
@@ -230,22 +234,22 @@ public class LDPanel extends LevelPanel {
 
     private void setGodsTile(Tile replaceTo) {
         godsTile.replaceWith(replaceTo);
-        tilePreview = new hudObject(130, 345, 160, 100, godsTile.getGraphPath(), "");
+        tilePreview = new HudObject(130, 345, 160, 100, godsTile.getGraphPath(), "");
         hudObjects.set(tilePrevLoc, tilePreview);
     }
 
     private void buildTileCommander() {
-        hudObject tilesTab = new hudObject(0, 0, 388, 316, "pics/hud/leveldesigner/tilesTab.png", "");
+        HudObject tilesTab = new HudObject(0, 0, 388, 316, "pics/hud/leveldesigner/tilesTab.png", "");
         int tileRows = 18;//how many rows can be displayed at a time
         int ypos = 22;//starting y position of first row
 
         //hardcoded sizes: I got these from looking at the actual images used.
-        hudObject buttonBg = new hudObject(4, 316, 381, 157, "pics/hud/leveldesigner/buttonBg.png", "");
-        hudObject saveMap = new hudObject(buttonBg.getXMin(), 316, 100, 40, "pics/hud/leveldesigner/saveButton.png", "save");
-        hudObject newMap = new hudObject(buttonBg.getXMin(), 356, 100, 40, "pics/hud/leveldesigner/newButton.png", "new");
-        hudObject deleteSelection = new hudObject(buttonBg.getXMin() + 281, 316, 100, 40, "pics/hud/leveldesigner/deleteButton.png", "delete");
-        hudObject fillSelection = new hudObject(buttonBg.getXMin() + 281, 356, 100, 40, "pics/hud/leveldesigner/fillButton.png", "fill");
-        hudObject clearSelection = new hudObject(buttonBg.getXMin() + 281, 396, 100, 40, "pics/hud/leveldesigner/clearButton.png", "clear");
+        HudObject buttonBg = new HudObject(4, 316, 381, 157, "pics/hud/leveldesigner/buttonBg.png", "");
+        HudObject saveMap = new HudObject(buttonBg.getXMin(), 316, 100, 40, "pics/hud/leveldesigner/saveButton.png", "save");
+        HudObject newMap = new HudObject(buttonBg.getXMin(), 356, 100, 40, "pics/hud/leveldesigner/newButton.png", "new");
+        HudObject deleteSelection = new HudObject(buttonBg.getXMin() + 281, 316, 100, 40, "pics/hud/leveldesigner/deleteButton.png", "delete");
+        HudObject fillSelection = new HudObject(buttonBg.getXMin() + 281, 356, 100, 40, "pics/hud/leveldesigner/fillButton.png", "fill");
+        HudObject clearSelection = new HudObject(buttonBg.getXMin() + 281, 396, 100, 40, "pics/hud/leveldesigner/clearButton.png", "clear");
        // hudObject clearSelection = new hudObject(buttonBg.getXMin() + 281, 396, 100, 40, "pics/hud/charSetup/bar.png", "clear");
 
         //this section calculates how many different tiles there are:
@@ -253,8 +257,8 @@ public class LDPanel extends LevelPanel {
         //in the picture's library. it should auto-detect each new addition.
         for (int rows = 0; rows < tileRows; rows++) {
             //again, these constants are delicate numbers based off of the actual files
-            hudObject newRow = new hudObject(3, ypos, 381, 17, "pics/hud/leveldesigner/row0" + ((rows % 2) + 1) + ".png", "row" + rows);
-            hudString rowTileText = new hudString("Tile " + (rows + tileLibOffset), 7, ypos - 2);
+            HudObject newRow = new HudObject(3, ypos, 381, 17, "pics/hud/leveldesigner/row0" + ((rows % 2) + 1) + ".png", "row" + rows);
+            HudString rowTileText = new HudString("Tile " + (rows + tileLibOffset), 7, ypos - 2);
             // rowTileText = 
             ypos += 16;
             hudObjects.add(newRow);

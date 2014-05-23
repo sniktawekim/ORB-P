@@ -1,4 +1,4 @@
-package orb.p;
+package orb.p.listeners;
 
 
 
@@ -14,7 +14,7 @@ public class IClick extends MouseInputAdapter {
     boolean clicked;
     private boolean pressed = false;
 
-    IClick() {
+    public IClick() {
         clicked = false;
     }
 

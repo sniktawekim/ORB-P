@@ -1,14 +1,14 @@
-package orb.p;
+package orb.p.core;
 
 
 
 /**
  * @author MWatkins
  */
-public class hudObject extends OnScreenObject{
+public class HudObject extends OnScreenObject{
 
     private String actionName;
-    hudObject(int xPos,int yPos,int xSize,int ySize, String imagePath, String aName) {
+    public HudObject(int xPos,int yPos,int xSize,int ySize, String imagePath, String aName) {
         super(xPos,yPos,xSize,ySize);
         actionName = aName;
         setGraphic(imagePath);

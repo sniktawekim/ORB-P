@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package orb.p;
+package orb.p.core;
 
 /**
  *

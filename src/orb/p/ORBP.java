@@ -5,6 +5,12 @@
  */
 
 package orb.p;
+import orb.p.panels.GamePanel;
+import orb.p.panels.PreGamePanel;
+import orb.p.panels.CharSetupPanel;
+import orb.p.panels.MenuPanel;
+import orb.p.panels.MPanel;
+import orb.p.panels.LDPanel;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -20,14 +26,14 @@ import javax.swing.JFrame;
 public class ORBP {
 
     static boolean developerMode = false;
-    static String libraryPath = "../testLibrary/";
+    public static String libraryPath = "../testLibrary/";
     static String paneStatus = "menu";
-    static int screenHeight = 0;
-    static int screenWidth = 0;
+    public static int screenHeight = 0;
+    public static int screenWidth = 0;
 
     static MPanel canvas;
     static JFrame frame;
-    static String currentCanvas = "menu";
+    public static String currentCanvas = "menu";
 
     /**
      * @param args the command line arguments
@@ -115,7 +121,7 @@ public class ORBP {
             canvas = new PreGamePanel();
         } 
         else if (currentCanvas.compareToIgnoreCase("chars") == 0) {
-            canvas = new charSetupPanel();
+            canvas = new CharSetupPanel();
         } else {
             System.out.println(currentCanvas);
         }

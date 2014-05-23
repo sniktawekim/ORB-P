@@ -1,15 +1,17 @@
-package orb.p;
+package orb.p.core;
 
 
+import orb.p.listeners.IClick;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.ImageObserver;
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import orb.p.ORBP;
+
 
 /**
  *
@@ -35,7 +37,7 @@ public abstract class OnScreenObject {
     protected int containerYMin;//object cannot vertically go under
     protected int containerXMax;//object cannot horizontally go beyond
     protected int containerXMin;//object cannot horizontally go under
-    protected String graphPath;
+    public String graphPath;
     protected String highPath;
 
     protected boolean visible;//toggles existence of object

@@ -10,7 +10,7 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-import orb.p.GamePanel;
+import orb.p.panels.GamePanel;
 
 /**
  *

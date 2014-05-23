@@ -1,11 +1,11 @@
-package orb.p;
+package orb.p.listeners;
 
 
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class Ipress implements KeyListener {
+public class IPress implements KeyListener {
 
     boolean left, right, up, down, delete, clear, fill;
     int kUp = 87, kLeft = 65, kDown = 83, kRight = 68, kDelete = 127, kQ=81, kE=69;
@@ -18,7 +18,7 @@ public class Ipress implements KeyListener {
     //74=j
     //107 = numpad +
     //109 = numpad - 
-    Ipress() {
+    public IPress() {
         left = false;
         right = false;
         up = false;

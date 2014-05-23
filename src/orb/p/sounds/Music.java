@@ -1,4 +1,4 @@
-package orb.p;
+package orb.p.sounds;
 
 import java.io.IOException;
 

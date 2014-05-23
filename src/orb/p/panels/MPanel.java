@@ -1,4 +1,4 @@
-package orb.p;
+package orb.p.panels;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,6 +15,11 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import orb.p.listeners.IClick;
+import orb.p.listeners.IPress;
+import orb.p.ORBP;
+import orb.p.core.HudObject;
+import orb.p.core.HudString;
 
 /**
  *
@@ -25,25 +30,25 @@ public abstract class MPanel extends JPanel {
     final int canvasWidth = ORBP.screenWidth;
     final int canvasHeight = ORBP.screenHeight;
     final int backgroundWidth = 1300;
-    String bgiPath = ORBP.libraryPath + "pics/backgrounds/default.png";
-    ArrayList<hudObject> hudObjects;
-    ArrayList<hudString> hudFonts;
+    public String bgiPath = ORBP.libraryPath + "pics/backgrounds/default.png";
+    ArrayList<HudObject> hudObjects;
+    ArrayList<HudString> hudFonts;
     protected ImageIcon bgIcon;
     protected Image bgImage;
     IClick myClick;//mouse listener, useful for menu options
-    Ipress myPress;
+    IPress myPress;
     boolean hudclicked = false;
     protected String status = "good";
 
     protected abstract void buildHUD();
 
-    protected abstract void hudAction(hudObject current);
+    protected abstract void hudAction(HudObject current);
 
     MPanel() {
         hudObjects = new ArrayList<>();
         hudFonts = new ArrayList<>();
         myClick = new IClick();
-        myPress = new Ipress();
+        myPress = new IPress();
         this.addKeyListener(myPress);
         this.addMouseListener(myClick);
         addMouseMotionListener(myClick);
@@ -82,12 +87,12 @@ public abstract class MPanel extends JPanel {
     }
     protected void paintObjects(Graphics g) {
         for (int i = 0; i < hudObjects.size(); i++) {
-            hudObject current = hudObjects.get(i);
+            HudObject current = hudObjects.get(i);
             current.paint(0, 0, g, this, myClick);
         }
         
         for (int i = 0; i < hudFonts.size(); i++) {
-            hudString current = hudFonts.get(i);
+            HudString current = hudFonts.get(i);
             current.paint(0, 17, g, this);
         }
     }
@@ -97,7 +102,7 @@ public abstract class MPanel extends JPanel {
         int xClicked = myClick.getEX();
         int yClicked = myClick.getEY();
         for (int i = 0; i < hudObjects.size(); i++) {
-            hudObject current = hudObjects.get(i);
+            HudObject current = hudObjects.get(i);
             if (current.isWithin(xClicked, yClicked) && !(current.getAction().compareToIgnoreCase("") == 0)) {
                 hudAction(current);
                 //System.out.println("action hud clicked");
@@ -113,7 +118,7 @@ public abstract class MPanel extends JPanel {
         }
     }
 
-    protected String update() {
+    public String update() {
         return status;
     }
 

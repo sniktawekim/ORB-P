@@ -1,4 +1,4 @@
-package orb.p;
+package orb.p.core;
 
 
 
@@ -6,11 +6,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import orb.p.ORBP;
 
 /**
  * @author MWatkins
  */
-class Board {
+public class Board {
 
     Tile tiles[][];
     int board[][];
@@ -23,13 +24,13 @@ class Board {
     String bgi = ORBP.libraryPath+"pics/backgrounds/gamePanel.png";
     String filepath = "levels/default.lvl";
 
-    String title = "Level";
+    public String title = "Level";
     int defaultTile = 0;
     boolean fill = false;
     int tilesLeft = 10;
     int tilesRight = 10;
 
-    Board(String levelFilePath) {
+    public Board(String levelFilePath) {
         currentFile = new ArrayList<>();
         tiledef = new ArrayList<>();
         filepath = levelFilePath;
@@ -202,7 +203,7 @@ class Board {
         }
     }
 
-    void getAllTiles(ArrayList<Tile> objects) {
+    public void getAllTiles(ArrayList<Tile> objects) {
         for (int i = 0; i < tilesLeft; i++) {
             for (int j = 0; j < tilesRight; j++) {
                 objects.add(tiles[i][j]);
@@ -210,7 +211,7 @@ class Board {
         }
     }
 
-    Tile getTile(int x, int y) {
+    public Tile getTile(int x, int y) {
         return tiles[x-1][tilesLeft - y];
     }
 
@@ -248,7 +249,7 @@ class Board {
         return i;
     }
 
-    String getBGI() {
+    public String getBGI() {
         return bgi;
     }
     public int getLeftBarrier(){

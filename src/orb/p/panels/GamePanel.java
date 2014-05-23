@@ -1,12 +1,15 @@
-package orb.p;
+package orb.p.panels;
 
 import java.awt.Graphics;
-import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
+import orb.p.core.ItemBox;
+import orb.p.core.Tile;
 import orb.p.network.Client;
 import orb.p.network.Server;
 import orb.p.network.Communicator;
+import orb.p.core.Character;
+import orb.p.core.HudObject;
 
 /**
  * @author MWatkins
@@ -23,7 +26,7 @@ public class GamePanel extends LevelPanel {
 
     HashMap<String, Character> onlinePlayers = new HashMap<>();
 
-    GamePanel() {
+    public GamePanel() {
         super();
         for (int i = 0; i < 6; i++) {
             ItemBox test = new ItemBox(tiles.get(i).getXMin(), tiles.get(5).getYMin());
@@ -48,8 +51,8 @@ public class GamePanel extends LevelPanel {
         super.paintComponent(g);
     }
 
-    @Override
-    protected void hudAction(hudObject hudOb) {
+  
+    protected void hudAction(HudObject hudOb) {
         super.hudAction(hudOb);
 
     }

@@ -1,4 +1,4 @@
-package orb.p;
+package orb.p.core;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,11 +15,11 @@ import java.awt.image.ImageObserver;
  *
  * @author MWatkins
  */
-public class hudString {
+public class HudString {
 int x = 0;
 int y = 0;
 String text = "";
-protected hudString(String string, int xLoc, int yLoc){
+public HudString(String string, int xLoc, int yLoc){
     text = string;
     x=xLoc;
     y=yLoc;

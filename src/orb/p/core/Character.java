@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package orb.p;
+package orb.p.core;
 
 /**
  *
@@ -13,7 +13,7 @@ public class Character extends OnScreenObject {
 
     //TODO Character stats
     Tile currentTile;
-    Tile prevTile; //previous tile, for direction calculations
+    public Tile prevTile; //previous tile, for direction calculations
     
     private int moves = 5;
     private int direction;

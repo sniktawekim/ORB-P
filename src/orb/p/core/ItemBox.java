@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package orb.p;
+package orb.p.core;
 
+import orb.p.panels.LevelPanel;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;

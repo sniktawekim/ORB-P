@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 
-package orb.p;
+package orb.p.panels;
+
+import orb.p.core.HudObject;
 
 /**
  *
@@ -18,7 +20,7 @@ public class PreGamePanel extends MPanel{
     }
 
     @Override
-    protected void hudAction(hudObject current) {
+    protected void hudAction(HudObject current) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

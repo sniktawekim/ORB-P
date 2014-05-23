@@ -1,7 +1,12 @@
-package orb.p;
+package orb.p.panels;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import orb.p.core.Board;
+import orb.p.sounds.Music;
+import orb.p.ORBP;
+import orb.p.core.Tile;
+import orb.p.core.HudObject;
 
 /**
  *
@@ -16,7 +21,7 @@ public abstract class LevelPanel extends MPanel {
     Board currentBoard;
     int xOffset = 0;
     int yOffset = 0;
-    static String prePath = "";
+    public static String prePath = "";
     Music music;
     boolean repeatMusic = true;
 
@@ -30,7 +35,7 @@ public abstract class LevelPanel extends MPanel {
 
     public void playMusic() {
         music = new Music("test");
-       // music.play();
+        music.play();
     }
 
     protected void paintObjects(Graphics g) {
@@ -77,10 +82,10 @@ public abstract class LevelPanel extends MPanel {
 
     @Override
     protected void buildHUD() {
-        hudObject leftArrow = new hudObject(0, canvasHeight / 2, 40, 50, "pics/hud/arrows/lha.png", "lha");
-        hudObject rightArrow = new hudObject(canvasWidth - 40, canvasHeight / 2, 40, 50, "pics/hud/arrows/rha.png", "rha");
-        hudObject upArrow = new hudObject(canvasWidth / 2 - 25, 0, 50, 40, "pics/hud/arrows/uha.png", "uha");
-        hudObject downArrow = new hudObject(canvasWidth / 2 - 25, canvasHeight - 40, 50, 40, "pics/hud/arrows/dha.png", "dha");
+        HudObject leftArrow = new HudObject(0, canvasHeight / 2, 40, 50, "pics/hud/arrows/lha.png", "lha");
+        HudObject rightArrow = new HudObject(canvasWidth - 40, canvasHeight / 2, 40, 50, "pics/hud/arrows/rha.png", "rha");
+        HudObject upArrow = new HudObject(canvasWidth / 2 - 25, 0, 50, 40, "pics/hud/arrows/uha.png", "uha");
+        HudObject downArrow = new HudObject(canvasWidth / 2 - 25, canvasHeight - 40, 50, 40, "pics/hud/arrows/dha.png", "dha");
 
        // hudObjects.add(leftArrow);
         //  hudObjects.add(rightArrow);
@@ -97,7 +102,7 @@ public abstract class LevelPanel extends MPanel {
     }
 
     @Override
-    protected void hudAction(hudObject hudOb) {
+    protected void hudAction(HudObject hudOb) {
         if (hudOb.matches("lha")) {
             shift(400, 0);
         }

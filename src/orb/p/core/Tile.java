@@ -1,12 +1,14 @@
-package orb.p;
+package orb.p.core;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import orb.p.listeners.IClick;
 import java.awt.Graphics;
 import java.awt.image.ImageObserver;
+import orb.p.ORBP;
 
 /**
  *
@@ -14,10 +16,10 @@ import java.awt.image.ImageObserver;
  */
 public class Tile extends OnScreenObject {
 
-    int terrainCost;
-    int xLoc;
-    int yLoc;
-    int id;
+    public int terrainCost;
+    public int xLoc;
+    public int yLoc;
+    public int id;
     OnScreenObject onTop = null;
 
     //tile width is 120 and height is 60
@@ -117,7 +119,7 @@ public class Tile extends OnScreenObject {
 
     }
 
-    protected void setOnTop(OnScreenObject toPlace) {
+    public void setOnTop(OnScreenObject toPlace) {
         onTop = toPlace;
         onTop.setXMin(xmin + toPlace.xOffset);
         onTop.setYMin(ymin + ysize - toPlace.getYSize());
