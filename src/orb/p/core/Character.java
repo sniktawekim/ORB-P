@@ -14,7 +14,7 @@ public class Character extends OnScreenObject {
     //TODO Character stats
     Tile currentTile;
     public Tile prevTile; //previous tile, for direction calculations
-    
+    private CharStats stats;
     private int moves = 5;
     private int direction;
     private int prevDirection;
