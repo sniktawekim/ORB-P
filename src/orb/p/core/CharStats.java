@@ -2,7 +2,9 @@
 
 package orb.p.core;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import orb.p.ORBP;
 
 /**
  *
@@ -36,9 +38,24 @@ public class CharStats {
         toFile.add("<defense>" + defense + "</defense>");
         toFile.add("<draw>" + draw + "</draw>");
         toFile.add("<hp>" + hp + "</hp>");
-        toFile.add("<root>" + "</root>");
+        toFile.add("<root>" + root +  "</root>");
         
         //write the array to file (library/characters)
+        for(int i=0; i<toFile.size(); i++){
+            System.out.println(toFile.get(i));
+        }
+      
+         try {
+            PrintWriter writer = new PrintWriter(ORBP.libraryPath + "characters/" + name + ".txt", "UTF-8");//for output file
+
+            for (int i = 0; i < toFile.size(); i++) {
+                writer.println(toFile.get(i));
+            }
+            writer.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        toFile = new ArrayList();
     }
     
     public void loadChar(String path){

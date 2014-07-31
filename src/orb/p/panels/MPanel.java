@@ -5,8 +5,6 @@ package orb.p.panels;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -59,7 +57,7 @@ public abstract class MPanel extends JPanel {
     protected void paintBackground(Graphics g) {
         try {//try to paint background image
 
-            Toolkit toolkit = Toolkit.getDefaultToolkit();       
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
             bgImage = toolkit.getImage(bgiPath);
             g.drawImage(bgImage, 0, 0, this);
 
@@ -78,42 +76,45 @@ public abstract class MPanel extends JPanel {
         checkKey();
     }
 
-    protected boolean clearOldClickStatus(){       
+    protected boolean clearOldClickStatus() {
         if (!myClick.getClicked()) {
             return false;
-        }    else {
+        } else {
             return true;
         }
     }
+
     protected void paintObjects(Graphics g) {
-        for (int i = 0; i < hudObjects.size(); i++) {
+        for (int i = 0; i < hudObjects.size(); i++) {           
             HudObject current = hudObjects.get(i);
+            if(current.getVisible())
             current.paint(0, 0, g, this, myClick);
         }
-        
+
         for (int i = 0; i < hudFonts.size(); i++) {
             HudString current = hudFonts.get(i);
             current.paint(0, 17, g, this);
         }
     }
 
-    protected void checkClick() {       
+    protected void checkClick() {
         hudclicked = false;
         int xClicked = myClick.getEX();
         int yClicked = myClick.getEY();
         for (int i = 0; i < hudObjects.size(); i++) {
             HudObject current = hudObjects.get(i);
-            if (current.isWithin(xClicked, yClicked) && !(current.getAction().compareToIgnoreCase("") == 0)) {
-                hudAction(current);
-                //System.out.println("action hud clicked");
-                hudclicked = true;
-                return;
-            } else if (current.isWithin(xClicked, yClicked)) {
-               // System.out.println("lame hud clicked");
-                hudclicked = true;            
+            if (current.getVisible() == true) {
+                if (current.isWithin(xClicked, yClicked) && !(current.getAction().compareToIgnoreCase("") == 0)) {
+                    hudAction(current);
+                    hudclicked = true;
+                    return;
+                } else if (current.isWithin(xClicked, yClicked)) {
+                    // System.out.println("lame hud clicked");
+                    hudclicked = true;
+                }
             }
         }
-        if(hudclicked){
+        if (hudclicked) {
             return;
         }
     }
@@ -123,7 +124,31 @@ public abstract class MPanel extends JPanel {
     }
 
     protected void checkKey() {
-        
+
+    }
+    
+        private void printHudObjectsStats(){
+        ArrayList<String> temp = new ArrayList();
+        ArrayList<Integer> numfound = new ArrayList();
+        temp.add(hudObjects.get(0).getAction());
+        numfound.add(0);
+
+        for (int i = 0; i < hudObjects.size(); i++) {
+            boolean found = false;
+            for (int j = 0; j < temp.size(); j++) {
+                if (temp.get(j).compareToIgnoreCase(hudObjects.get(i).getAction()) == 0) {
+                    numfound.set(j, numfound.get(j) + 1);
+                    found = true;
+                }
+            }
+            if (!found) {
+                temp.add(hudObjects.get(i).getAction());
+                numfound.add(1);
+            }
+        }
+        for(int i = 0; i<temp.size();i++){
+            System.out.println(temp.get(i) + " " + numfound.get(i));
+        }
     }
 
 }

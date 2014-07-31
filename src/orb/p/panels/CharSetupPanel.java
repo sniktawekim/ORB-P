@@ -5,9 +5,11 @@
  */
 package orb.p.panels;
 
-import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.JOptionPane;
 import orb.p.ORBP;
+import orb.p.core.CharStats;
 import orb.p.core.HudObject;
 
 /**
@@ -22,6 +24,7 @@ public class CharSetupPanel extends MPanel {
     private int drawStat;
     private int hpStat;
     private int remainingBars;
+    HudObject saveButton;
     private String modelPath = "pics/character/testLady/4.png";
 
     public CharSetupPanel() {
@@ -38,9 +41,10 @@ public class CharSetupPanel extends MPanel {
 
     @Override
     protected void buildHUD() {
-
+        hudObjects = new ArrayList<>();
         buildStatTable();
         buildModelPreviewer();
+
     }
 
     @Override
@@ -64,6 +68,8 @@ public class CharSetupPanel extends MPanel {
             removeBar(rest);
         } else if (hudOb.matches("changeSkin")) {
             changeSkin();
+        } else if (hudOb.matches("save")) {
+            saveCharacter();
         }
 
         buildHUD();
@@ -77,13 +83,13 @@ public class CharSetupPanel extends MPanel {
         int rArrowXLoc = 435;
         String lArrowPath = "pics/hud/charSetup/la.png";
         String rArrowPath = "pics/hud/charSetup/ra.png";
-        
+
         //settings for vertical stat bars
         int vBarXStart = 120;
         int vBarXSize = 15;
         int vBarYSize = 30;
         String vBarPath = "pics/hud/charSetup/bar.png";
-        
+
         HudObject buttonBg = new HudObject(4, 4, 400, 300, "pics/hud/charSetup/statTable.png", "");
         HudObject remStatBin = new HudObject(460, 60, 50, 200, "pics/hud/charSetup/remStatBin.png", "");
         hudObjects.add(buttonBg);
@@ -139,6 +145,7 @@ public class CharSetupPanel extends MPanel {
         HudObject hpAdd = new HudObject(rArrowXLoc, 235, arrowXSize, arrowYSize, rArrowPath, "addhp");
         hudObjects.add(hpRemove);
         hudObjects.add(hpAdd);
+        checkSaveButton();
 
     }
 
@@ -164,6 +171,7 @@ public class CharSetupPanel extends MPanel {
         }
         remainingBars--;
         System.out.println("Remaining Stats:" + remainingBars);
+
     }
 
     private void removeBar(String stat) {
@@ -197,7 +205,7 @@ public class CharSetupPanel extends MPanel {
                 remainingBars++;
             }
         }
-        System.out.println("Remaining Stats:" + remainingBars);
+        System.out.println("Remaining Stats:" + remainingBars);       
     }
 
     private void buildModelPreviewer() {
@@ -211,6 +219,7 @@ public class CharSetupPanel extends MPanel {
         HudObject dispModel = new HudObject(xposition + charxOffset, yposition + charyOffset, 50, 100, modelPath, "changeSkin");
         HudObject modBg = new HudObject(xposition, yposition, windowxSize, windowySize, "pics/hud/charSetup/modBG.png", "");
         HudObject modOver = new HudObject(xposition, yposition, windowxSize, windowySize, "pics/hud/charSetup/modOver.png", "");
+
         hudObjects.add(modBg);
         hudObjects.add(dispModel);
         hudObjects.add(modOver);
@@ -220,7 +229,28 @@ public class CharSetupPanel extends MPanel {
         Random generator = new Random();
         int i = generator.nextInt(4) + 1;
         modelPath = "pics/character/testLady/" + i + ".png";
-        
+
     }
+
+    public void checkSaveButton() {
+        if (remainingBars == 0) {
+            int saveButtonX = 0;
+            int saveButtonY = 260;
+            int saveButtonXs = 100;
+            int saveButtonYs = 40;
+            saveButton = new HudObject(true, saveButtonX, saveButtonY, saveButtonXs, saveButtonYs, "pics/hud/charSetup/saveButton.png", "save");
+            hudObjects.add(saveButton);
+        } else {
+            hudObjects.remove(saveButton);
+        }
+    }
+
+    private void saveCharacter() {
+
+        CharStats newCharacter = new CharStats(JOptionPane.showInputDialog("Name your character:"), moveStat, attackStat, defenseStat, drawStat, hpStat, modelPath.substring(0, modelPath.length()-6));
+        newCharacter.saveChar(status);
+        status = "menu";
+    }
+
 
 }

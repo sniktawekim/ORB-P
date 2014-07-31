@@ -1,6 +1,5 @@
 package orb.p.core;
 
-
 import orb.p.listeners.IClick;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -11,7 +10,6 @@ import java.io.File;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import orb.p.ORBP;
-
 
 /**
  *
@@ -62,6 +60,22 @@ public abstract class OnScreenObject {
         run = 0;
 
         visible = true;
+    }
+      OnScreenObject(int x, int y, int sizeX, int sizeY, boolean visible) {
+        xmin = x;
+        ymin = y;
+        xsize = sizeX;
+        ysize = sizeY;
+        containerXMax = ORBP.screenWidth;
+        containerXMin = -sizeX;
+        containerYMax = ORBP.screenHeight;
+        containerYMin = -sizeY;
+
+        //default the object to no movement
+        rise = 0;
+        run = 0;
+
+        this.setVisible(visible);
     }
 
     public int getXMin() {
@@ -147,7 +161,7 @@ public abstract class OnScreenObject {
         graphPath = setto;
         try {
             Toolkit toolkit = Toolkit.getDefaultToolkit();
-           
+
             g = toolkit.getImage(ORBP.libraryPath + graphPath);
         } catch (Exception e) {
             System.out.print("OnScreenObject setGraphic caught: ");
@@ -157,32 +171,31 @@ public abstract class OnScreenObject {
             listf(graphPath, files);
         }
     }
-    public void listf(String directoryName, ArrayList<File> files) {
-    File directory = new File(directoryName);
 
-    // get all the files from a directory
-    File[] fList = directory.listFiles();
-    for (File file : fList) {
-        if (file.isFile()) {
-            files.add(file);
-        } else if (file.isDirectory()) {
-            listf(file.getAbsolutePath(), files);
+    public void listf(String directoryName, ArrayList<File> files) {
+        File directory = new File(directoryName);
+
+        // get all the files from a directory
+        File[] fList = directory.listFiles();
+        for (File file : fList) {
+            if (file.isFile()) {
+                files.add(file);
+            } else if (file.isDirectory()) {
+                listf(file.getAbsolutePath(), files);
+            }
         }
     }
-}
 
     public void setHighGraphic(String setto) {
         highPath = setto;
         try {
             Toolkit toolkit = Toolkit.getDefaultToolkit();
             h = toolkit.getImage(highPath);
-        
+
         } catch (Exception e) {
             System.out.print("OnScreenObject setGraphic caught: ");
             System.out.print(e);
             System.out.println(" " + highPath);
-
-            
 
         }
 
@@ -279,21 +292,23 @@ public abstract class OnScreenObject {
     }
 
     public void paint(int xOffset, int yOffset, Graphics g, ImageObserver lulz, IClick mouse) {
-        int xpos = getXMin() + xOffset;
-        int ypos = getYMin() + yOffset;
-        if (isOnScreen(xpos, ypos)) {
-            g.drawImage(getGraphic(), xpos, ypos, lulz);
-            if (highlight) {
-                g.drawImage(getHigh(), xpos, ypos, lulz);
+       
+            int xpos = getXMin() + xOffset;
+            int ypos = getYMin() + yOffset;
+            if (isOnScreen(xpos, ypos)) {
+                g.drawImage(getGraphic(), xpos, ypos, lulz);
+                if (highlight) {
+                    g.drawImage(getHigh(), xpos, ypos, lulz);
+                }
+                if (calcHoveredStatus(xOffset, yOffset, mouse)) {
+                    g.drawImage(getHover(), xpos, ypos, lulz);
+                    setHovered(true);
+                    calcHighlightStatus(mouse);
+                } else {
+                    setHovered(false);
+                }
             }
-            if (calcHoveredStatus(xOffset, yOffset, mouse)) {
-                g.drawImage(getHover(), xpos, ypos, lulz);
-                setHovered(true);
-                calcHighlightStatus(mouse);
-            } else {
-                setHovered(false);
-            }
-        }
+        
     }
 
     public boolean isOnScreen(int x, int y) {
@@ -301,7 +316,7 @@ public abstract class OnScreenObject {
         boolean isntLeft = (x + xsize) > containerXMin;
         boolean isntBelow = y < containerYMax;
         boolean isntAbove = (y + ysize) > 0;
-        return isntRight && isntLeft && isntBelow && isntAbove;
+        return isntRight && isntLeft && isntBelow && isntAbove && this.getVisible();
     }
 
     protected void calcHighlightStatus(IClick mouse) {
