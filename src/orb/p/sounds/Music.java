@@ -31,7 +31,7 @@ public class Music {
 	 */
 	public void play()
 	{
-		ogg.play();
+		//ogg.play();
 	}
 	public boolean isPlaying(){
             return !ogg.stopped();

@@ -1,6 +1,7 @@
 package orb.p.panels;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 import orb.p.core.ItemBox;
@@ -41,8 +42,9 @@ public class GamePanel extends LevelPanel {
 
     @Override
     protected void buildHUD() {
+        hudObjects = new ArrayList<>();
+        buildActionBar();
         super.buildHUD();
-
     }
 
     @Override
@@ -54,6 +56,9 @@ public class GamePanel extends LevelPanel {
   
     protected void hudAction(HudObject hudOb) {
         super.hudAction(hudOb);
+        if(hudOb.getAction().compareToIgnoreCase("menu")==0){
+            status = "menu";
+        }
 
     }
 
@@ -167,6 +172,15 @@ public class GamePanel extends LevelPanel {
 
     public String getLocalPlayerId() {
         return localPlayerId;
+    }
+
+    private void buildActionBar() {
+    HudObject topBar = new HudObject(0, 0, 1300, 40, "pics/hud/gamePanelHud/topBar.png", "");
+    hudObjects.add(topBar);
+    HudObject moveButton = new HudObject(10,0,120, 40,"pics/hud/gamePanelHud/moveButton.png", "moveMode");
+    hudObjects.add(moveButton);
+    HudObject quitButton = new HudObject(130,0,100, 40,"pics/hud/gamePanelHud/saveButton.png", "menu");
+    hudObjects.add(quitButton);
     }
 
 }
