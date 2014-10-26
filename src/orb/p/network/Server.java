@@ -7,6 +7,7 @@ package orb.p.network;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -35,11 +36,12 @@ public class Server extends Communicator {
             DataOutputStream outToServer = new DataOutputStream(connectedPlayer.getOutputStream());
             outToServer.writeBytes(message + "\n");
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    @Override
     public void run() {
 
         String message = null;
@@ -48,8 +50,11 @@ public class Server extends Communicator {
         try {
             welcomeSocket = new ServerSocket(9001);
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
+            
+            //Do not run the server if an error occured. 
+            isRunning = false;
         }
 
         while (isRunning) {
