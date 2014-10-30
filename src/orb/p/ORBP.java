@@ -5,12 +5,6 @@
  */
 
 package orb.p;
-import orb.p.panels.GamePanel;
-import orb.p.panels.PreGamePanel;
-import orb.p.panels.CharSetupPanel;
-import orb.p.panels.MenuPanel;
-import orb.p.panels.MPanel;
-import orb.p.panels.LDPanel;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -18,6 +12,13 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.io.File;
 import javax.swing.JFrame;
+import orb.p.panels.CharSetupPanel;
+import orb.p.panels.GamePanel;
+import orb.p.panels.LDPanel;
+import orb.p.panels.MPanel;
+import orb.p.panels.MenuPanel;
+import orb.p.panels.PreGamePanel;
+import orb.p.panels.StartWizardPanel;
 
 /**
  *
@@ -122,7 +123,9 @@ public class ORBP {
         } 
         else if (currentCanvas.compareToIgnoreCase("chars") == 0) {
             canvas = new CharSetupPanel();
-        } else {
+        } else if (currentCanvas.compareToIgnoreCase(StartWizardPanel.PANEL_ID) == 0) {
+            canvas = new StartWizardPanel();
+        }else {
             System.out.println(currentCanvas);
         }
     }
