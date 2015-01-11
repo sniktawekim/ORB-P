@@ -1,13 +1,13 @@
 package orb.p.core;
 
 
-
 /**
  * @author MWatkins
  */
 public class HudObject extends OnScreenObject {
 
     private String actionName;
+
 
     public HudObject(int xPos, int yPos, int xSize, int ySize, String imagePath, String aName) {
         super(xPos, yPos, xSize, ySize);
@@ -31,6 +31,7 @@ public class HudObject extends OnScreenObject {
     public boolean contains(String toLook) {
         return actionName.contains(toLook);
     }
+
 
 
 }

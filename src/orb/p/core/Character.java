@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package orb.p.core;
 
 /**
- *
  * @author blainezor
  */
 public class Character extends OnScreenObject {
@@ -14,11 +8,11 @@ public class Character extends OnScreenObject {
     //TODO Character stats
     Tile currentTile;
     public Tile prevTile; //previous tile, for direction calculations
-    private CharStats stats;
+    protected CharStats stats;
     private int moves = 5;
     private int direction;
     private int prevDirection;
-    
+    protected int currentHP;
     private String charPath;
     private String charId;
     
@@ -26,11 +20,13 @@ public class Character extends OnScreenObject {
     public Character(String charId, Tile startTile, String characterPath) {
         //TODO Display position is off
         super(startTile.xLoc, startTile.yLoc, 120, 140);
+        stats = new CharStats("Name", 2, 2, 3, 1, 100, charId);      
         xOffset = 30;
         currentTile = startTile;
         this.charId = charId;
         direction = 4;
         charPath = characterPath;
+        currentHP=stats.getMaxHP();
         changeDirection(4);
     }
 
@@ -85,7 +81,7 @@ public class Character extends OnScreenObject {
             System.out.println("AI ERROR: Invalid direction code: " + Direction);
             return;
         }
-        //moves--;
+        moves--;
         System.out.println(moves + " moves remain");
         
     }

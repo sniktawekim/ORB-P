@@ -19,8 +19,8 @@ import orb.p.ORBP;
  */
 public abstract class OnScreenObject {
 
-    private ImageIcon highGraph;
-    private ImageIcon hoverGraph;
+    private ImageIcon highGraph;//highlighted image
+    private ImageIcon hoverGraph;//hovering image
     Image g;
     Image h;
     Image o;
@@ -35,14 +35,14 @@ public abstract class OnScreenObject {
     protected int containerYMin;//object cannot vertically go under
     protected int containerXMax;//object cannot horizontally go beyond
     protected int containerXMin;//object cannot horizontally go under
-    public String graphPath;
-    protected String highPath;
-
+    public String graphPath;//basic graphic path
+    protected String highPath;//highlighted graphic path
+    protected String hoverPath;//hovered graphic path
     protected boolean visible;//toggles existence of object
 
     protected Color color;//color of object, if not a graphic
-    private boolean highlight = false;
-    private String hoverPath;
+    protected boolean highlight = false;
+
     private boolean hovered = false;
 
     OnScreenObject(int x, int y, int sizeX, int sizeY) {
@@ -187,7 +187,7 @@ public abstract class OnScreenObject {
     }
 
     public void setHighGraphic(String setto) {
-        highPath = setto;
+        highPath = ORBP.libraryPath +setto;
         try {
             Toolkit toolkit = Toolkit.getDefaultToolkit();
             h = toolkit.getImage(highPath);
@@ -220,6 +220,9 @@ public abstract class OnScreenObject {
 
     public String getHoverPath() {
         return hoverPath;
+    }
+    public String getHighPath() {
+        return highPath;
     }
 
     /**
@@ -299,7 +302,7 @@ public abstract class OnScreenObject {
                 g.drawImage(getGraphic(), xpos, ypos, lulz);
                 if (highlight) {
                     g.drawImage(getHigh(), xpos, ypos, lulz);
-                }
+                } 
                 if (calcHoveredStatus(xOffset, yOffset, mouse)) {
                     g.drawImage(getHover(), xpos, ypos, lulz);
                     setHovered(true);
@@ -319,8 +322,9 @@ public abstract class OnScreenObject {
         return isntRight && isntLeft && isntBelow && isntAbove && this.getVisible();
     }
 
+
     protected void calcHighlightStatus(IClick mouse) {
-        return;
+        
     }
 
     protected boolean calcHoveredStatus(int xOffset, int yOffset, IClick mouse) {

@@ -28,7 +28,7 @@ public class Tile extends OnScreenObject {
         containerXMin = -120;
         containerYMin = -85;
         setGraphic(ORBP.libraryPath + "pics/tiles/tile001.png");
-        setHighGraphic(ORBP.libraryPath + "pics/highlights/tileHighlight.png");
+        setHighGraphic("pics/highlights/tileHighlight.png");
         setHoverGraphic(ORBP.libraryPath + "pics/highlights/tileHover.png");
     }
 
@@ -103,6 +103,7 @@ public class Tile extends OnScreenObject {
         terrainCost = newInfo.terrainCost;
     }
 
+    @Override
     protected void calcHighlightStatus(IClick mouse) {
         if (mouse.getPress() && ORBP.currentCanvas.compareToIgnoreCase("ld") == 0) {
             setHighlight(true);

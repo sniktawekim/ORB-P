@@ -16,16 +16,16 @@ public class CharStats {
     private int attack=-1;
     private int defense=-1;
     private int draw=-1;
-    private int hp=-1;
+    private int maxHP=-1;
     private String root;//the path to the graphics folder for the character
     
-    public CharStats(String name, int movement, int attack, int defense, int draw, int hp, String root){
+    public CharStats(String name, int movement, int attack, int defense, int draw, int maxHP, String root){
         this.name = name;
         this.movement = movement;
         this.attack = attack;
         this.defense = defense;
         this.draw = draw;
-        this.hp = hp;
+        this.maxHP = maxHP;
         this.root = root;
     }
     
@@ -37,7 +37,7 @@ public class CharStats {
         toFile.add("<attack>" + attack + "</attack>");
         toFile.add("<defense>" + defense + "</defense>");
         toFile.add("<draw>" + draw + "</draw>");
-        toFile.add("<hp>" + hp + "</hp>");
+        toFile.add("<hp>" + maxHP + "</hp>");
         toFile.add("<root>" + root +  "</root>");
         
         //write the array to file (library/characters)
@@ -128,8 +128,8 @@ public class CharStats {
     public int getDraw(){
         return draw;
     }
-    public int getHp(){
-        return hp;
+    public int getMaxHP(){
+        return maxHP;
     }
     //'n settin
     public void setName(String name){
@@ -151,7 +151,7 @@ public class CharStats {
         this.draw = draw;
     }
     public void setHP(int hp){
-        this.hp = hp;
+        this.maxHP = hp;
     }
 }
 

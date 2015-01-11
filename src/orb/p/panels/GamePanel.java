@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
+import orb.p.ORBP;
 import orb.p.core.ItemBox;
 import orb.p.core.Tile;
 import orb.p.network.Client;
@@ -21,6 +22,8 @@ public class GamePanel extends LevelPanel {
     private boolean selectMode = false;
     private boolean isClient = true;
     private boolean isLocal = false;
+    private boolean moveMode = false;
+    private boolean resetMoves = false;
     private String localPlayerId;
     Character localPlayer;
     Communicator comm;
@@ -36,7 +39,7 @@ public class GamePanel extends LevelPanel {
         playMusic();
 
         //Obviously for testing
-        getInput();
+        getNetworkSettingsInput();
         //Load Communicator     
     }
 
@@ -53,11 +56,20 @@ public class GamePanel extends LevelPanel {
         super.paintComponent(g);
     }
 
-  
     protected void hudAction(HudObject hudOb) {
         super.hudAction(hudOb);
-        if(hudOb.getAction().compareToIgnoreCase("menu")==0){
+        if (hudOb.getAction().compareToIgnoreCase("menu") == 0) {
             status = "menu";
+        } else if (hudOb.getAction().compareToIgnoreCase("moveMode") == 0 && moveMode == false) {
+            moveMode = true;
+            hudOb.setHighlight(true);
+        } else if (hudOb.getAction().compareToIgnoreCase("moveMode") == 0 && moveMode == true) {
+            moveMode = false;
+            resetMoves = true;
+            hudOb.setHighlight(false);
+        } else if (hudOb.getAction()
+                .compareToIgnoreCase("mute") == 0) {
+            music.tMute();
         }
 
     }
@@ -71,6 +83,10 @@ public class GamePanel extends LevelPanel {
     public void moveCharacter(String characterId, int tileX, int tileY) {
         Character characterToMove = onlinePlayers.get(characterId);
         Tile currentTile = currentBoard.getTile(tileX, tileY);
+        if (resetMoves == true) {
+            characterToMove.resetMoves();
+            resetMoves = false;
+        }
         if (characterToMove.getMoves() != 0) {
             if (checkMoveLegal(characterToMove, currentTile)) {
                 //Two way reference
@@ -80,30 +96,35 @@ public class GamePanel extends LevelPanel {
                 //Get Tile
                 currentTile.setOnTop(characterToMove);
             }
+        } else {
+            System.out.println("OUT OF MOVES");
         }
 
     }
 
+    @Override
     protected void handleClickedTile(Tile clicked) {
-        moveCharacter(localPlayerId, clicked.xLoc, clicked.yLoc);
-        if (!isLocal) {
-            comm.sendMessage(localPlayerId + "," + clicked.xLoc + "," + clicked.yLoc);
+        if (moveMode) {
+            moveCharacter(localPlayerId, clicked.xLoc, clicked.yLoc);
+            if (!isLocal) {
+                comm.sendMessage(localPlayerId + "," + clicked.xLoc + "," + clicked.yLoc);
+            }
         }
     }
 
     public boolean checkMoveLegal(Character currentPlayer, Tile clicked) {
-        int pX = currentPlayer.getCurrentTile().getNESWLoc();
-        int pY = currentPlayer.getCurrentTile().getNWSELoc();
+        int characterXLocation = currentPlayer.getCurrentTile().getNESWLoc();
+        int characterYLocation = currentPlayer.getCurrentTile().getNWSELoc();
 
         boolean NESWaxis = false;
         boolean NWSEaxis = false;
         boolean tileIsEmpty = true;
         boolean okTerrain = clicked.terrainCost != 0;
 
-        if (((clicked.getNESWLoc() + 1 == pX) || (clicked.getNESWLoc() - 1 == pX)) && clicked.getNWSELoc() == pY) {
+        if (((clicked.getNESWLoc() + 1 == characterXLocation) || (clicked.getNESWLoc() - 1 == characterXLocation)) && clicked.getNWSELoc() == characterYLocation) {
 
             NESWaxis = true;
-        } else if (((clicked.getNWSELoc() + 1 == pY) || (clicked.getNWSELoc() - 1 == pY)) && clicked.getNESWLoc() == pX) {
+        } else if (((clicked.getNWSELoc() + 1 == characterYLocation) || (clicked.getNWSELoc() - 1 == characterYLocation)) && clicked.getNESWLoc() == characterXLocation) {
             NWSEaxis = true;
         }
         if (clicked.checkEmpty() == false) {
@@ -114,16 +135,16 @@ public class GamePanel extends LevelPanel {
             return true;
         } else {
             if (NESWaxis) {
-                System.out.print("(NESWaxis ");
+                System.out.print("failed NESWaxis ");
             }
             if (NWSEaxis) {
-                System.out.print("|| NWSEaxis)");
+                System.out.print("failed NWSEaxis)");
             }
             if (tileIsEmpty) {
-                System.out.print("&&tileIsEmpty ");
+                System.out.print("failed tileIsEmpty ");
             }
             if (okTerrain) {
-                System.out.println("&& okTerrain");
+                System.out.println("failed  okTerrain");
             }
 
             System.out.println("");
@@ -131,7 +152,7 @@ public class GamePanel extends LevelPanel {
         }
     }
 
-    private void getInput() {
+    private void getNetworkSettingsInput() {
         String host = JOptionPane.showInputDialog("Host (Leave Empty for Local)");
         localPlayerId = JOptionPane.showInputDialog("Player ID: ");
 
@@ -175,12 +196,15 @@ public class GamePanel extends LevelPanel {
     }
 
     private void buildActionBar() {
-    HudObject topBar = new HudObject(0, 0, 1300, 40, "pics/hud/gamePanelHud/topBar.png", "");
-    hudObjects.add(topBar);
-    HudObject moveButton = new HudObject(10,0,120, 40,"pics/hud/gamePanelHud/moveButton.png", "moveMode");
-    hudObjects.add(moveButton);
-    HudObject quitButton = new HudObject(130,0,100, 40,"pics/hud/gamePanelHud/saveButton.png", "menu");
-    hudObjects.add(quitButton);
+        HudObject topBar = new HudObject(0, 0, 1300, 40, "pics/hud/gamePanelHud/topBar.png", "");
+        hudObjects.add(topBar);
+        HudObject moveButton = new HudObject(10, 0, 120, 40, "pics/hud/gamePanelHud/moveButton.png", "moveMode");
+        moveButton.setHighGraphic("pics/highlights/moveButtonHighlight.png");//WHY THE FUCK DOESNT THIS WORK!?
+        hudObjects.add(moveButton);
+        HudObject quitButton = new HudObject(130, 0, 100, 40, "pics/hud/gamePanelHud/saveButton.png", "menu");
+        hudObjects.add(quitButton);
+        HudObject muteButton = new HudObject(canvasWidth - 80 - 40, 0, 40, 40, "pics/hud/gamePanelHud/volumeButton.png", "mute");
+        hudObjects.add(muteButton);
     }
 
 }

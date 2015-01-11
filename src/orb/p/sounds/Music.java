@@ -13,7 +13,7 @@ import org.newdawn.easyogg.OggClip;
 public class Music {
 
     private OggClip ogg;
-    private boolean mute = false;
+    private boolean mute = true;
 
     /**
      * File must be inside of the music.jar
@@ -32,6 +32,7 @@ public class Music {
      * Play
      */
     public void play() {
+        //System.out.println("MUTE IS " + mute);
         if (!mute) {
             ogg.play();
         }
@@ -46,5 +47,8 @@ public class Music {
         if (mute) {
             ogg.stop();
         }
+    }
+    public boolean getMute(){
+        return mute;
     }
 }

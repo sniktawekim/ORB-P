@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package orb.p;
+
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -47,7 +47,9 @@ public class ORBP {
         configureLibrary();
         getResolution();
         buildCanvas();
-        canvasControl();
+        while (true) {//testloop to solve recursion
+            canvasControl();
+        }
 
     }
 
@@ -61,7 +63,7 @@ public class ORBP {
             System.out.println("in IDE, library at:" + libraryPath);
         } else {
             System.out.println(launchLoc);
-            
+
             System.out.println("in jar");
         }
 
@@ -88,7 +90,7 @@ public class ORBP {
         determineCanvas();
         frame = new JFrame("ORB-P");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(screenWidth-50, screenHeight-50);
+        frame.setSize(screenWidth - 50, screenHeight - 50);
         frame.setResizable(false);//lock game resolution
         frame.setContentPane(canvas);
         frame.setVisible(true);
@@ -105,40 +107,37 @@ public class ORBP {
         frame.dispose();
         frame = null;
         buildCanvas();
-        canvasControl();
+        //canvasControl();//see if we can change this to a loop instead of recursing
     }
 
     private static void determineCanvas() {
         if (currentCanvas.compareToIgnoreCase("menu") == 0) {
             canvas = new MenuPanel();
-        }
-        else if (currentCanvas.compareToIgnoreCase("ld") == 0) {
+        } else if (currentCanvas.compareToIgnoreCase("ld") == 0) {
             canvas = new LDPanel();
-        }
-        else if (currentCanvas.compareToIgnoreCase("play") == 0) {
+        } else if (currentCanvas.compareToIgnoreCase("play") == 0) {
             canvas = new GamePanel();
-        }
-        else if (currentCanvas.compareToIgnoreCase("shop") == 0) {
+        } else if (currentCanvas.compareToIgnoreCase("shop") == 0) {
             canvas = new PreGamePanel();
-        } 
-        else if (currentCanvas.compareToIgnoreCase("chars") == 0) {
+        } else if (currentCanvas.compareToIgnoreCase("chars") == 0) {
             canvas = new CharSetupPanel();
         } else if (currentCanvas.compareToIgnoreCase(StartWizardPanel.PANEL_ID) == 0) {
             canvas = new StartWizardPanel();
-        }else {
+        }
+        else {
             System.out.println(currentCanvas);
         }
     }
 
     private static void changeCursor() {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Image image = toolkit.getImage(libraryPath+ "pics/hud/cursor/cursor.png");
- 
+        Image image = toolkit.getImage(libraryPath + "pics/hud/cursor/cursor.png");
+
         Cursor c = toolkit.createCustomCursor(image, new Point(frame.getX() + 3,
                 frame.getY() + 3), "img");
         frame.setCursor(c);
     }
-    
+
     private static void pause() {
         try {
             Thread.sleep(5); // wait 5ms
