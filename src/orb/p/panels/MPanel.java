@@ -100,6 +100,7 @@ public abstract class MPanel extends JPanel {
     }
 
     protected void checkClick() {
+        anyClicked = false;
         anyClicked = myClick.getClicked();
         if (anyClicked) {//check if you clicked and resets click status
             hudclicked = false;
