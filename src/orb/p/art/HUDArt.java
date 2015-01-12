@@ -19,6 +19,8 @@ public class HUDArt {
     //StartWizardPanel
     public static final String START_WIZARD_PANEL = "pics/hud/startwizard/";
     public static final String NETWORK = START_WIZARD_PANEL + "Network.png";
+    public static final String NETWORK_HIGHLIGHT = START_WIZARD_PANEL + "NetworkHighlight.png";
     public static final String LOCAL = START_WIZARD_PANEL + "Local.png";
+    public static final String LOCAL_HIGHLIGHT = START_WIZARD_PANEL + "LocalHighlight.png";
     
 }

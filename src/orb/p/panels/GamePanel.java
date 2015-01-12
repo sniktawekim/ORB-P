@@ -12,6 +12,7 @@ import orb.p.network.Server;
 import orb.p.network.Communicator;
 import orb.p.core.Character;
 import orb.p.core.HudObject;
+import orb.p.network.temp.TempNetworkStarter;
 
 /**
  * @author MWatkins
@@ -153,24 +154,20 @@ public class GamePanel extends LevelPanel {
     }
 
     private void getNetworkSettingsInput() {
-        String host = JOptionPane.showInputDialog("Host (Leave Empty for Local)");
-        localPlayerId = JOptionPane.showInputDialog("Player ID: ");
-
-        if (host == null || host.isEmpty()) {
-
-            int hostGame = JOptionPane.showConfirmDialog(null,
-                    "Would you like to host a game?", "Please select",
-                    JOptionPane.YES_NO_OPTION);
-            if (hostGame == JOptionPane.YES_OPTION) {
-                comm = new Server(this);
-                comm.start();
-                isClient = false;
-                testCharacter(localPlayerId, 3, 48);
-            } else {
-                isLocal = true;
-                testCharacter(localPlayerId, 3, 48);
-            }
-        } else {
+        String host = TempNetworkStarter.host;
+        localPlayerId = TempNetworkStarter.characterName;
+        //Local Game
+        if (TempNetworkStarter.isLocal) {
+            isLocal = true;
+            testCharacter(localPlayerId, 3, 48);
+        } //Host Game
+        else if (host == null || host.isEmpty()) { //
+            comm = new Server(this);
+            comm.start();
+            isClient = false;
+            testCharacter(localPlayerId, 3, 48);
+        } //Join Game
+        else {
             comm = new Client(this, host);
             comm.sendMessage(localPlayerId);
             comm.start();
