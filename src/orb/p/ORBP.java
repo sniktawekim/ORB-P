@@ -41,15 +41,16 @@ public class ORBP {
      */
     public static void main(String[] args) {
         init();
+                while (true) {//testloop to solve recursion
+            canvasControl();
+        }
     }
 
     public static void init() {
         configureLibrary();
         getResolution();
         buildCanvas();
-        while (true) {//testloop to solve recursion
-            canvasControl();
-        }
+
 
     }
 

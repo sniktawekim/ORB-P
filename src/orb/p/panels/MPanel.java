@@ -36,6 +36,7 @@ public abstract class MPanel extends JPanel {
     IClick myClick;//mouse listener, useful for menu options
     IPress myPress;
     boolean hudclicked = false;
+    boolean anyClicked = false;
     protected String status = "good";
 
     protected abstract void buildHUD();
@@ -85,10 +86,11 @@ public abstract class MPanel extends JPanel {
     }
 
     protected void paintObjects(Graphics g) {
-        for (int i = 0; i < hudObjects.size(); i++) {           
+        for (int i = 0; i < hudObjects.size(); i++) {
             HudObject current = hudObjects.get(i);
-            if(current.getVisible())
-            current.paint(0, 0, g, this, myClick);
+            if (current.getVisible()) {
+                current.paint(0, 0, g, this, myClick);
+            }
         }
 
         for (int i = 0; i < hudFonts.size(); i++) {
@@ -98,29 +100,29 @@ public abstract class MPanel extends JPanel {
     }
 
     protected void checkClick() {
-        hudclicked = false;
-        int xClicked = myClick.getEX();
-        int yClicked = myClick.getEY();
-       // if(myClick.getClicked()) this breaks everything else, especially level editor
-       // {
-        for (int i = 0; i < hudObjects.size(); i++) {
-            HudObject current = hudObjects.get(i);
-            if (current.getVisible() == true) {
-                if (current.isWithin(xClicked, yClicked) && !(current.getAction().compareToIgnoreCase("") == 0)) {
-                    hudAction(current);
-                    //Clear the state of the click listener                    
-                    hudclicked = true;
-                    return;
-                } else if (current.isWithin(xClicked, yClicked)) {
-                    // System.out.println("lame hud clicked");
-                    hudclicked = true;
+        anyClicked = myClick.getClicked();
+        if (anyClicked) {//check if you clicked and resets click status
+            hudclicked = false;
+            int xClicked = myClick.getEX();
+            int yClicked = myClick.getEY();
+            // if(myClick.getClicked()) this breaks everything else, especially level editor
+            // {
+            for (int i = 0; i < hudObjects.size(); i++) {
+                HudObject current = hudObjects.get(i);
+                if (current.getVisible() == true) {
+                    if (current.isWithin(xClicked, yClicked) && !(current.getAction().compareToIgnoreCase("") == 0)) {
+                        hudAction(current);
+                        //Clear the state of the click listener                    
+                        hudclicked = true;
+                        return;
+                    } else if (current.isWithin(xClicked, yClicked)) {
+                        // System.out.println("lame hud clicked");
+                        hudclicked = true;
+                    }
                 }
             }
+            //}
         }
-        if (hudclicked) {
-            return;
-        }
-        //}
     }
 
     public String update() {
@@ -130,8 +132,8 @@ public abstract class MPanel extends JPanel {
     protected void checkKey() {
 
     }
-    
-        private void printHudObjectsStats(){
+
+    private void printHudObjectsStats() {
         ArrayList<String> temp = new ArrayList();
         ArrayList<Integer> numfound = new ArrayList();
         temp.add(hudObjects.get(0).getAction());
@@ -150,7 +152,7 @@ public abstract class MPanel extends JPanel {
                 numfound.add(1);
             }
         }
-        for(int i = 0; i<temp.size();i++){
+        for (int i = 0; i < temp.size(); i++) {
             System.out.println(temp.get(i) + " " + numfound.get(i));
         }
     }

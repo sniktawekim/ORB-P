@@ -54,12 +54,15 @@ public class IClick extends MouseInputAdapter {
 
     public boolean getClicked() {
         if (clicked) {
-            clicked = false;
+            resetClicked();
             return true;
         } else {
             return false;
         }
 
+    }
+    public void resetClicked(){
+        clicked=false;
     }
 
     public int getEX() {

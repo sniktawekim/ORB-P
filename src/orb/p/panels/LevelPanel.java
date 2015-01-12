@@ -49,9 +49,10 @@ public abstract class LevelPanel extends MPanel {
     }
 
     protected void checkClick() {
-        if (clearOldClickStatus()) {
+        
             super.checkClick();//checks hud clicking
-            if (!hudclicked) {
+            if(anyClicked){
+            if (!hudclicked) {//if hud wasn't clicked
                 int xClicked = myClick.getEX() - xOffset;
                 int yClicked = myClick.getEY() - yOffset;
                 for (int i = 0; i < tiles.size(); i++) {
@@ -62,7 +63,7 @@ public abstract class LevelPanel extends MPanel {
                     }
                 }
             }
-        }
+            }
     }
 
     protected void checkKey() {
