@@ -101,8 +101,8 @@ public abstract class MPanel extends JPanel {
         hudclicked = false;
         int xClicked = myClick.getEX();
         int yClicked = myClick.getEY();
-        if(myClick.getClicked())
-        {
+       // if(myClick.getClicked()) this breaks everything else, especially level editor
+       // {
         for (int i = 0; i < hudObjects.size(); i++) {
             HudObject current = hudObjects.get(i);
             if (current.getVisible() == true) {
@@ -120,7 +120,7 @@ public abstract class MPanel extends JPanel {
         if (hudclicked) {
             return;
         }
-        }
+        //}
     }
 
     public String update() {
