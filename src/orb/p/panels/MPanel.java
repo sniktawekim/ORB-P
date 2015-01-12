@@ -101,11 +101,15 @@ public abstract class MPanel extends JPanel {
         hudclicked = false;
         int xClicked = myClick.getEX();
         int yClicked = myClick.getEY();
+        //Verify the button has been clicked
+        if(myClick.getClicked())
+        {
         for (int i = 0; i < hudObjects.size(); i++) {
             HudObject current = hudObjects.get(i);
             if (current.getVisible() == true) {
                 if (current.isWithin(xClicked, yClicked) && !(current.getAction().compareToIgnoreCase("") == 0)) {
                     hudAction(current);
+                    //Clear the state of the click listener                    
                     hudclicked = true;
                     return;
                 } else if (current.isWithin(xClicked, yClicked)) {
@@ -117,6 +121,7 @@ public abstract class MPanel extends JPanel {
         if (hudclicked) {
             return;
         }
+       }
     }
 
     public String update() {

@@ -1,7 +1,9 @@
 package orb.p.panels;
 
 import orb.p.ORBP;
+import orb.p.art.HUDArt;
 import orb.p.core.HudObject;
+
 
 
 
@@ -20,16 +22,30 @@ public class StartWizardPanel extends MPanel{
 
 @Override
     protected void buildHUD() {
+        //Create Buttons
+        HudObject play = new HudObject(canvasWidth-400,canvasHeight-300, 400, 200,HUDArt.PLAY, "play");
+        HudObject local = new HudObject(-50,20, 400, 200,HUDArt.LOCAL, "local");
+        HudObject network = new HudObject(150,20, 400, 200,HUDArt.NETWORK, "network");
         
-        HudObject play = new HudObject(canvasWidth/2-200,400, 400, 200,"pics/hud/titlemenu/options/Play.png", "play");
-        
+        //Add Objects
         hudObjects.add(play);
+        hudObjects.add(local);
+        hudObjects.add(network);
     }
 
+    @Override
     protected void hudAction(HudObject hudOb) {
 
         if (hudOb.matches("play")) {
             status = "play";
+        }
+        else if (hudOb.matches("network"))
+        {
+             System.out.println("network");   
+        }
+        else if (hudOb.matches("local"))
+        {
+             System.out.println("local");   
         }
     }
 
