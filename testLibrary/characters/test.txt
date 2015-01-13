@@ -1,0 +1,8 @@
+<character>
+<name>test</name>
+<movement>4</movement>
+<attack>5</attack>
+<defense>3</defense>
+<draw>0</draw>
+<hp>0</hp>
+<root>pics/character/testLady</root>
