@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 import orb.p.ORBP;
+import orb.p.art.CHARArt;
 import orb.p.art.HUDArt;
 import orb.p.core.ItemBox;
 import orb.p.core.Tile;
@@ -20,8 +21,8 @@ import orb.p.network.temp.TempNetworkStarter;
  */
 public class GamePanel extends LevelPanel {
 
-    private Tile selected = null;
-    private boolean selectMode = false;
+    private Tile selected = null;//contains the currently player-selected tile
+    private boolean selectMode = false;//
     private boolean isClient = true;
     private boolean isLocal = false;
     private boolean moveMode = false;
@@ -183,7 +184,7 @@ public class GamePanel extends LevelPanel {
 
         startingTile = currentBoard.getTile(x, y);
 
-        Character newChar = new Character(playerId, startingTile, "pics/character/testLady/");
+        Character newChar = new Character(playerId, startingTile,CHARArt.CLOUD);
         startingTile.setOnTop(newChar);
         onlinePlayers.put(playerId, newChar);
 

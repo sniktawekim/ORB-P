@@ -24,11 +24,12 @@ public class HUDArt {
     public static final String LOCAL_HIGHLIGHT = START_WIZARD_PANEL + "LocalHighlight.png";
     
     //hudActionBar
-    public static final String BAR_BACKGROUND = "pics/hud/gamePanelHud/topBar.png";
-    public static final String MOVE_BUTTON = "pics/hud/gamePanelHud/moveButton.png";
-    public static final String SAVE_BUTTON = "pics/hud/gamePanelHud/saveButton.png";
-    public static final String MOVE_BUTTON_HIGHLIGHT = "pics/highlights/moveButtonHighlight.png";
-    public static final String VOLUME_BUTTON ="pics/hud/gamePanelHud/volumeButton.png";
+    public static final String HUD_ACTION_BAR = "pics/hud/gamePanelHud/";
+    public static final String BAR_BACKGROUND =HUD_ACTION_BAR + "topBar.png";
+    public static final String MOVE_BUTTON = HUD_ACTION_BAR +"moveButton.png";
+    public static final String SAVE_BUTTON = HUD_ACTION_BAR +"saveButton.png";
+    public static final String MOVE_BUTTON_HIGHLIGHT =HUD_ACTION_BAR + "moveButtonHighlight.png";
+    public static final String VOLUME_BUTTON =HUD_ACTION_BAR +"volumeButton.png";
     
     
 }

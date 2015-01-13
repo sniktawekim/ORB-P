@@ -1,5 +1,18 @@
 package orb.p.core;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import orb.p.ORBP;
+import orb.p.art.CHARArt;
+import orb.p.listeners.IClick;
+
 /**
  * @author blainezor
  */
@@ -14,19 +27,21 @@ public class Character extends OnScreenObject {
     private int prevDirection;
     protected int currentHP;
     private String charPath;
-    private String charId;
-    
+    private String playerID;
+    private int spriteState = 0;
+    private int spriteClock = 0;
+    private int rotateRate = 45;
 
-    public Character(String charId, Tile startTile, String characterPath) {
+    public Character(String playerID, Tile startTile, String characterPath) {
         //TODO Display position is off
         super(startTile.xLoc, startTile.yLoc, 120, 140);
-        stats = new CharStats("Name", 2, 2, 3, 1, 100, charId);      
+        stats = new CharStats("Name", 2, 2, 3, 1, 100, playerID);
         xOffset = 30;
         currentTile = startTile;
-        this.charId = charId;
+        this.playerID = playerID;
         direction = 4;
         charPath = characterPath;
-        currentHP=stats.getMaxHP();
+        currentHP = stats.getMaxHP();
         changeDirection(4);
     }
 
@@ -38,67 +53,123 @@ public class Character extends OnScreenObject {
         currentTile = toCurrentTile;
 
         int prevNWSE = prevTile.getNESWLoc();
-        int currentNWSE = currentTile.getNESWLoc();        
+        int currentNWSE = currentTile.getNESWLoc();
         int prevNESW = prevTile.getNWSELoc();
         int currentNESW = currentTile.getNWSELoc();
-        
-        
-        if(currentNWSE-prevNWSE>0){//moving towards bottom right
+
+        if (currentNWSE - prevNWSE > 0) {//moving towards bottom right
             setDirection(4);
-        } else if(currentNWSE-prevNWSE<0){//moving towards top left
+        } else if (currentNWSE - prevNWSE < 0) {//moving towards top left
             setDirection(2);
-        } else if(currentNESW-prevNESW>0){//moving towards top right
+        } else if (currentNESW - prevNESW > 0) {//moving towards top right
             setDirection(1);
-        } else if(currentNESW-prevNESW<0){//moving towards bottom left
+        } else if (currentNESW - prevNESW < 0) {//moving towards bottom left
             setDirection(3);
         }
         System.out.println("Moved in direction: " + direction);
-        
+
     }
 
     public void resetMoves() {
         System.out.println("Reset moves");
         moves = 5;
-        
+
     }
 
-    public void handleMove(int Direction) {      
-        if(Direction==0){//a human player move
-            prevTile = currentTile;          
-        } else if(Direction == 1){ //Northeast
+    public void handleMove(int Direction) {
+        if (Direction == 0) {//a human player move
+            prevTile = currentTile;
+        } else if (Direction == 1) { //Northeast
             setDirection(1);
             System.out.println("AI D1 move");
-        } else if(Direction == 2){//Northwest
+        } else if (Direction == 2) {//Northwest
             setDirection(2);
             System.out.println("AI D2 move");
-        } else if(Direction == 3){//Southwest
+        } else if (Direction == 3) {//Southwest
             setDirection(3);
             System.out.println("AI D3 move");
-        } else if(Direction == 4){//Southeast
+        } else if (Direction == 4) {//Southeast
             setDirection(4);
             System.out.println("AI D4 move");
-        }else{
+        } else {
             System.out.println("AI ERROR: Invalid direction code: " + Direction);
             return;
         }
         moves--;
         System.out.println(moves + " moves remain");
-        
+
     }
 
     public int getMoves() {
         return moves;
     }
 
-    public void setDirection(int toDirection){
+    public void setDirection(int toDirection) {
         prevDirection = direction;
         direction = toDirection;
-        if(prevDirection!=direction){
+        if (prevDirection != direction) {
             changeDirection(direction);
         }
     }
 
     private void changeDirection(int newDirection) {
-       setGraphic(charPath + newDirection +".png");
+
+        direction = newDirection;
+
     }
+// SPRITE CALCULATIONS IN PROGRESS
+
+    @Override
+    public void paint(int xOffset, int yOffset, Graphics g, ImageObserver lulz, IClick mouse) {
+        super.paint(xOffset, yOffset, g, lulz, mouse);
+        update();
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        
+
+        BufferedImage bigImg = null;
+        String walkString = "";
+        if (direction == 1) {
+            walkString = CHARArt.WALKING_1;
+        } else if (direction == 2) {
+            walkString = CHARArt.WALKING_2;
+        } else if (direction == 3) {
+            walkString = CHARArt.WALKING_3;
+        } else if (direction == 4) {
+            walkString = CHARArt.WALKING_4;
+        }
+        try {
+            bigImg = ImageIO.read(new File(ORBP.libraryPath + charPath + walkString));
+// The above line throws an checked IOException which must be caught.
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage() + " on: " + ORBP.libraryPath + charPath + walkString);
+            return;
+        }
+
+        final int width = 50;
+        final int height = 99;
+        final int rows = 1;
+        final int cols = 3;
+        //1 for black border
+        int imgNum = spriteState;
+        if (imgNum > 2) {
+            imgNum = 0;
+        }
+        int xStart = 1 + imgNum * 51;//51 for width+endborder
+        int yStart = 1;
+
+        g = bigImg.getSubimage(xStart, yStart, width, height);
+        spriteClock++;
+
+        if (spriteClock % rotateRate == 0) {
+            spriteState++;
+        }
+        if (spriteState == 3) {
+            spriteState = 0;
+        }
+    }
+//**/
 }

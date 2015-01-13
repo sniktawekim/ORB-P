@@ -286,7 +286,7 @@ public abstract class OnScreenObject {
         return highlight;
     }
 
-    private void setHovered(boolean setto) {
+    protected void setHovered(boolean setto) {
         hovered = setto;
     }
 

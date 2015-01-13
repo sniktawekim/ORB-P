@@ -12,18 +12,17 @@ package orb.p.art;
  */
 public class CHARArt {
 
-    
-    //TEST CHARACTER
-    public static final String TEST = "pics/hud/startwizard/";
-    
-    
+    public static final String ROOT = "pics/character/";
+    public static final String WALKING_1 = "w1.png";
+    public static final String WALKING_2 = "w2.png";
+    public static final String WALKING_3 = "w3.png";
+    public static final String WALKING_4 = "w4.png";
+    //CLOUD
+    public static final String CLOUD = ROOT + "cloud/";
     //REDHEAD
-    public static final String REDHEAD = "pics/hud/startwizard/";
-    
-    //WHITE ROBOT
-    public static final String ROBOT_3 = "pics/hud/startwizard/";
-    
-    
-    
-    
+    public static final String REDHEAD = ROOT + "redhead/";
+    //ROBOT
+    public static final String ROBOT = ROOT + "robot/";
+    //TESTLADY
+    public static final String TESTLADY = ROOT + "testlady/";
 }
