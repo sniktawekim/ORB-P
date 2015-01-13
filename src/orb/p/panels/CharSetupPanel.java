@@ -49,9 +49,8 @@ public class CharSetupPanel extends MPanel {
 
     @Override
     protected void checkClick() {
-        if (myClick.getClicked()) {
             super.checkClick();
-        }
+        
     }
 
     @Override

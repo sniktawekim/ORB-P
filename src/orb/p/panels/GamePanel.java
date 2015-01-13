@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 import orb.p.ORBP;
+import orb.p.art.HUDArt;
 import orb.p.core.ItemBox;
 import orb.p.core.Tile;
 import orb.p.network.Client;
@@ -193,14 +194,14 @@ public class GamePanel extends LevelPanel {
     }
 
     private void buildActionBar() {
-        HudObject topBar = new HudObject(0, 0, 1300, 40, "pics/hud/gamePanelHud/topBar.png", "");
+        HudObject topBar = new HudObject(0, 0, 1300, 40, HUDArt.BAR_BACKGROUND, "");
         hudObjects.add(topBar);
-        HudObject moveButton = new HudObject(10, 0, 120, 40, "pics/hud/gamePanelHud/moveButton.png", "moveMode");
-        moveButton.setHighGraphic("pics/highlights/moveButtonHighlight.png");//WHY THE FUCK DOESNT THIS WORK!?
+        HudObject moveButton = new HudObject(10, 0, 120, 40, HUDArt.MOVE_BUTTON, "moveMode");
+        moveButton.setHighGraphic(HUDArt.MOVE_BUTTON_HIGHLIGHT);//WHY THE FUCK DOESNT THIS WORK!?
         hudObjects.add(moveButton);
-        HudObject quitButton = new HudObject(130, 0, 100, 40, "pics/hud/gamePanelHud/saveButton.png", "menu");
+        HudObject quitButton = new HudObject(130, 0, 100, 40,HUDArt.SAVE_BUTTON , "menu");
         hudObjects.add(quitButton);
-        HudObject muteButton = new HudObject(canvasWidth - 80 - 40, 0, 40, 40, "pics/hud/gamePanelHud/volumeButton.png", "mute");
+        HudObject muteButton = new HudObject(canvasWidth - 80 - 40, 0, 40, 40, HUDArt.VOLUME_BUTTON, "mute");
         hudObjects.add(muteButton);
     }
 

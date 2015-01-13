@@ -23,4 +23,12 @@ public class HUDArt {
     public static final String LOCAL = START_WIZARD_PANEL + "Local.png";
     public static final String LOCAL_HIGHLIGHT = START_WIZARD_PANEL + "LocalHighlight.png";
     
+    //hudActionBar
+    public static final String BAR_BACKGROUND = "pics/hud/gamePanelHud/topBar.png";
+    public static final String MOVE_BUTTON = "pics/hud/gamePanelHud/moveButton.png";
+    public static final String SAVE_BUTTON = "pics/hud/gamePanelHud/saveButton.png";
+    public static final String MOVE_BUTTON_HIGHLIGHT = "pics/highlights/moveButtonHighlight.png";
+    public static final String VOLUME_BUTTON ="pics/hud/gamePanelHud/volumeButton.png";
+    
+    
 }
