@@ -60,18 +60,23 @@ public class GamePanel extends LevelPanel {
     }
 
     protected void hudAction(HudObject hudOb) {
+        Character isMoving = onlinePlayers.get(localPlayerId);
         super.hudAction(hudOb);
         if (hudOb.getAction().compareToIgnoreCase("menu") == 0) {
             status = "menu";
-        } else if (hudOb.getAction().compareToIgnoreCase("moveMode") == 0 && moveMode == false) {
-            moveMode = true;
-            hudOb.setHighlight(true);
-        } else if (hudOb.getAction().compareToIgnoreCase("moveMode") == 0 && moveMode == true) {
-            moveMode = false;
-            resetMoves = true;
-            hudOb.setHighlight(false);
-        } else if (hudOb.getAction()
-                .compareToIgnoreCase("mute") == 0) {
+        } else if (hudOb.getAction().compareToIgnoreCase("moveMode") == 0 ) {
+            if (!moveMode) {
+                moveMode = true;
+                hudOb.setHighlight(true);
+                
+                isMoving.toggleMoving();
+            } else {
+                moveMode = false;
+                resetMoves = true;
+                hudOb.setHighlight(false);
+                 isMoving.toggleMoving();
+            }
+        } else if (hudOb.getAction().compareToIgnoreCase("mute") == 0) {
             music.tMute();
         }
 
@@ -184,7 +189,7 @@ public class GamePanel extends LevelPanel {
 
         startingTile = currentBoard.getTile(x, y);
 
-        Character newChar = new Character(playerId, startingTile,CHARArt.CLOUD);
+        Character newChar = new Character(playerId, startingTile, CHARArt.CLOUD);
         startingTile.setOnTop(newChar);
         onlinePlayers.put(playerId, newChar);
 
@@ -200,7 +205,7 @@ public class GamePanel extends LevelPanel {
         HudObject moveButton = new HudObject(10, 0, 120, 40, HUDArt.MOVE_BUTTON, "moveMode");
         moveButton.setHighGraphic(HUDArt.MOVE_BUTTON_HIGHLIGHT);//WHY THE FUCK DOESNT THIS WORK!?
         hudObjects.add(moveButton);
-        HudObject quitButton = new HudObject(130, 0, 100, 40,HUDArt.SAVE_BUTTON , "menu");
+        HudObject quitButton = new HudObject(130, 0, 100, 40, HUDArt.SAVE_BUTTON, "menu");
         hudObjects.add(quitButton);
         HudObject muteButton = new HudObject(canvasWidth - 80 - 40, 0, 40, 40, HUDArt.VOLUME_BUTTON, "mute");
         hudObjects.add(muteButton);

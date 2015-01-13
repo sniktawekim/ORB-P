@@ -22,6 +22,7 @@ public class Character extends OnScreenObject {
     Tile currentTile;
     public Tile prevTile; //previous tile, for direction calculations
     protected CharStats stats;
+    boolean currentlyMoving = false;
     private int moves = 5;
     private int direction;
     private int prevDirection;
@@ -119,6 +120,10 @@ public class Character extends OnScreenObject {
     }
 // SPRITE CALCULATIONS IN PROGRESS
 
+    public void toggleMoving() {
+        currentlyMoving = !currentlyMoving;
+    }
+
     @Override
     public void paint(int xOffset, int yOffset, Graphics g, ImageObserver lulz, IClick mouse) {
         super.paint(xOffset, yOffset, g, lulz, mouse);
@@ -128,7 +133,6 @@ public class Character extends OnScreenObject {
     @Override
     public void update() {
         super.update();
-        
 
         BufferedImage bigImg = null;
         String walkString = "";
@@ -162,13 +166,16 @@ public class Character extends OnScreenObject {
         int yStart = 1;
 
         g = bigImg.getSubimage(xStart, yStart, width, height);
-        spriteClock++;
 
-        if (spriteClock % rotateRate == 0) {
-            spriteState++;
-        }
-        if (spriteState == 3) {
-            spriteState = 0;
+        if (currentlyMoving) {
+            spriteClock++;
+
+            if (spriteClock % rotateRate == 0) {
+                spriteState++;
+            }
+            if (spriteState == 3) {
+                spriteState = 0;
+            }
         }
     }
 //**/
