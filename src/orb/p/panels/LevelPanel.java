@@ -24,6 +24,7 @@ public abstract class LevelPanel extends MPanel {
     public static String prePath = "";
     Music music;
     boolean repeatMusic = true;
+    Parallaxer backgrounds;
 
     LevelPanel() {
         super();
@@ -37,6 +38,10 @@ public abstract class LevelPanel extends MPanel {
     public void playMusic() {
        // music = new Music("test");//moved to contstructor
         music.play();
+    }
+    @Override
+    protected void paintBackground(Graphics g) {
+        backgrounds.paint(g, xOffset, yOffset, canvasWidth, canvasHeight, this);
     }
 
     protected void paintObjects(Graphics g) {
@@ -101,6 +106,10 @@ public abstract class LevelPanel extends MPanel {
         gBoard.getAllTiles(tiles);
         bgiPath = gBoard.getBGI();
         title = gBoard.title;
+        ArrayList<String> bgPaths = new ArrayList();
+        bgPaths.add(bgiPath);
+        backgrounds = new Parallaxer(bgPaths);
+        
     }
 
     @Override

@@ -12,6 +12,7 @@ public class IClick extends MouseInputAdapter {
     int x = 0;
     int y = 0;
     boolean clicked;
+    int whichClicked = 0;
     private boolean pressed = false;
 
     public IClick() {
@@ -20,7 +21,6 @@ public class IClick extends MouseInputAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
     }
 
     @Override
@@ -34,12 +34,15 @@ public class IClick extends MouseInputAdapter {
         pressed = true;
         x = e.getX();
         y = e.getY();
+    
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         clicked = true;
         pressed = false;
+        whichClicked = e.getButton();
+ 
 
     }
 
