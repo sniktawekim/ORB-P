@@ -145,6 +145,8 @@ public class Character extends OnScreenObject {
         } else if (direction == 4) {
             walkString = CHARArt.WALKING_4;
         }
+        
+        
         try {
             bigImg = ImageIO.read(new File(ORBP.libraryPath + charPath + walkString));
 // The above line throws an checked IOException which must be caught.

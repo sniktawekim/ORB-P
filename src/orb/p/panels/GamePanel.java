@@ -28,6 +28,8 @@ public class GamePanel extends LevelPanel {
     private boolean moveMode = false;
     private boolean resetMoves = false;
     private String localPlayerId;
+    
+    
     Character localPlayer;
     Communicator comm;
 
@@ -200,14 +202,14 @@ public class GamePanel extends LevelPanel {
     }
 
     private void buildActionBar() {
-        HudObject topBar = new HudObject(0, 0, 1300, 40, HUDArt.BAR_BACKGROUND, "");
+        HudObject topBar = new HudObject(HUDArt.BAR_XSTART,HUDArt.BAR_YSTART, HUDArt.BAR_WIDTH, HUDArt.BAR_HEIGHT, HUDArt.BAR_BACKGROUND, "");
         hudObjects.add(topBar);
-        HudObject moveButton = new HudObject(10, 0, 120, 40, HUDArt.MOVE_BUTTON, "moveMode");
+        HudObject moveButton = new HudObject(HUDArt.MOVE_BUTTON_XSTART, HUDArt.MOVE_BUTTON_YSTART, HUDArt.MOVE_BUTTON_WIDTH, HUDArt.MOVE_BUTTON_HEIGHT, HUDArt.MOVE_BUTTON, "moveMode");
         moveButton.setHighGraphic(HUDArt.MOVE_BUTTON_HIGHLIGHT);
         hudObjects.add(moveButton);
-        HudObject quitButton = new HudObject(130, 0, 100, 40, HUDArt.SAVE_BUTTON, "menu");
+        HudObject quitButton = new HudObject(HUDArt.QUIT_BUTTON_XSTART, HUDArt.QUIT_BUTTON_YSTART, HUDArt.QUIT_BUTTON_WIDTH, HUDArt.QUIT_BUTTON_HEIGHT, HUDArt.QUIT_BUTTON,  "menu");
         hudObjects.add(quitButton);
-        HudObject muteButton = new HudObject(canvasWidth - 80 - 40, 0, 40, 40, HUDArt.VOLUME_BUTTON, "mute");
+        HudObject muteButton = new HudObject(HUDArt.MUTE_BUTTON_XSTART, HUDArt.MUTE_BUTTON_YSTART, HUDArt.MUTE_BUTTON_WIDTH, HUDArt.MUTE_BUTTON_HEIGHT, HUDArt.MUTE_BUTTON, "mute");
         hudObjects.add(muteButton);
     }
 
