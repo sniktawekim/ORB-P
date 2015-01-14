@@ -203,7 +203,7 @@ public class GamePanel extends LevelPanel {
         HudObject topBar = new HudObject(0, 0, 1300, 40, HUDArt.BAR_BACKGROUND, "");
         hudObjects.add(topBar);
         HudObject moveButton = new HudObject(10, 0, 120, 40, HUDArt.MOVE_BUTTON, "moveMode");
-        moveButton.setHighGraphic(HUDArt.MOVE_BUTTON_HIGHLIGHT);//WHY THE FUCK DOESNT THIS WORK!?
+        moveButton.setHighGraphic(HUDArt.MOVE_BUTTON_HIGHLIGHT);
         hudObjects.add(moveButton);
         HudObject quitButton = new HudObject(130, 0, 100, 40, HUDArt.SAVE_BUTTON, "menu");
         hudObjects.add(quitButton);

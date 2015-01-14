@@ -31,13 +31,13 @@ public class Character extends OnScreenObject {
     private String playerID;
     private int spriteState = 0;
     private int spriteClock = 0;
-    private int rotateRate = 45;
+    private int rotateRate = 135;
 
     public Character(String playerID, Tile startTile, String characterPath) {
         //TODO Display position is off
         super(startTile.xLoc, startTile.yLoc, 120, 140);
         stats = new CharStats("Name", 2, 2, 3, 1, 100, playerID);
-        xOffset = 30;
+        xOffset = 37;
         currentTile = startTile;
         this.playerID = playerID;
         direction = 4;
@@ -155,8 +155,8 @@ public class Character extends OnScreenObject {
 
         final int width = 50;
         final int height = 99;
-        final int rows = 1;
-        final int cols = 3;
+        int frames = 3;
+        frames = (bigImg.getWidth()%width) - 1;
         //1 for black border
         int imgNum = spriteState;
         if (imgNum > 2) {
@@ -170,10 +170,10 @@ public class Character extends OnScreenObject {
         if (currentlyMoving) {
             spriteClock++;
 
-            if (spriteClock % rotateRate == 0) {
+            if (spriteClock % (rotateRate/frames) == 0) {
                 spriteState++;
             }
-            if (spriteState == 3) {
+            if (spriteState == frames) {
                 spriteState = 0;
             }
         }

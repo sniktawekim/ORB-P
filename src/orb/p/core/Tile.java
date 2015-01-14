@@ -123,7 +123,7 @@ public class Tile extends OnScreenObject {
     public void setOnTop(OnScreenObject toPlace) {
         onTop = toPlace;
         onTop.setXMin(xmin + toPlace.xOffset);
-        onTop.setYMin(ymin + ysize - toPlace.getYSize());
+        onTop.setYMin(ymin + ysize - toPlace.getYSize()+8);
     }
 
     public void removeFromTop() {
