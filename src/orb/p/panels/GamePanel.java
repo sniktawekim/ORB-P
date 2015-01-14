@@ -28,8 +28,7 @@ public class GamePanel extends LevelPanel {
     private boolean moveMode = false;
     private boolean resetMoves = false;
     private String localPlayerId;
-    
-    
+
     Character localPlayer;
     Communicator comm;
 
@@ -66,20 +65,16 @@ public class GamePanel extends LevelPanel {
         super.hudAction(hudOb);
         if (hudOb.getAction().compareToIgnoreCase("menu") == 0) {
             status = "menu";
-        } else if (hudOb.getAction().compareToIgnoreCase("moveMode") == 0 ) {
-            if (!moveMode) {
-                moveMode = true;
-                hudOb.setHighlight(true);
-                
-                isMoving.toggleMoving();
-            } else {
-                moveMode = false;
-                resetMoves = true;
-                hudOb.setHighlight(false);
-                 isMoving.toggleMoving();
-            }
+        } else if (hudOb.getAction().compareToIgnoreCase("moveMode") == 0) {
+            resetMoves = !moveMode;
+            hudOb.setHighlight(!moveMode);
+            moveMode = !moveMode;
+
+            isMoving.toggleMoving();
         } else if (hudOb.getAction().compareToIgnoreCase("mute") == 0) {
             music.tMute();
+        } else if (hudOb.getAction().compareToIgnoreCase("attackMode") == 0) {
+            isMoving.setAnimation("attack");
         }
 
     }
@@ -202,13 +197,15 @@ public class GamePanel extends LevelPanel {
     }
 
     private void buildActionBar() {
-        HudObject topBar = new HudObject(HUDArt.BAR_XSTART,HUDArt.BAR_YSTART, HUDArt.BAR_WIDTH, HUDArt.BAR_HEIGHT, HUDArt.BAR_BACKGROUND, "");
+        HudObject topBar = new HudObject(HUDArt.BAR_XSTART, HUDArt.BAR_YSTART, HUDArt.BAR_WIDTH, HUDArt.BAR_HEIGHT, HUDArt.BAR_BACKGROUND, "");
         hudObjects.add(topBar);
         HudObject moveButton = new HudObject(HUDArt.MOVE_BUTTON_XSTART, HUDArt.MOVE_BUTTON_YSTART, HUDArt.MOVE_BUTTON_WIDTH, HUDArt.MOVE_BUTTON_HEIGHT, HUDArt.MOVE_BUTTON, "moveMode");
         moveButton.setHighGraphic(HUDArt.MOVE_BUTTON_HIGHLIGHT);
         hudObjects.add(moveButton);
-        HudObject quitButton = new HudObject(HUDArt.QUIT_BUTTON_XSTART, HUDArt.QUIT_BUTTON_YSTART, HUDArt.QUIT_BUTTON_WIDTH, HUDArt.QUIT_BUTTON_HEIGHT, HUDArt.QUIT_BUTTON,  "menu");
+        HudObject quitButton = new HudObject(HUDArt.QUIT_BUTTON_XSTART, HUDArt.QUIT_BUTTON_YSTART, HUDArt.QUIT_BUTTON_WIDTH, HUDArt.QUIT_BUTTON_HEIGHT, HUDArt.QUIT_BUTTON, "menu");
         hudObjects.add(quitButton);
+        HudObject attackButton = new HudObject(HUDArt.ATTACK_BUTTON_XSTART, HUDArt.ATTACK_BUTTON_YSTART, HUDArt.ATTACK_BUTTON_WIDTH, HUDArt.ATTACK_BUTTON_HEIGHT, HUDArt.ATTACK_BUTTON, "attackMode");
+        hudObjects.add(attackButton);
         HudObject muteButton = new HudObject(HUDArt.MUTE_BUTTON_XSTART, HUDArt.MUTE_BUTTON_YSTART, HUDArt.MUTE_BUTTON_WIDTH, HUDArt.MUTE_BUTTON_HEIGHT, HUDArt.MUTE_BUTTON, "mute");
         hudObjects.add(muteButton);
     }

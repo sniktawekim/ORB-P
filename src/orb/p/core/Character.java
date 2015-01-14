@@ -30,6 +30,8 @@ public class Character extends OnScreenObject {
     private String charPath;
     private String playerID;
     private int spriteState = 0;
+    private boolean spriteLoop = true;
+    private String spriteMode = "walk";
     private int spriteClock = 0;
     private int rotateRate = 135;
 
@@ -122,6 +124,9 @@ public class Character extends OnScreenObject {
 
     public void toggleMoving() {
         currentlyMoving = !currentlyMoving;
+        if (currentlyMoving) {
+            spriteMode = "walk";
+        }
     }
 
     @Override
@@ -135,18 +140,8 @@ public class Character extends OnScreenObject {
         super.update();
 
         BufferedImage bigImg = null;
-        String walkString = "";
-        if (direction == 1) {
-            walkString = CHARArt.WALKING_1;
-        } else if (direction == 2) {
-            walkString = CHARArt.WALKING_2;
-        } else if (direction == 3) {
-            walkString = CHARArt.WALKING_3;
-        } else if (direction == 4) {
-            walkString = CHARArt.WALKING_4;
-        }
-        
-        
+        String walkString = determineAnimation();
+
         try {
             bigImg = ImageIO.read(new File(ORBP.libraryPath + charPath + walkString));
 // The above line throws an checked IOException which must be caught.
@@ -158,7 +153,7 @@ public class Character extends OnScreenObject {
         final int width = 50;
         final int height = 99;
         int frames = 3;
-        frames = (bigImg.getWidth()%width) - 1;
+        frames = (bigImg.getWidth() % width) - 1;
         //1 for black border
         int imgNum = spriteState;
         if (imgNum > 2) {
@@ -169,16 +164,70 @@ public class Character extends OnScreenObject {
 
         g = bigImg.getSubimage(xStart, yStart, width, height);
 
-        if (currentlyMoving) {
-            spriteClock++;
+        spriteClock++;
 
-            if (spriteClock % (rotateRate/frames) == 0) {
-                spriteState++;
-            }
-            if (spriteState == frames) {
+        if (spriteClock % (rotateRate / frames) == 0) {
+            spriteState++;
+        }
+        if (spriteState == frames) {
+            if (spriteLoop) {
                 spriteState = 0;
             }
+            else{
+                setAnimation("walk");
+            }
         }
+
     }
 //**/
+
+    public void setAnimation(String code) {
+        spriteState = 0;
+        spriteClock = 0;
+        spriteMode = code;
+    }
+
+    public String getAnimation() {
+        return spriteMode;
+    }
+
+    public String determineAnimation() {
+        String spritePath = "";
+        if (spriteMode.compareToIgnoreCase("walk") == 0) {
+            spriteLoop = true;
+            if (direction == 1) {
+                spritePath = CHARArt.WALKING_1;
+            } else if (direction == 2) {
+                spritePath = CHARArt.WALKING_2;
+            } else if (direction == 3) {
+                spritePath = CHARArt.WALKING_3;
+            } else if (direction == 4) {
+                spritePath = CHARArt.WALKING_4;
+            }
+        } else if (spriteMode.compareToIgnoreCase("attack") == 0) {
+            spriteLoop = false;
+            if (direction == 1) {
+                spritePath = CHARArt.ATTACK_1;
+            } else if (direction == 2) {
+                spritePath = CHARArt.ATTACK_2;
+            } else if (direction == 3) {
+                spritePath = CHARArt.ATTACK_3;
+            } else if (direction == 4) {
+                spritePath = CHARArt.ATTACK_4;
+            }
+
+        } else if (spriteMode.compareToIgnoreCase("flinch") == 0) {
+            if (direction == 1) {
+                spritePath = CHARArt.ATTACK_1;
+            } else if (direction == 2) {
+                spritePath = CHARArt.ATTACK_2;
+            } else if (direction == 3) {
+                spritePath = CHARArt.ATTACK_3;
+            } else if (direction == 4) {
+                spritePath = CHARArt.ATTACK_4;
+            }
+
+        }
+        return spritePath;
+    }
 }
