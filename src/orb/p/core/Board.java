@@ -262,6 +262,12 @@ public class Board {
         int rightmost = right.getXMax() +20;
         return rightmost;
     }
+    public int getWidth(){
+        //calc how many tiles on the hypotenuse
+        Tile right = getTile(tilesLeft,tilesLeft);
+        Tile left = getTile(1,1);
+        return right.getXMax()-left.getXMin();
+    }
     public int getUpperBarrier(){
         Tile top = getTile(1,tilesRight);   
         int topmost = top.getYMin() + 20;

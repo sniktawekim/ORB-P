@@ -36,10 +36,11 @@ public class GamePanel extends LevelPanel {
 
     public GamePanel() {
         super();
+        /**
         for (int i = 0; i < 6; i++) {
             ItemBox test = new ItemBox(tiles.get(i).getXMin(), tiles.get(5).getYMin());
             tiles.get(i).setOnTop(test);
-        }
+        }*/
         playMusic();
 
         //Obviously for testing
@@ -163,19 +164,19 @@ public class GamePanel extends LevelPanel {
         //Local Game
         if (TempNetworkStarter.isLocal) {
             isLocal = true;
-            testCharacter(localPlayerId, 3, 48);
+            testCharacter(localPlayerId, 11, 11);
         } //Host Game
         else if (host == null || host.isEmpty()) { //
             comm = new Server(this);
             comm.start();
             isClient = false;
-            testCharacter(localPlayerId, 3, 48);
+            testCharacter(localPlayerId, 12, 12);
         } //Join Game
         else {
             comm = new Client(this, host);
             comm.sendMessage(localPlayerId);
             comm.start();
-            testCharacter(localPlayerId, 3, 49);
+            testCharacter(localPlayerId, 3, 3);
         }
 
     }

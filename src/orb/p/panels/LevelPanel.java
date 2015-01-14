@@ -41,7 +41,7 @@ public abstract class LevelPanel extends MPanel {
     }
     @Override
     protected void paintBackground(Graphics g) {
-        backgrounds.paint(g, xOffset, yOffset, canvasWidth, canvasHeight, this);
+        backgrounds.paint(g, xOffset, yOffset, currentBoard.getWidth(), currentBoard.getLowerBarrier(), this);
     }
 
     protected void paintObjects(Graphics g) {
@@ -107,8 +107,22 @@ public abstract class LevelPanel extends MPanel {
         bgiPath = gBoard.getBGI();
         title = gBoard.title;
         ArrayList<String> bgPaths = new ArrayList();
-        bgPaths.add(bgiPath);
-        backgrounds = new Parallaxer(bgPaths);
+        ArrayList<Integer> startingOffsets = new ArrayList();
+        
+        String backdrop = ORBP.libraryPath+"pics/backgrounds/tronGroundOuter.png";
+        String layer1= ORBP.libraryPath+"pics/backgrounds/large.png";
+        String layer2= ORBP.libraryPath+"pics/backgrounds/gamePanel2.png";
+        bgPaths.add(backdrop);
+        bgPaths.add(layer1);
+        bgPaths.add(layer2);
+        startingOffsets.add(0);
+        startingOffsets.add(0);
+        startingOffsets.add(-1*3667/2);
+        startingOffsets.add(0);
+        startingOffsets.add(2200);
+        startingOffsets.add(400);
+        
+        backgrounds = new Parallaxer(bgPaths, startingOffsets);
         
     }
 

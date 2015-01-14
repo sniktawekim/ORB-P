@@ -21,11 +21,13 @@ public class Parallaxer {
 
     private ArrayList<Image> backgrounds;
     private ArrayList<Integer> sizes;
+    private ArrayList<Integer> startingOffsets;
     BufferedImage current;
 
-    public Parallaxer(ArrayList<String> paths) {
+    public Parallaxer(ArrayList<String> paths, ArrayList<Integer> sOffsets) {
         backgrounds = new ArrayList();
         sizes = new ArrayList();
+        startingOffsets = new ArrayList();
         for (int i = 0; i < paths.size(); i++) {
             Toolkit toolkit = Toolkit.getDefaultToolkit();
             try {
@@ -40,35 +42,34 @@ public class Parallaxer {
             sizes.add(width);
             sizes.add(height);
         }
+        for (int i = 0; i < sOffsets.size(); i++) {
+            startingOffsets.add(sOffsets.get(i));
+        }
     }
 
-    public void paint(Graphics g, int boardXOffset, int boardYOffset, int boardWidth, int boardHeight, ImageObserver obs) {
-        int bgxOffset = 0;
-        int bgyOffset = 0;
+    public void paint(Graphics g, int xOffset, int yOffset, int boardWidth, int boardHeight, ImageObserver obs) {
+        double bgxOffset = 0;
+        double bgyOffset = 0;
+        double boardXOffset = (double) xOffset;
+        double boardYOffset = (double) yOffset;
+
         try {//try to paint background image
             for (int i = 0; i < backgrounds.size(); i++) {
-                int bgWidth = sizes.get(i*2);
-                int bgHeight = sizes.get((i*2)+1);
-                //using the size/offset ratio of the board to calc the bg offsets
-                bgxOffset = boardXOffset*bgWidth/boardWidth;
-                bgyOffset = boardYOffset*bgHeight/boardHeight;
-                //if the offset is going to push us past the edge, we need to stop it
-                if(bgxOffset+bgWidth<Properties.SCREEN_WIDTH){//this catches the right bound
-                    System.out.println("x edge");
-                    bgxOffset =bgWidth - Properties.SCREEN_WIDTH;
+                int bgWidth = sizes.get(i * 2);//only the even numbers
+                int bgHeight = sizes.get((i * 2) + 1);//only the odd numbers
+
+                if (i != 0) {//we don't want the very backdrop to move
+                    //using the size/offset ratio of the board to calc the bg offsets
+
+                    bgxOffset += (double) i * .3 * boardXOffset * bgWidth / (double) boardWidth;
+
+                    //System.out.println("board width:" + boardWidth + "bgWidth: "+bgWidth);
+                    bgyOffset += boardYOffset * bgHeight / (double) boardHeight;
+
                 }
-                if(bgxOffset>0){
-                    bgxOffset = 0;
-                }
-                
-                
-                if(bgyOffset+bgHeight<Properties.SCREEN_HEIGHT){
-                    System.out.println("y edge");
-                    bgyOffset =bgHeight - Properties.SCREEN_HEIGHT;
-                }
-                
-                
-                g.drawImage(current, bgxOffset, bgyOffset, obs);
+                bgxOffset += startingOffsets.get(i * 2);
+                bgyOffset += startingOffsets.get((i * 2) + 1);
+                g.drawImage(backgrounds.get(i), (int) bgxOffset, (int) bgyOffset, obs);
             }
         } catch (Exception e) {//if it fails, paint a blue rectangle
             System.out.println("PARALLAX ERROR");
