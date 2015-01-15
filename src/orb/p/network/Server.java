@@ -63,7 +63,7 @@ public class Server extends Communicator {
 
                 connectionSocket = welcomeSocket.accept();
                 connections.add(connectionSocket);
-                ClientHandler clientHandler = new ClientHandler(this, connectionSocket);
+                ClientHandler clientHandler = new ClientHandler(this,gPanel, connectionSocket);
                 
                 //TODO: Better thread control
                 Thread clientThread = new Thread(clientHandler);

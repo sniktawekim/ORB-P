@@ -3,11 +3,8 @@ package orb.p.panels;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.swing.JOptionPane;
-import orb.p.ORBP;
 import orb.p.art.CHARArt;
 import orb.p.art.HUDArt;
-import orb.p.core.ItemBox;
 import orb.p.core.Tile;
 import orb.p.network.Client;
 import orb.p.network.Server;
@@ -32,7 +29,7 @@ public class GamePanel extends LevelPanel {
     Character localPlayer;
     Communicator comm;
 
-    HashMap<String, Character> onlinePlayers = new HashMap<>();
+    public HashMap<String, Character> onlinePlayers = new HashMap<>();
 
     public GamePanel() {
         super();
