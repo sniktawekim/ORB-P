@@ -64,11 +64,14 @@ public class Parallaxer {
                     bgxOffset += (double) i * .3 * boardXOffset * bgWidth / (double) boardWidth;
 
                     //System.out.println("board width:" + boardWidth + "bgWidth: "+bgWidth);
-                    bgyOffset += boardYOffset * bgHeight / (double) boardHeight;
+                    bgyOffset += i*.3 *boardYOffset * bgHeight / (double) boardHeight;
 
                 }
                 bgxOffset += startingOffsets.get(i * 2);
                 bgyOffset += startingOffsets.get((i * 2) + 1);
+                
+                
+                
                 g.drawImage(backgrounds.get(i), (int) bgxOffset, (int) bgyOffset, obs);
             }
         } catch (Exception e) {//if it fails, paint a blue rectangle

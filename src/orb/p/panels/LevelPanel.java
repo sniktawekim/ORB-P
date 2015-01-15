@@ -109,9 +109,9 @@ public abstract class LevelPanel extends MPanel {
         ArrayList<String> bgPaths = new ArrayList();
         ArrayList<Integer> startingOffsets = new ArrayList();
         
-        String backdrop = ORBP.libraryPath+"pics/backgrounds/tronGroundOuter.png";
-        String layer1= ORBP.libraryPath+"pics/backgrounds/large.png";
-        String layer2= ORBP.libraryPath+"pics/backgrounds/gamePanel2.png";
+        String backdrop = ORBP.libraryPath+"pics/backgrounds/backDrop.png";
+        String layer1= ORBP.libraryPath+"pics/backgrounds/layer1.png";
+        String layer2= ORBP.libraryPath+"pics/backgrounds/layer2.png";
         bgPaths.add(backdrop);
         bgPaths.add(layer1);
         bgPaths.add(layer2);
@@ -119,8 +119,8 @@ public abstract class LevelPanel extends MPanel {
         startingOffsets.add(0);
         startingOffsets.add(-1*3667/2);
         startingOffsets.add(0);
-        startingOffsets.add(2200);
-        startingOffsets.add(400);
+        startingOffsets.add(0);
+        startingOffsets.add(-11);
         
         backgrounds = new Parallaxer(bgPaths, startingOffsets);
         
