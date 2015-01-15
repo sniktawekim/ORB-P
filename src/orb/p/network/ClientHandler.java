@@ -45,6 +45,7 @@ public class ClientHandler implements Runnable {
                         server.sendMessage(playerId + "," + player.getCurrentTile().xLoc+ "," +player.getCurrentTile().yLoc);
                     }
                     server.loadCharacter(message, 12, 12);
+                    server.sendMessage(message+ "," + 12+ "," + 12);
                 } else {
                     //Needs to be done in a separate class
                     String[] values = message.split(",");
@@ -53,6 +54,7 @@ public class ClientHandler implements Runnable {
                     int x = Integer.parseInt(values[1]);
                     int y = Integer.parseInt(values[2]);
                     server.moveCharacter(charId, x, y);
+                    server.sendMessage(message+ "," + x+ "," + y);
                 }
             }
         } catch (Exception e) {
