@@ -3,7 +3,7 @@
  * of information relating to a specific operation. 
  */
 
-package orb.p.network;
+package orb.p.network.messages;
 
 /**
  *

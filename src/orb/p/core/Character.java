@@ -1,13 +1,13 @@
 package orb.p.core;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import orb.p.ORBP;
 import orb.p.art.CHARArt;
@@ -34,6 +34,8 @@ public class Character extends OnScreenObject {
     private String spriteMode = "walk";
     private int spriteClock = 0;
     private int rotateRate = 135;
+    //TODO: Selected a better font
+    Font test = new Font("TimesRoman", Font.BOLD, 14);
 
     public Character(String playerID, Tile startTile, String characterPath) {
         //TODO Display position is off
@@ -132,6 +134,13 @@ public class Character extends OnScreenObject {
     @Override
     public void paint(int xOffset, int yOffset, Graphics g, ImageObserver lulz, IClick mouse) {
         super.paint(xOffset, yOffset, g, lulz, mouse);
+        int xpos = getXMin() + xOffset;
+        int ypos = getYMin() + yOffset;
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setColor(Color.GREEN);
+        g2.setFont(test);
+        //The placement needs to be calculated better
+        g2.drawString(playerID, xpos + 5, ypos + 25);
         update();
     }
 
@@ -172,8 +181,7 @@ public class Character extends OnScreenObject {
         if (spriteState == frames) {
             if (spriteLoop) {
                 spriteState = 0;
-            }
-            else{
+            } else {
                 setAnimation("walk");
             }
         }

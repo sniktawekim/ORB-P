@@ -178,7 +178,7 @@ public class GamePanel extends LevelPanel {
 
     }
 
-    public void testCharacter(String playerId, int x, int y) {
+    synchronized public void testCharacter(String playerId, int x, int y) {
 
         Tile startingTile;
 

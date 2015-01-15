@@ -1,5 +1,7 @@
 package orb.p.network;
 
+import orb.p.network.messages.Message;
+
 /**
  *
  * @author blainezor
