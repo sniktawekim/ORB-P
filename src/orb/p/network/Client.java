@@ -66,7 +66,7 @@ public class Client extends Communicator {
 
                 if (!isPlayerConnected) {
                     isPlayerConnected = true;
-                    gPanel.testCharacter(message, 3, 48);
+                    gPanel.testCharacter(message, 12, 12);
                 } else {
                     //Create class to handle message types 
                     String[] values = message.split(",");

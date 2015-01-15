@@ -5,12 +5,12 @@
  */
 package orb.p.network;
 
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import orb.p.panels.GamePanel;
 
 /**
@@ -19,32 +19,32 @@ import orb.p.panels.GamePanel;
  */
 public class Server extends Communicator {
 
-    private boolean isPlayerConnected = false;
     private boolean isRunning = true;
+    private ArrayList<Socket> connections = new ArrayList<Socket>();
     private Socket connectedPlayer;
-
+    private InetSocketAddress testAddress;
     GamePanel gPanel;
 
     public Server(GamePanel gPanel) {
 
         this.gPanel = gPanel;
     }
-    
+
     @Override
     public void sendMessage(String message) {
         try {
-            DataOutputStream outToServer = new DataOutputStream(connectedPlayer.getOutputStream());
-            outToServer.writeBytes(message + "\n");
+            for (Socket connection : connections) {
+                DataOutputStream outToServer = new DataOutputStream(connection.getOutputStream());
+                outToServer.writeBytes(message + "\n");
+            }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
+    
     @Override
     public void run() {
-
-        String message = null;
         ServerSocket welcomeSocket = null;
 
         try {
@@ -52,7 +52,7 @@ public class Server extends Communicator {
 
         } catch (IOException e) {
             e.printStackTrace();
-            
+
             //Do not run the server if an error occured. 
             isRunning = false;
         }
@@ -62,25 +62,13 @@ public class Server extends Communicator {
                 Socket connectionSocket = null;
 
                 connectionSocket = welcomeSocket.accept();
-                BufferedReader inFromClient
-                        = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-                connectedPlayer = connectionSocket;
-                while (connectionSocket.isConnected()) {
-                    message = inFromClient.readLine();
-                    if (!isPlayerConnected) {
-                        isPlayerConnected = true;                        
-                        gPanel.testCharacter(message, 3, 49);
-                        sendMessage(gPanel.getLocalPlayerId());
-                    } else {
-                        //Needs to be done in a separate class
-                        String[] values = message.split(",");
-
-                        String charId = values[0];
-                        int x = Integer.parseInt(values[1]);
-                        int y = Integer.parseInt(values[2]);
-                        gPanel.moveCharacter(charId, x, y);
-                    }
-                }
+                connections.add(connectionSocket);
+                ClientHandler clientHandler = new ClientHandler(this, connectionSocket);
+                
+                //TODO: Better thread control
+                Thread clientThread = new Thread(clientHandler);
+                clientThread.start();
+                
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -88,4 +76,20 @@ public class Server extends Communicator {
 
     }
 
+    private Socket getSocket() throws Exception {
+        if (connectedPlayer == null || connectedPlayer.isClosed()) {
+            connectedPlayer = new Socket(testAddress.getHostName(), testAddress.getPort());
+        }
+
+        return connectedPlayer;
+    }
+    public void loadCharacter(String charName, int x, int y)
+    {
+        gPanel.testCharacter(charName, x, y);
+    }
+    
+    public void moveCharacter(String charName, int x, int y)
+    {
+        gPanel.moveCharacter(charName, x, y);
+    }
 }

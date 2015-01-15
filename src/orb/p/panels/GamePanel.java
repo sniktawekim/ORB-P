@@ -176,7 +176,7 @@ public class GamePanel extends LevelPanel {
             comm = new Client(this, host);
             comm.sendMessage(localPlayerId);
             comm.start();
-            testCharacter(localPlayerId, 3, 3);
+            testCharacter(localPlayerId, 12, 12);
         }
 
     }
