@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import orb.p.core.Board;
 import orb.p.sounds.Music;
 import orb.p.ORBP;
+import orb.p.Properties;
 import orb.p.core.Tile;
 import orb.p.core.HudObject;
 
@@ -41,7 +42,7 @@ public abstract class LevelPanel extends MPanel {
     }
     @Override
     protected void paintBackground(Graphics g) {
-        backgrounds.paint(g, xOffset, yOffset, currentBoard.getWidth(), currentBoard.getLowerBarrier(), this);
+        backgrounds.paint(g, xOffset, yOffset, currentBoard.getRightBarrier(), currentBoard.getLowerBarrier(), this);
     }
 
     protected void paintObjects(Graphics g) {
@@ -108,6 +109,7 @@ public abstract class LevelPanel extends MPanel {
         title = gBoard.title;
         ArrayList<String> bgPaths = new ArrayList();
         ArrayList<Integer> startingOffsets = new ArrayList();
+        ArrayList<Integer> free = new ArrayList();
         
         String backdrop = ORBP.libraryPath+"pics/backgrounds/backDrop.png";
         String layer1= ORBP.libraryPath+"pics/backgrounds/layer1.png";
@@ -121,8 +123,11 @@ public abstract class LevelPanel extends MPanel {
         startingOffsets.add(0);
         startingOffsets.add(0);
         startingOffsets.add(-11);
+        free.add(0);
+        free.add(0);
+        free.add(0);
         
-        backgrounds = new Parallaxer(bgPaths, startingOffsets);
+        backgrounds = new Parallaxer(bgPaths, startingOffsets, free);
         
     }
 
@@ -144,18 +149,23 @@ public abstract class LevelPanel extends MPanel {
 
     private void shift(int x, int y) {
 
+
         if (!(-1 * xOffset + canvasWidth > currentBoard.getRightBarrier()) && x < 0) {//RIGHT ARROW PRESSED, SHIFTING BOARD LEFT
             xOffset += x;
+            backgrounds.shift((double) x,0);
         }
         if (!(xOffset + canvasWidth > currentBoard.getRightBarrier()) && x > 0) {//LEFT ARROW PRESSED, SHIFTING BOARD RIGHT
             xOffset += x;
+            backgrounds.shift((double) x,0);
         }
 
         if ((yOffset < currentBoard.getUpperBarrier()) && y > 0) {//UP ARROW PRESSED, SHIFTING BOARD DOWN
             yOffset += y;
+            backgrounds.shift(0,(double) y);
         }
         if (!((-1 * yOffset) + canvasHeight > currentBoard.getLowerBarrier()) && y < 0) {//DOWN ARROW PRESSED, SHIFTING BOARD UP
             yOffset += y;
+            backgrounds.shift(0,(double) y);
         }
 
     }

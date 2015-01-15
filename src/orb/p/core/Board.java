@@ -212,7 +212,13 @@ public class Board {
     }
 
     public Tile getTile(int x, int y) {
+        try{
         return tiles[x-1][tilesLeft - y];
+        } catch(Exception e){
+            System.out.println("TILE OUT OF BOUNDS: ("+x+","+y+")");
+            System.exit(0);
+            return null;
+        }
     }
 
     private void fillBoardArray() {

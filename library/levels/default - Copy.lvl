@@ -18,8 +18,8 @@
 </def>
 <board>
 <title>default</title>
-<width>40</width>
-<height>40</height>
+<width>50</width>
+<height>50</height>
 <default>0</default>
 <fill>true</fill>
 <overwrite>

@@ -20,8 +20,9 @@ public class Properties {
     public static final int SCREEN_X_START = 808;
     public static final int SCREEN_Y_START = 40;
     public static final int SCREEN_WIDTH = 1300;
+    public static final int SCREEN_HEIGHT = 800;
     public static final int HALF_WIDTH = 650;
     public static final int HALF_HEIGHT = 400;
-    public static final int SCREEN_HEIGHT = 800; //guess??
+     //guess??
     
 }
