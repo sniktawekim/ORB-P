@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.ArrayList;
 import orb.p.panels.GamePanel;
 
 /**
@@ -20,12 +21,12 @@ public class Client extends Communicator {
     private boolean isPlayerConnected = false;
     private boolean isRunning = true;
     Socket clientSocket;
+    //ArrayList<String> connctedPlayerNames = new ArrayList<String>();
     //Host Address
     private String host;
     GamePanel gPanel;
-    
-    public Client(GamePanel gPanel, String host)
-    {
+
+    public Client(GamePanel gPanel, String host) {
         this.gPanel = gPanel;
         this.host = host;
     }
@@ -63,19 +64,23 @@ public class Client extends Communicator {
                 BufferedReader inFromClient
                         = new BufferedReader(new InputStreamReader(getSocket().getInputStream()));
                 message = inFromClient.readLine();
+                //Create class to handle message types 
+                String[] values = message.split(",");
 
-                if (!isPlayerConnected) {
-                    isPlayerConnected = true;
-                    gPanel.testCharacter(message, 12, 12);
-                } else {
-                    //Create class to handle message types 
-                    String[] values = message.split(",");
+                String charId = values[0];
+                if (!gPanel.onlinePlayers.containsKey(charId)) {
+                    int x = Integer.parseInt(values[1]);
+                    int y = Integer.parseInt(values[2]);
+                    gPanel.testCharacter(charId, x, y);
+                    //connctedPlayerNames.add(charId);
+                }
 
-                    String charId = values[0];
+               else if (values.length >= 3) {
                     int x = Integer.parseInt(values[1]);
                     int y = Integer.parseInt(values[2]);
                     gPanel.moveCharacter(charId, x, y);
                 }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
