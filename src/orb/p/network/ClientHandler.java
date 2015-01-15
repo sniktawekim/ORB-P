@@ -43,6 +43,8 @@ public class ClientHandler implements Runnable {
                     for (String playerId : gPanel.onlinePlayers.keySet()) {
                         Character player = gPanel.onlinePlayers.get(playerId);
                         server.sendMessage(playerId + "," + player.getCurrentTile().xLoc+ "," +player.getCurrentTile().yLoc);
+                        //Ghetto work around until I find out why it's not working
+                        Thread.sleep(2000);
                     }
                     server.loadCharacter(message, 12, 12);
                     server.sendMessage(message+ "," + 12+ "," + 12);
