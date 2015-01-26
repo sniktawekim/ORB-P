@@ -10,7 +10,7 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 import orb.p.ORBP;
 import orb.p.core.CharStats;
-import orb.p.core.HudObject;
+import orb.p.OnScreenObjects.*;
 
 /**
  *

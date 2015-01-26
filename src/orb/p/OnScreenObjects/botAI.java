@@ -1,10 +1,9 @@
-package orb.p.core;
-
+package orb.p.OnScreenObjects;
 /**
  * AI FOR TERMINATOR
  * @author Michael Watkins
  */
-public class botAI extends Character{
+public class botAI extends Person{
     public double panic = 33;
 
     public botAI(String charId, Tile startTile, String characterPath, int panicAt) {

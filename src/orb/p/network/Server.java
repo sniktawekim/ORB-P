@@ -83,13 +83,13 @@ public class Server extends Communicator {
 
         return connectedPlayer;
     }
-    public void loadCharacter(String charName, int x, int y)
+    public void loadPerson(String charName, int x, int y)
     {
-        gPanel.testCharacter(charName, x, y);
+        gPanel.testPerson(charName, x, y);
     }
     
-    public void moveCharacter(String charName, int x, int y)
+    public void movePerson(String charName, int x, int y)
     {
-        gPanel.moveCharacter(charName, x, y);
+        gPanel.movePerson(charName, x, y);
     }
 }

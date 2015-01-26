@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import orb.p.ORBP;
 import orb.p.art.HUDArt;
-import orb.p.core.HudObject;
+import orb.p.OnScreenObjects.*;
 import orb.p.network.temp.TempNetworkStarter;
 
 

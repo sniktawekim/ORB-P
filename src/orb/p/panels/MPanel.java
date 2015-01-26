@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import orb.p.listeners.IClick;
 import orb.p.listeners.IPress;
 import orb.p.ORBP;
-import orb.p.core.HudObject;
+import orb.p.OnScreenObjects.*;
 import orb.p.core.HudString;
 
 /**

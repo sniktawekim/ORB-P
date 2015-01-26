@@ -5,12 +5,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import orb.p.art.CHARArt;
 import orb.p.art.HUDArt;
-import orb.p.core.Tile;
+import orb.p.OnScreenObjects.*;
 import orb.p.network.Client;
 import orb.p.network.Server;
 import orb.p.network.Communicator;
-import orb.p.core.Character;
-import orb.p.core.HudObject;
+
 import orb.p.network.temp.TempNetworkStarter;
 
 /**
@@ -26,10 +25,10 @@ public class GamePanel extends LevelPanel {
     private boolean resetMoves = false;
     private String localPlayerId;
 
-    Character localPlayer;
+    Person localPlayer;
     Communicator comm;
 
-    public HashMap<String, Character> onlinePlayers = new HashMap<>();
+    public HashMap<String, Person> onlinePlayers = new HashMap<>();
 
     public GamePanel() {
         super();
@@ -59,7 +58,7 @@ public class GamePanel extends LevelPanel {
     }
 
     protected void hudAction(HudObject hudOb) {
-        Character isMoving = onlinePlayers.get(localPlayerId);
+        Person isMoving = onlinePlayers.get(localPlayerId);
         super.hudAction(hudOb);
         if (hudOb.getAction().compareToIgnoreCase("menu") == 0) {
             status = "menu";
@@ -83,8 +82,8 @@ public class GamePanel extends LevelPanel {
      * @param tileX
      * @param tileY
      */
-    public void moveCharacter(String characterId, int tileX, int tileY) {
-        Character characterToMove = onlinePlayers.get(characterId);
+    public void movePerson(String characterId, int tileX, int tileY) {
+        Person characterToMove = onlinePlayers.get(characterId);
         Tile currentTile = currentBoard.getTile(tileX, tileY);
         if (resetMoves == true) {
             characterToMove.resetMoves();
@@ -108,14 +107,14 @@ public class GamePanel extends LevelPanel {
     @Override
     protected void handleClickedTile(Tile clicked) {
         if (moveMode) {
-            moveCharacter(localPlayerId, clicked.xLoc, clicked.yLoc);
+            movePerson(localPlayerId, clicked.xLoc, clicked.yLoc);
             if (!isLocal) {
                 comm.sendMessage(localPlayerId + "," + clicked.xLoc + "," + clicked.yLoc);
             }
         }
     }
 
-    public boolean checkMoveLegal(Character currentPlayer, Tile clicked) {
+    public boolean checkMoveLegal(Person currentPlayer, Tile clicked) {
         int characterXLocation = currentPlayer.getCurrentTile().getNESWLoc();
         int characterYLocation = currentPlayer.getCurrentTile().getNWSELoc();
 
@@ -161,30 +160,30 @@ public class GamePanel extends LevelPanel {
         //Local Game
         if (TempNetworkStarter.isLocal) {
             isLocal = true;
-            testCharacter(localPlayerId, 11, 11);
+            testPerson(localPlayerId, 11, 11);
         } //Host Game
         else if (host == null || host.isEmpty()) { //
             comm = new Server(this);
             comm.start();
             isClient = false;
-            testCharacter(localPlayerId, 12, 12);
+            testPerson(localPlayerId, 12, 12);
         } //Join Game
         else {
             comm = new Client(this, host);
             comm.sendMessage(localPlayerId);
             comm.start();
-            testCharacter(localPlayerId, 12, 12);
+            testPerson(localPlayerId, 12, 12);
         }
 
     }
 
-    synchronized public void testCharacter(String playerId, int x, int y) {
+    synchronized public void testPerson(String playerId, int x, int y) {
 
         Tile startingTile;
 
         startingTile = currentBoard.getTile(x, y);
 
-        Character newChar = new Character(playerId, startingTile, CHARArt.CLOUD);
+        Person newChar = new Person(playerId, startingTile, CHARArt.CLOUD);
         startingTile.setOnTop(newChar);
         onlinePlayers.put(playerId, newChar);
 

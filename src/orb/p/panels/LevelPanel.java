@@ -7,8 +7,7 @@ import orb.p.core.Board;
 import orb.p.sounds.Music;
 import orb.p.ORBP;
 import orb.p.Properties;
-import orb.p.core.Tile;
-import orb.p.core.HudObject;
+import orb.p.OnScreenObjects.*;
 
 /**
  *

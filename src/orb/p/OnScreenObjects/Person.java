@@ -1,4 +1,4 @@
-package orb.p.core;
+package orb.p.OnScreenObjects;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -9,14 +9,16 @@ import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import orb.p.ORBP;
+import orb.p.*;
 import orb.p.art.CHARArt;
+import orb.p.core.CharStats;
 import orb.p.listeners.IClick;
+
 
 /**
  * @author blainezor
  */
-public class Character extends OnScreenObject {
+public class Person extends OnScreenObject {
 
     //TODO Character stats
     Tile currentTile;
@@ -37,7 +39,7 @@ public class Character extends OnScreenObject {
     //TODO: Selected a better font
     Font test = new Font("TimesRoman", Font.BOLD, 14);
 
-    public Character(String playerID, Tile startTile, String characterPath) {
+    public Person(String playerID, Tile startTile, String characterPath) {
         //TODO Display position is off
         super(startTile.xLoc, startTile.yLoc, 120, 140);
         stats = new CharStats("Name", 2, 2, 3, 1, 100, playerID);

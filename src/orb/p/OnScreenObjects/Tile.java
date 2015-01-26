@@ -1,4 +1,4 @@
-package orb.p.core;
+package orb.p.OnScreenObjects;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -9,6 +9,7 @@ import orb.p.listeners.IClick;
 import java.awt.Graphics;
 import java.awt.image.ImageObserver;
 import orb.p.ORBP;
+import orb.p.Properties;
 
 /**
  *
@@ -21,15 +22,17 @@ public class Tile extends OnScreenObject {
     public int yLoc;
     public int id;
     OnScreenObject onTop = null;
+    OnScreenObject leftCurtain = null;
+    OnScreenObject rightCurtain = null;
 
     //tile width is 120 and height is 60
     public Tile(int xLocation, int yLocation) {
-        super(xLocation, yLocation, 120, 100);
-        containerXMin = -120;
-        containerYMin = -85;
-        setGraphic(ORBP.libraryPath + "pics/tiles/tile001.png");
-        setHighGraphic("pics/highlights/tileHighlight.png");
-        setHoverGraphic(ORBP.libraryPath + "pics/highlights/tileHover.png");
+        super(xLocation, yLocation, Properties.TILE_WIDTH,Properties.TILE_HEIGHT);
+        containerXMin = -1 * Properties.TILE_RIGHT_BIND;
+        containerYMin = -1 * Properties.TILE_LOWER_BIND;
+        setGraphic(Properties.HOLE);
+        setHighGraphic(Properties.HIGHLIGHT);
+        setHoverGraphic(Properties.HOVER);
     }
 
     @Override
@@ -105,6 +108,7 @@ public class Tile extends OnScreenObject {
 
     @Override
     protected void calcHighlightStatus(IClick mouse) {
+        //if the mouse is currently pressed and we are on the level designer panel
         if (mouse.getPress() && ORBP.currentCanvas.compareToIgnoreCase("ld") == 0) {
             setHighlight(true);
         }
@@ -124,6 +128,9 @@ public class Tile extends OnScreenObject {
         onTop = toPlace;
         onTop.setXMin(xmin + toPlace.xOffset);
         onTop.setYMin(ymin + ysize - toPlace.getYSize()+8);
+    }
+    public void setLeftCurtain(String path){
+        //leftCurtain = new OnScreenObject(xmin,ymin+(int)(Properties.TILE_HEIGHT/2),Properties.TILE_WIDTH/2,Properties.CURTAIN_HEIGHT);
     }
 
     public void removeFromTop() {

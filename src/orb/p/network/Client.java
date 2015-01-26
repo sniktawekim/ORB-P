@@ -71,14 +71,14 @@ public class Client extends Communicator {
                 if (!gPanel.onlinePlayers.containsKey(charId)) {
                     int x = Integer.parseInt(values[1]);
                     int y = Integer.parseInt(values[2]);
-                    gPanel.testCharacter(charId, x, y);
+                    gPanel.testPerson(charId, x, y);
                     //connctedPlayerNames.add(charId);
                 }
 
                else if (values.length >= 3) {
                     int x = Integer.parseInt(values[1]);
                     int y = Integer.parseInt(values[2]);
-                    gPanel.moveCharacter(charId, x, y);
+                    gPanel.movePerson(charId, x, y);
                 }
 
             } catch (Exception e) {

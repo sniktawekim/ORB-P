@@ -6,7 +6,7 @@
 
 package orb.p.panels;
 
-import orb.p.core.HudObject;
+import orb.p.OnScreenObjects.*;
 
 /**
  *

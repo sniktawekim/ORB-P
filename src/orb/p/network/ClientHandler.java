@@ -9,7 +9,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import orb.p.panels.GamePanel;
-import orb.p.core.Character;
+import orb.p.OnScreenObjects.*;
 
 /**
  *
@@ -41,12 +41,12 @@ public class ClientHandler implements Runnable {
                 if (!playerConnected) {
                     playerConnected = true;                    
                     for (String playerId : gPanel.onlinePlayers.keySet()) {
-                        Character player = gPanel.onlinePlayers.get(playerId);
+                        Person player = gPanel.onlinePlayers.get(playerId);
                         server.sendMessage(playerId + "," + player.getCurrentTile().xLoc+ "," +player.getCurrentTile().yLoc);
                         //Ghetto work around until I find out why it's not working
                         Thread.sleep(2000);
                     }
-                    server.loadCharacter(message, 12, 12);
+                    server.loadPerson(message, 12, 12);
                     server.sendMessage(message+ "," + 12+ "," + 12);
                 } else {
                     //Needs to be done in a separate class
@@ -55,7 +55,7 @@ public class ClientHandler implements Runnable {
                     String charId = values[0];
                     int x = Integer.parseInt(values[1]);
                     int y = Integer.parseInt(values[2]);
-                    server.moveCharacter(charId, x, y);
+                    server.movePerson(charId, x, y);
                     server.sendMessage(message+ "," + x+ "," + y);
                 }
             }

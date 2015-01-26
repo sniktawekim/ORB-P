@@ -1,4 +1,4 @@
-package orb.p.core;
+package orb.p.OnScreenObjects;
 
 import orb.p.listeners.IClick;
 import java.awt.Color;
