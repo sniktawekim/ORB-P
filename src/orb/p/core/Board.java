@@ -182,7 +182,7 @@ public class Board {
             }
             if (cLine.contains("<curt>")) {
                 cLine = removeXML(cLine);
-                TileCurtains toCurt = new TileCurtains(toadd);
+                TileCurtains toCurt = new TileCurtains(toadd, cLine);
                 //need to process picture path!
                 toadd.setWalls(toCurt);
             }

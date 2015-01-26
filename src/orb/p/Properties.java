@@ -46,4 +46,5 @@ public class Properties {
     
     //curtain paths
     public static final String DEFAULT_CPATH = "pics/curtains/default.png";
+    public static final String CURTAIN_PREFIX = "pics/curtains/";
 }
