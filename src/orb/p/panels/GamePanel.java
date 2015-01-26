@@ -6,6 +6,7 @@ import java.util.HashMap;
 import orb.p.art.CHARArt;
 import orb.p.art.HUDArt;
 import orb.p.OnScreenObjects.*;
+import orb.p.Properties;
 import orb.p.network.Client;
 import orb.p.network.Server;
 import orb.p.network.Communicator;
@@ -160,19 +161,19 @@ public class GamePanel extends LevelPanel {
         //Local Game
         if (TempNetworkStarter.isLocal) {
             isLocal = true;
-            testPerson(localPlayerId, 11, 11);
+            testPerson(localPlayerId, Properties.CHARX, Properties.CHARY);
         } //Host Game
         else if (host == null || host.isEmpty()) { //
             comm = new Server(this);
             comm.start();
             isClient = false;
-            testPerson(localPlayerId, 12, 12);
+            testPerson(localPlayerId, 14, 14);
         } //Join Game
         else {
             comm = new Client(this, host);
             comm.sendMessage(localPlayerId);
             comm.start();
-            testPerson(localPlayerId, 12, 12);
+            testPerson(localPlayerId, 13, 14);
         }
 
     }

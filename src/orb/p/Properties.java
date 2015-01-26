@@ -14,6 +14,10 @@ import static orb.p.ORBP.screenWidth;
  * @author Omnicis
  */
 public class Properties {
+    
+    public static final int CHARX = 13;
+    public static final int CHARY = 13;
+    
     //screen size properties
     public static final int FRAME_WIDTH = 1357;
     public static final int FRAME_HEIGHT = 800;
