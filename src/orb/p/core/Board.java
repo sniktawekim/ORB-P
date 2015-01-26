@@ -180,6 +180,12 @@ public class Board {
                 cLine = removeXML(cLine);
                 toadd.setGraphic(cLine);
             }
+            if (cLine.contains("<curt>")) {
+                cLine = removeXML(cLine);
+                TileCurtains toCurt = new TileCurtains(toadd);
+                //need to process picture path!
+                toadd.setWalls(toCurt);
+            }
             i++;
             cLine = currentFile.get(i);
         }
@@ -198,7 +204,7 @@ public class Board {
                 toAdd.setID(board[i][j]);
                 toAdd.setXMin(canvasWidth / 2 - (j * 60) + (i * 60));
                 toAdd.setYMin(-15 + (35 * j) + (i * (50 - 15)));
-                toAdd.setLoc(i+1,tilesRight - j);
+                toAdd.setLoc(i+1,tilesRight - j);                
                 tiles[i][j] = toAdd;
             }
         }

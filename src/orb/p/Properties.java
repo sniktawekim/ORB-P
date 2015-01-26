@@ -37,6 +37,13 @@ public class Properties {
     public static final String HOLE = ORBP.libraryPath + "pics/tiles/tile001.png";
     public static final String HIGHLIGHT = "pics/highlights/tileHighlight.png";
     public static final String HOVER = ORBP.libraryPath + "pics/highlights/tileHover.png";
+    
+    
+    
+    //curtain properties
     public static final int CURTAIN_HEIGHT = 534;
-
+    public static final int CURTAIN_WIDTH = 60;
+    
+    //curtain paths
+    public static final String DEFAULT_CPATH = "pics/curtains/default.png";
 }

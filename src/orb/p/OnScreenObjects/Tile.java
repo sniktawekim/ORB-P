@@ -22,12 +22,11 @@ public class Tile extends OnScreenObject {
     public int yLoc;
     public int id;
     OnScreenObject onTop = null;
-    OnScreenObject leftCurtain = null;
-    OnScreenObject rightCurtain = null;
+    TileCurtains walls = null;
 
     //tile width is 120 and height is 60
     public Tile(int xLocation, int yLocation) {
-        super(xLocation, yLocation, Properties.TILE_WIDTH,Properties.TILE_HEIGHT);
+        super(xLocation, yLocation, Properties.TILE_WIDTH, Properties.TILE_HEIGHT);
         containerXMin = -1 * Properties.TILE_RIGHT_BIND;
         containerYMin = -1 * Properties.TILE_LOWER_BIND;
         setGraphic(Properties.HOLE);
@@ -72,6 +71,9 @@ public class Tile extends OnScreenObject {
         Tile copy = new Tile(getXMin(), getYMin());
         copy.setGraphic(graphPath);
         copy.terrainCost = terrainCost;
+        if (walls != null) {
+            copy.setWalls(walls.copy());
+        }
         return copy;
     }
 
@@ -127,10 +129,7 @@ public class Tile extends OnScreenObject {
     public void setOnTop(OnScreenObject toPlace) {
         onTop = toPlace;
         onTop.setXMin(xmin + toPlace.xOffset);
-        onTop.setYMin(ymin + ysize - toPlace.getYSize()+8);
-    }
-    public void setLeftCurtain(String path){
-        //leftCurtain = new OnScreenObject(xmin,ymin+(int)(Properties.TILE_HEIGHT/2),Properties.TILE_WIDTH/2,Properties.CURTAIN_HEIGHT);
+        onTop.setYMin(ymin + ysize - toPlace.getYSize() + 8);
     }
 
     public void removeFromTop() {
@@ -144,6 +143,26 @@ public class Tile extends OnScreenObject {
                 onTop.paint(xOffset, yOffset, g, lulz, mouse);
             }
         }
+        if (walls != null) {
+            walls.paint(xOffset, yOffset, g, lulz, mouse);
+
+        }
+    }
+
+    @Override
+    public void setXMin(int x) {
+        super.setXMin(x);
+        if (walls != null) {
+            walls.setHost(this);
+        }
+    }
+
+    @Override
+    public void setYMin(int y) {
+        super.setYMin(y);
+        if (walls != null) {
+            walls.setHost(this);
+        }
     }
 
     public boolean checkEmpty() {
@@ -152,5 +171,9 @@ public class Tile extends OnScreenObject {
         } else {
             return false;
         }
+    }
+
+    public void setWalls(TileCurtains toCurt) {
+        walls = toCurt;
     }
 }

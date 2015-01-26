@@ -8,7 +8,8 @@
 <tiledef>
 <id>1</id>
 <cost>1</cost>
-<path>pics/tiles/tile003.png</path>
+<path>pics/tiles/tile004.png</path>
+<curt>wallpath.png</curt>
 </tiledef>
 <tiledef>
 <id>2</id>
