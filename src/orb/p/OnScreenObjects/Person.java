@@ -11,7 +11,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import orb.p.*;
 import orb.p.art.CHARArt;
-import orb.p.core.CharStats;
+import orb.p.core.PersonStats;
 import orb.p.listeners.IClick;
 
 
@@ -23,7 +23,7 @@ public class Person extends OnScreenObject {
     //TODO Character stats
     Tile currentTile;
     public Tile prevTile; //previous tile, for direction calculations
-    protected CharStats stats;
+    protected PersonStats stats;
     boolean currentlyMoving = false;
     private int moves = 5;
     private int direction;
@@ -42,7 +42,7 @@ public class Person extends OnScreenObject {
     public Person(String playerID, Tile startTile, String characterPath) {
         //TODO Display position is off
         super(startTile.xLoc, startTile.yLoc, 120, 140);
-        stats = new CharStats("Name", 2, 2, 3, 1, 100, playerID);
+        stats = new PersonStats("Name", 2, 2, 3, 1, 100, playerID);
         xOffset = 37;
         currentTile = startTile;
         this.playerID = playerID;

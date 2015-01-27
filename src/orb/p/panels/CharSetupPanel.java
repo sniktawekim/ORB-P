@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JOptionPane;
 import orb.p.ORBP;
-import orb.p.core.CharStats;
+import orb.p.core.PersonStats;
 import orb.p.OnScreenObjects.*;
 
 /**
@@ -246,8 +246,8 @@ public class CharSetupPanel extends MPanel {
 
     private void saveCharacter() {
 
-        CharStats newCharacter = new CharStats(JOptionPane.showInputDialog("Name your character:"), moveStat, attackStat, defenseStat, drawStat, hpStat, modelPath.substring(0, modelPath.length()-6));
-        newCharacter.saveChar(status);
+        PersonStats newCharacter = new PersonStats(JOptionPane.showInputDialog("Name your character:"), moveStat, attackStat, defenseStat, drawStat, hpStat, modelPath.substring(0, modelPath.length()-6));
+        newCharacter.save(status);
         status = "menu";
     }
 
