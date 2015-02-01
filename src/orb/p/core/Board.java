@@ -2,12 +2,12 @@ package orb.p.core;
 
 
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+
 import java.util.ArrayList;
-import orb.p.*;
-import orb.p.OnScreenObjects.*;
+import orb.p.ORBP;
+import orb.p.OnScreenObjects.Tile;
+import orb.p.OnScreenObjects.TileCurtains;
+import orb.p.Properties;
 
 /**
  * @author MWatkins
