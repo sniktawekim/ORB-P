@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import orb.p.core.Board;
 import orb.p.sounds.Music;
 import orb.p.ORBP;
-import orb.p.Properties;
 import orb.p.OnScreenObjects.*;
 
 /**
@@ -37,9 +36,10 @@ public abstract class LevelPanel extends MPanel {
     }
 
     public void playMusic() {
-       // music = new Music("test");//moved to contstructor
+        // music = new Music("test");//moved to contstructor
         music.play();
     }
+
     @Override
     protected void paintBackground(Graphics g) {
         backgrounds.paint(g, xOffset, yOffset, currentBoard.getRightBarrier(), currentBoard.getLowerBarrier(), this);
@@ -55,9 +55,9 @@ public abstract class LevelPanel extends MPanel {
     }
 
     protected void checkClick() {
-        
-            super.checkClick();//checks hud clicking
-            if(anyClicked){
+
+        super.checkClick();//checks hud clicking
+        if (anyClicked) {
             if (!hudclicked) {//if hud wasn't clicked
                 int xClicked = myClick.getEX() - xOffset;
                 int yClicked = myClick.getEY() - yOffset;
@@ -69,10 +69,11 @@ public abstract class LevelPanel extends MPanel {
                     }
                 }
             }
-            }
+        }
     }
 
     protected void checkKey() {
+        super.checkKey();
         if (myPress.getKeyPressed("left")) {
             shift(10, 0);
         }
@@ -86,19 +87,12 @@ public abstract class LevelPanel extends MPanel {
             shift(0, -10);
         }
 
+
     }
 
     @Override
     protected void buildHUD() {
-        HudObject leftArrow = new HudObject(0, canvasHeight / 2, 40, 50, "pics/hud/arrows/lha.png", "lha");
-        HudObject rightArrow = new HudObject(canvasWidth - 40, canvasHeight / 2, 40, 50, "pics/hud/arrows/rha.png", "rha");
-        HudObject upArrow = new HudObject(canvasWidth / 2 - 25, 0, 50, 40, "pics/hud/arrows/uha.png", "uha");
-        HudObject downArrow = new HudObject(canvasWidth / 2 - 25, canvasHeight - 40, 50, 40, "pics/hud/arrows/dha.png", "dha");
-
-       // hudObjects.add(leftArrow);
-        //  hudObjects.add(rightArrow);
-        // hudObjects.add(upArrow);
-        // hudObjects.add(downArrow);
+       // super.buildHUD();
     }
 
     protected abstract void handleClickedTile(Tile clicked);
@@ -110,16 +104,16 @@ public abstract class LevelPanel extends MPanel {
         ArrayList<String> bgPaths = new ArrayList();
         ArrayList<Integer> startingOffsets = new ArrayList();
         ArrayList<Integer> sizes = new ArrayList();
-        
-        String backdrop = ORBP.libraryPath+"pics/backgrounds/backDrop.png";
-        String layer1= ORBP.libraryPath+"pics/backgrounds/layer1.png";
-        String layer2= ORBP.libraryPath+"pics/backgrounds/layer2.png";
+
+        String backdrop = ORBP.libraryPath + "pics/backgrounds/backDrop.png";
+        String layer1 = ORBP.libraryPath + "pics/backgrounds/layer1.png";
+        String layer2 = ORBP.libraryPath + "pics/backgrounds/layer2.png";
         bgPaths.add(backdrop);
         bgPaths.add(layer1);
         bgPaths.add(layer2);
         startingOffsets.add(0);
         startingOffsets.add(0);
-        startingOffsets.add(-1*3667/2);
+        startingOffsets.add(-1 * 3667 / 2);
         startingOffsets.add(0);
         startingOffsets.add(0);
         startingOffsets.add(-11);
@@ -129,53 +123,43 @@ public abstract class LevelPanel extends MPanel {
         sizes.add(3667);//layer1 y
         sizes.add(3667);//layer2 x
         sizes.add(7334);//layer2 y (get it yet?)         
-        
+
         backgrounds = new Parallaxer(bgPaths, startingOffsets, sizes);
-        
+
     }
 
     @Override
     protected void hudAction(HudObject hudOb) {
-        if (hudOb.matches("lha")) {
-            shift(400, 0);
-        }
-        if (hudOb.matches("rha")) {
-            shift(-400, 0);
-        }
-        if (hudOb.matches("dha")) {
-            shift(0, -400);
-        }
-        if (hudOb.matches("uha")) {
-            shift(0, 400);
-        }
+        super.hudAction(hudOb);
     }
 
     private void shift(int x, int y) {
 
-
         if (!(-1 * xOffset + canvasWidth > currentBoard.getRightBarrier()) && x < 0) {//RIGHT ARROW PRESSED, SHIFTING BOARD LEFT
             xOffset += x;
-            backgrounds.shift((double) x,0);
+            backgrounds.shift((double) x, 0);
         }
         if (!(xOffset + canvasWidth > currentBoard.getRightBarrier()) && x > 0) {//LEFT ARROW PRESSED, SHIFTING BOARD RIGHT
             xOffset += x;
-            backgrounds.shift((double) x,0);
+            backgrounds.shift((double) x, 0);
         }
 
         if ((yOffset < currentBoard.getUpperBarrier()) && y > 0) {//UP ARROW PRESSED, SHIFTING BOARD DOWN
             yOffset += y;
-            backgrounds.shift(0,(double) y);
+            backgrounds.shift(0, (double) y);
         }
         if (!((-1 * yOffset) + canvasHeight > currentBoard.getLowerBarrier()) && y < 0) {//DOWN ARROW PRESSED, SHIFTING BOARD UP
             yOffset += y;
-            backgrounds.shift(0,(double) y);
+            backgrounds.shift(0, (double) y);
         }
 
     }
 
     protected void checkMusic() {
-       if(!music.isPlaying()){
-           playMusic();
-       }
+        if (!music.isPlaying()) {
+            playMusic();
+        }
     }
+
+
 }

@@ -16,7 +16,7 @@ import orb.p.OnScreenObjects.*;
  *
  * @author mwatkins
  */
-public class CharSetupPanel extends MPanel {
+public class PersonSetupPanel extends MPanel {
 
     private int moveStat;
     private int attackStat;
@@ -27,7 +27,7 @@ public class CharSetupPanel extends MPanel {
     HudObject saveButton;
     private String modelPath = "pics/character/testLady/4.png";
 
-    public CharSetupPanel() {
+    public PersonSetupPanel() {
         super();
         bgiPath = ORBP.libraryPath + "pics/hud/charSetup/bg.png";
         moveStat = 0;
@@ -55,6 +55,7 @@ public class CharSetupPanel extends MPanel {
 
     @Override
     protected void hudAction(HudObject hudOb) {
+        super.hudAction(hudOb);
 
         String f3 = hudOb.getAction().substring(0, 3);
 

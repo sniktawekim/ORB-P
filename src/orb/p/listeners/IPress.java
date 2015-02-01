@@ -7,8 +7,8 @@ import java.awt.event.KeyListener;
 
 public class IPress implements KeyListener {
 
-    boolean left, right, up, down, delete, clear, fill;
-    int kUp = 87, kLeft = 65, kDown = 83, kRight = 68, kDelete = 127, kQ=81, kE=69;
+    boolean left, right, up, down, delete, clear, fill, esc;
+    int kUp = 87, kLeft = 65, kDown = 83, kRight = 68, kDelete = 127, kQ=81, kE=69, kEsc=27;
 
     //keycodes:
     //87 = w
@@ -26,6 +26,7 @@ public class IPress implements KeyListener {
         delete = false;
         clear = false;
         fill = false;
+        esc = false;
 
     }
 
@@ -46,6 +47,9 @@ public class IPress implements KeyListener {
         }
         if (e.getKeyCode() == kE) {
             fill = true;         
+        }
+        if(e.getKeyCode() == kEsc){
+            esc = true;
         }
         
 
@@ -101,6 +105,13 @@ public class IPress implements KeyListener {
             case "fill":
                 if (fill) {
                     fill = false;
+                    return true;
+                } else {
+                    return false;
+                }
+            case "esc":
+                if (esc) {
+                    esc = false;                 
                     return true;
                 } else {
                     return false;

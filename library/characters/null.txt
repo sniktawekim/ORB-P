@@ -1,0 +1,11 @@
+<character>
+<name>null</name>
+<agillity>0</agillity>
+<strength>0</strength>
+<sense>1</sense>
+<mastery>1</mastery>
+<maxCharge>100</maxCharge>
+<defense>0</defense>
+<draw>0</draw>
+<hp>0</hp>
+<root>pics/character/testLady</root>

@@ -55,9 +55,10 @@ public class GamePanel extends LevelPanel {
 
     @Override
     protected void buildHUD() {
+        //super.buildHUD();
         hudObjects = new ArrayList<>();
         buildActionBar();
-        super.buildHUD();
+
     }
 
     @Override
@@ -69,9 +70,7 @@ public class GamePanel extends LevelPanel {
     protected void hudAction(HudObject hudOb) {
         Person isMoving = onlinePlayers.get(localPlayerId);
         super.hudAction(hudOb);
-        if (hudOb.getAction().compareToIgnoreCase("menu") == 0) {
-            status = "menu";
-        } else if (hudOb.getAction().compareToIgnoreCase("moveMode") == 0) {
+        if (hudOb.getAction().compareToIgnoreCase("moveMode") == 0) {
             resetMoves = !moveMode;
             hudOb.setHighlight(!moveMode);
             moveMode = !moveMode;
@@ -81,6 +80,8 @@ public class GamePanel extends LevelPanel {
             music.tMute();
         } else if (hudOb.getAction().compareToIgnoreCase("attackMode") == 0) {
             isMoving.setAnimation("attack");
+        } else if (hudOb.getAction().compareToIgnoreCase("save") == 0) {
+            saveGame();
         }
 
     }
@@ -226,6 +227,10 @@ public class GamePanel extends LevelPanel {
             onlinePlayers.put(namesToLoad.get(i), toAdd);
             persons.add(toAdd);
         }
+    }
+
+    private void saveGame() {
+        System.out.println("SAVING GAME...NOT!");
     }
 
 }

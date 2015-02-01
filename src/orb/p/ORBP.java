@@ -12,7 +12,7 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.io.File;
 import javax.swing.JFrame;
-import orb.p.panels.CharSetupPanel;
+import orb.p.panels.PersonSetupPanel;
 import orb.p.panels.GamePanel;
 import orb.p.panels.LDPanel;
 import orb.p.panels.MPanel;
@@ -121,7 +121,7 @@ public class ORBP {
         } else if (currentCanvas.compareToIgnoreCase("shop") == 0) {
             canvas = new PreGamePanel();
         } else if (currentCanvas.compareToIgnoreCase("chars") == 0) {
-            canvas = new CharSetupPanel();
+            canvas = new PersonSetupPanel();
         } else if (currentCanvas.compareToIgnoreCase(StartWizardPanel.PANEL_ID) == 0) {
             canvas = new StartWizardPanel();
         }

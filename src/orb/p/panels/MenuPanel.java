@@ -22,13 +22,15 @@ public class MenuPanel extends MPanel{
         HudObject play = new HudObject(canvasWidth/2-200,400, 400, 200,"pics/hud/titlemenu/options/Play.png", StartWizardPanel.PANEL_ID);
         HudObject shop = new HudObject(canvasWidth/2-200,600, 400, 200,"pics/hud/titlemenu/options/Shop.png", "shop");
         
-        hudObjects.add(ld);
-        hudObjects.add(chars);
+        hudObjects.add(ld);        
         hudObjects.add(shop);
         hudObjects.add(play);
+        hudObjects.add(chars);
     }
 
+    @Override
     protected void hudAction(HudObject hudOb) {
+        super.hudAction(hudOb);
         if (hudOb.matches("ld")) {
             status = "ld";
         }
@@ -42,6 +44,7 @@ public class MenuPanel extends MPanel{
             status = StartWizardPanel.PANEL_ID;
         }
     }
+    
 
 
 }
