@@ -6,7 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import orb.p.ORBP;
+import orb.p.*;
 import orb.p.OnScreenObjects.*;
 
 /**
@@ -20,7 +20,7 @@ public class Board {
     static ArrayList<String> currentFile;
     static ArrayList<Tile> tiledef;
     final int canvasWidth = 1175;
-    static BufferedReader br = null;
+    
 
     String bgi = ORBP.libraryPath+"pics/backgrounds/gamePanel.png";
     String filepath = "levels/default.lvl";
@@ -38,13 +38,7 @@ public class Board {
         levelLoader();
     }
 
-    private String removeXML(String toremove) {
-        toremove = toremove.trim();
-        int startpoint = toremove.indexOf(">") + 1;
-        int endpoint = toremove.indexOf("</");
-        toremove = toremove.substring(startpoint, endpoint);
-        return toremove;
-    }
+    
 
     private void setBGI(String path) {
         bgi = ORBP.libraryPath + path;
@@ -65,28 +59,10 @@ public class Board {
         board = new int[tilesLeft][tilesRight];
     }
 
-    private void readFile() {
-        try {
-            String sCurrentLine;
-            br = new BufferedReader(new FileReader(filepath));
-
-            while ((sCurrentLine = br.readLine()) != null) {
-                currentFile.add(sCurrentLine);
-            }
-        } catch (IOException e) {
-            
-        }
-        try {
-            br.close();
-        } catch(Exception e){
-            
-        }
-    }
-
     private void levelLoader() {
 
         try {
-            readFile();
+            currentFile = Properties.readFile(filepath);
         } catch (Exception ex) {
             System.out.println("LEVEL FILE NOT FOUND");
             System.exit(0);
@@ -111,7 +87,7 @@ public class Board {
                 i = buildTileDef(i);
             }
             if (cLine.contains("<bgidef>")) {
-                cLine = removeXML(cLine);
+                cLine = Properties.removeXML(cLine);
                 setBGI(cLine);
             }
             i++;
@@ -124,23 +100,23 @@ public class Board {
         String cLine = currentFile.get(i);
         while (!cLine.contains("</board>")) {
             if (cLine.contains("<title>")) {
-                cLine = removeXML(cLine);
+                cLine = Properties.removeXML(cLine);
                 title = cLine;
             }
             if (cLine.contains("<width>")) {
-                cLine = removeXML(cLine);
+                cLine = Properties.removeXML(cLine);
                 tilesLeft = Integer.parseInt(cLine);
             }
             if (cLine.contains("<height>")) {
-                cLine = removeXML(cLine);
+                cLine = Properties.removeXML(cLine);
                 tilesRight = Integer.parseInt(cLine);
             }
             if (cLine.contains("<default>")) {
-                cLine = removeXML(cLine);
+                cLine = Properties.removeXML(cLine);
                 defaultTile = Integer.parseInt(cLine);
             }
             if (cLine.contains("<fill>")) {
-                cLine = removeXML(cLine);
+                cLine = Properties.removeXML(cLine);
                 if (cLine.compareToIgnoreCase("true") == 0) {
                     setBoardSize(tilesLeft, tilesRight);
                     fillBoardArray();
@@ -164,7 +140,7 @@ public class Board {
         while (!cLine.contains("</tiledef>")) {
 
             if (cLine.contains("<id>")) {
-                cLine = removeXML(cLine);
+                cLine = Properties.removeXML(cLine);
                 int tileID = Integer.parseInt(cLine);
                 if (tileID != tiledef.size()) {
                     System.out.println("TILE DEF ID ERROR: " + tiledef.size());
@@ -173,15 +149,15 @@ public class Board {
                 }
             }
             if (cLine.contains("<cost>")) {
-                cLine = removeXML(cLine);
+                cLine = Properties.removeXML(cLine);
                 toadd.terrainCost = Integer.parseInt(cLine);
             }
             if (cLine.contains("<path>")) {
-                cLine = removeXML(cLine);
+                cLine = Properties.removeXML(cLine);
                 toadd.setGraphic(cLine);
             }
             if (cLine.contains("<curt>")) {
-                cLine = removeXML(cLine);
+                cLine = Properties.removeXML(cLine);
                 TileCurtains toCurt = new TileCurtains(toadd, cLine);
                 //need to process picture path!
                 toadd.setWalls(toCurt);
@@ -247,11 +223,11 @@ public class Board {
         String cLine = currentFile.get(i);
         while (!cLine.contains("</overwrite>")) {
             if (cLine.contains("<type>")) {
-                cLine = removeXML(cLine);
+                cLine = Properties.removeXML(cLine);
                 type = Integer.parseInt(cLine);
             }
             if (cLine.contains("<tile>")) {
-                cLine = removeXML(cLine);
+                cLine = Properties.removeXML(cLine);
                 String[] coords = cLine.split(",");
                 setIndTile(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), type);
             }

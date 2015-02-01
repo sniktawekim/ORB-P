@@ -1,8 +1,11 @@
 <character>
 <name>Jayzus</name>
-<movement>6</movement>
-<attack>2</attack>
+<agillity>6</agillity>
+<strength>2</strength>
 <defense>1</defense>
 <draw>2</draw>
 <hp>1</hp>
+<mastery>1</mastery>
+<maxCharge>1</maxCharge>
 <root>pics/character/testLady</root>
+</character>

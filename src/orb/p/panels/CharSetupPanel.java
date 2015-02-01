@@ -246,7 +246,7 @@ public class CharSetupPanel extends MPanel {
 
     private void saveCharacter() {
 
-        PersonStats newCharacter = new PersonStats(JOptionPane.showInputDialog("Name your character:"), moveStat, attackStat, defenseStat, drawStat, hpStat, modelPath.substring(0, modelPath.length()-6));
+        PersonStats newCharacter = new PersonStats(JOptionPane.showInputDialog("Name your character:"), moveStat, attackStat, defenseStat, drawStat, hpStat,1,1,100, modelPath.substring(0, modelPath.length()-6));
         newCharacter.save(status);
         status = "menu";
     }

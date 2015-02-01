@@ -1,9 +1,0 @@
-<character>
-<name>suzie</name>
-<movement>6</movement>
-<attack>5</attack>
-<defense>3</defense>
-<draw>2</draw>
-<hp>13</hp>
-<root>pics/character/testLady</root>
-</character>

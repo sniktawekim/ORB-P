@@ -13,6 +13,12 @@ package orb.p.art;
 public class CHARArt {
 
     public static final String ROOT = "pics/character/";
+    public static int personXOff = 37;
+    public static final String CHAR_ROOT = "characters/";
+    public static final String D_CHAR = CHAR_ROOT + "default.txt";
+    
+    
+    
     //walking suffix
     public static final String WALKING_1 = "w1.png";
     public static final String WALKING_2 = "w2.png";

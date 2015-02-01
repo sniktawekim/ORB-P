@@ -7,6 +7,7 @@ import orb.p.art.CHARArt;
 import orb.p.art.HUDArt;
 import orb.p.OnScreenObjects.*;
 import orb.p.Properties;
+import orb.p.core.PersonStats;
 import orb.p.network.Client;
 import orb.p.network.Server;
 import orb.p.network.Communicator;
@@ -25,6 +26,9 @@ public class GamePanel extends LevelPanel {
     private boolean moveMode = false;
     private boolean resetMoves = false;
     private String localPlayerId;
+    private ArrayList<Person> persons;//arraylist of all persons
+    private ArrayList<String> personsToLoad;//populated from the setup panel
+    private ArrayList<String> namesToLoad;//populated from setup panel, parallel to personsToLoad
 
     Person localPlayer;
     Communicator comm;
@@ -33,16 +37,20 @@ public class GamePanel extends LevelPanel {
 
     public GamePanel() {
         super();
+        persons = new ArrayList();
+        personsToLoad = new ArrayList();
         /**
-        for (int i = 0; i < 6; i++) {
-            ItemBox test = new ItemBox(tiles.get(i).getXMin(), tiles.get(5).getYMin());
-            tiles.get(i).setOnTop(test);
-        }*/
+         * for (int i = 0; i < 6; i++) { ItemBox test = new
+         * ItemBox(tiles.get(i).getXMin(), tiles.get(5).getYMin());
+         * tiles.get(i).setOnTop(test); }
+         */
         playMusic();
 
         //Obviously for testing
         getNetworkSettingsInput();
         //Load Communicator     
+        loadPersons();// this method adds characters from the personsToLoad arraylist
+        PersonStats testLoader = new PersonStats(CHARArt.D_CHAR);
     }
 
     @Override
@@ -134,7 +142,7 @@ public class GamePanel extends LevelPanel {
             tileIsEmpty = false;
         }
         if ((NESWaxis || NWSEaxis) && tileIsEmpty && okTerrain) {
-            System.out.println("legal move");
+            // System.out.println("legal move");
             return true;
         } else {
             if (NESWaxis) {
@@ -206,6 +214,18 @@ public class GamePanel extends LevelPanel {
         hudObjects.add(attackButton);
         HudObject muteButton = new HudObject(HUDArt.MUTE_BUTTON_XSTART, HUDArt.MUTE_BUTTON_YSTART, HUDArt.MUTE_BUTTON_WIDTH, HUDArt.MUTE_BUTTON_HEIGHT, HUDArt.MUTE_BUTTON, "mute");
         hudObjects.add(muteButton);
+    }
+
+    private void loadPersons() {
+        for (int i = 0; i < personsToLoad.size(); i++) {
+            //arbitrarily assigned starting tile, want to add
+            //start locations to the level xml in the future.
+            Tile start = currentBoard.getTile(Properties.CHARX, Properties.CHARY);
+            Person toAdd = new Person(namesToLoad.get(i), start, personsToLoad.get(i));
+            start.setOnTop(toAdd);
+            onlinePlayers.put(namesToLoad.get(i), toAdd);
+            persons.add(toAdd);
+        }
     }
 
 }

@@ -42,15 +42,16 @@ public class Person extends OnScreenObject {
     public Person(String playerID, Tile startTile, String characterPath) {
         //TODO Display position is off
         super(startTile.xLoc, startTile.yLoc, 120, 140);
-        stats = new PersonStats("Name", 2, 2, 3, 1, 100, playerID);
-        xOffset = 37;
+        stats = new PersonStats("Name", 2, 2, 3, 1, 100,1,1,100, playerID);
+        xOffset = CHARArt.personXOff;//character offset relative to tile
         currentTile = startTile;
         this.playerID = playerID;
         direction = 4;
         charPath = characterPath;
         currentHP = stats.getMaxHP();
-        changeDirection(4);
+        changeDirection(direction);
     }
+
 
     public Tile getCurrentTile() {
         return currentTile;
@@ -73,12 +74,12 @@ public class Person extends OnScreenObject {
         } else if (currentNESW - prevNESW < 0) {//moving towards bottom left
             setDirection(3);
         }
-        System.out.println("Moved in direction: " + direction);
+        //System.out.println("Moved in direction: " + direction);
 
     }
 
     public void resetMoves() {
-        System.out.println("Reset moves");
+        //System.out.println("Reset moves");
         moves = 5;
 
     }
@@ -88,22 +89,22 @@ public class Person extends OnScreenObject {
             prevTile = currentTile;
         } else if (Direction == 1) { //Northeast
             setDirection(1);
-            System.out.println("AI D1 move");
+           // System.out.println("AI D1 move");
         } else if (Direction == 2) {//Northwest
             setDirection(2);
-            System.out.println("AI D2 move");
+           // System.out.println("AI D2 move");
         } else if (Direction == 3) {//Southwest
             setDirection(3);
-            System.out.println("AI D3 move");
+           // System.out.println("AI D3 move");
         } else if (Direction == 4) {//Southeast
             setDirection(4);
-            System.out.println("AI D4 move");
+            //System.out.println("AI D4 move");
         } else {
             System.out.println("AI ERROR: Invalid direction code: " + Direction);
             return;
         }
         moves--;
-        System.out.println(moves + " moves remain");
+        //System.out.println(moves + " moves remain");
 
     }
 
