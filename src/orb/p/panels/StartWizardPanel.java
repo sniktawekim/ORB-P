@@ -1,6 +1,7 @@
 package orb.p.panels;
 
 import java.awt.Font;
+import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,12 +22,12 @@ public class StartWizardPanel extends MPanel{
     public static final String PANEL_ID = "startWizard";
     
     //Hud Objects
-    HudObject play;
-    HudObject local;
-    HudObject network;
+
     
     JTextField ip;
     JTextField playerName;
+    boolean local=true;
+    
     public StartWizardPanel() {
         super();
         //Need a resource loader or a class to take care of file paths.
@@ -36,15 +37,11 @@ public class StartWizardPanel extends MPanel{
 @Override
     protected void buildHUD() {
         //Create Buttons
-        play = new HudObject(canvasWidth-400,canvasHeight-300, 400, 200,HUDArt.PLAY, "play");
-        local = new HudObject(10,30, 190, 38,HUDArt.LOCAL, "local");
-        local.setHighGraphic(HUDArt.LOCAL_HIGHLIGHT);
-        local.setHighlight(true);
-        network = new HudObject(150,30, 121, 38,HUDArt.NETWORK, "network");
-        network.setHighGraphic(HUDArt.NETWORK_HIGHLIGHT);
+        HudObject play = new HudObject(canvasWidth-400,canvasHeight-300, 400, 200,HUDArt.PLAY, "play");
+       
         
         JPanel controlPanel = new JPanel();
-        controlPanel.setBounds(61, 11, 81, 140);
+        controlPanel.setBounds(15, 200, 400, 140);
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
         
         Font labelFont =  new Font("Serif", Font.BOLD, 30);
@@ -66,34 +63,37 @@ public class StartWizardPanel extends MPanel{
         this.add(controlPanel);
         //Add Objects
         hudObjects.add(play);
-        hudObjects.add(local);
-        hudObjects.add(network);
+        ArrayList<HudObject> panel = new ArrayList<>();
+        panel = HUDArt.displayNetworkBar("lulz");
+        for(int i=0;i<panel.size();i++){
+            hudObjects.add(panel.get(i));
+        }
     }
 
     private void setNetworkValues()    
     {
         TempNetworkStarter.characterName = playerName.getText();
         TempNetworkStarter.host = ip.getText();
-        TempNetworkStarter.isLocal = local.getHighlight();
+        TempNetworkStarter.isLocal = local;
     }
     
     @Override
     protected void hudAction(HudObject hudOb) {
-
+        super.hudAction(hudOb);
         if (hudOb.matches("play")) {
             setNetworkValues();
             status = "play";
         }
         else if (hudOb.matches("network"))
         {
-             //System.out.println("network");              
+             //System.out.println("network"); 
+             resetHighlights();
              hudOb.setHighlight(true);
-             local.setHighlight(false);
+            // local.setHighlight(false);//now old
         }
         else if (hudOb.matches("local"))
         {
-             //System.out.println("local");  
-             network.setHighlight(false);
+             resetHighlights();
              hudOb.setHighlight(true);
         }
     }
@@ -104,5 +104,15 @@ public class StartWizardPanel extends MPanel{
         return false;
     }
 
+    @Override
+    protected void checkClick() {
+        super.checkClick();
+    }
 
+    private void resetHighlights() {
+        System.out.println("RESETTED");
+        for(int i=0;i<hudObjects.size();i++){
+            hudObjects.get(i).setHighlight(false);
+        }
+    }
 }

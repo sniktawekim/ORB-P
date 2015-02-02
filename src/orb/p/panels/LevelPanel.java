@@ -39,7 +39,6 @@ public abstract class LevelPanel extends MPanel {
     }
 
     public void playMusic() {
-        // music = new Music("test");//moved to contstructor
         music.play();
     }
 

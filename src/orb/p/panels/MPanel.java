@@ -124,17 +124,20 @@ public abstract class MPanel extends JPanel {
         didDrag = false;
         anyClicked = myClick.getClicked();
         if (myClick.getDragged()) {
-            if(handleDrag())
+            if (handleDrag()) {
                 didDrag = true;
+                System.out.println("drag");
                 return;
+            }
         }
-        
-        
-        if (anyClicked&&!didDrag) {//check if you clicked and resets click status
+
+        if (anyClicked && !didDrag) {//check if you clicked and resets click status
+            System.out.println("recognizes non-drag");
             hudclicked = false;
-            int xClicked = myClick.getEX();
-            int yClicked = myClick.getEY();
+            int xClicked = myClick.getX();
+            int yClicked = myClick.getY();
             if (um) {
+                System.out.println("thinks its a universal menu click");
                 for (int i = 0; i < universalMenu.size(); i++) {
                     HudObject current = universalMenu.get(i);
                     if (current.getVisible() == true) {
@@ -153,6 +156,7 @@ public abstract class MPanel extends JPanel {
             }
             //System.out.println("UM IS " + um + " hudclicked is " + hudclicked);
             if (hudclicked) {//if the UM was clicked
+                System.out.println("um return");
                 return; //return
             }
             for (int i = 0; i < hudObjects.size(); i++) {
@@ -160,12 +164,15 @@ public abstract class MPanel extends JPanel {
                 if (current.getVisible() == true) {
                     if (current.isWithin(xClicked, yClicked) && !(current.getAction().compareToIgnoreCase("") == 0)) {
                         hudAction(current);
-                        // System.out.println(current.getAction() + "clicked");
+                        System.out.println(current.getAction() + "clicked");
                         hudclicked = true;
                         return;
                     } else if (current.isWithin(xClicked, yClicked)) {
-                        //System.out.println("lame hud clicked");
+                        System.out.println("lame hud clicked:"+xClicked+","+yClicked);
                         hudclicked = true;
+                    } else{
+                        //not within the object
+                        System.out.println(+xClicked+","+yClicked);
                     }
                 }
             }
@@ -217,7 +224,8 @@ public abstract class MPanel extends JPanel {
     protected void buildUM() {
         universalMenu = HUDArt.displayUM("thisdoesnothingyet");
     }
-    protected boolean handleDrag(){
+
+    protected boolean handleDrag() {
         return false;
     }
 

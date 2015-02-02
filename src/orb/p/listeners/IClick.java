@@ -11,6 +11,8 @@ public class IClick extends MouseInputAdapter {
     int y = 0;
     int xdrag = 0;
     int ydrag = 0;
+    int clickedX;
+    int clickedY;
     boolean clicked;
     int whichClicked = 0;
     private boolean pressed = false;
@@ -22,6 +24,8 @@ public class IClick extends MouseInputAdapter {
     @Override
     public void mouseClicked(MouseEvent e) {
         clicked = true;
+        x = e.getX();
+        y = e.getY();
         whichClicked = e.getButton();
     }
 
@@ -42,7 +46,7 @@ public class IClick extends MouseInputAdapter {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        clicked = false;
+       // clicked = false;
         pressed = false;
         whichClicked = e.getButton();
 
