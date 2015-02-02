@@ -98,5 +98,11 @@ public class StartWizardPanel extends MPanel{
         }
     }
 
+    @Override
+    protected boolean handleDrag() {
+        ///GET FUCKED MPANEL
+        return false;
+    }
+
 
 }

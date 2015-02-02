@@ -20,6 +20,9 @@ public class Properties {
 
     public static final int CHARX = 13;
     public static final int CHARY = 13;
+    public static final int DRAG_THRESHOLD = 5;
+    public static final int SHIFT_RATE = 35;
+    public static final int SHIFT_SPEED = SHIFT_RATE-(10-DRAG_THRESHOLD);
 
     //screen size properties
     public static final int FRAME_WIDTH = 1366;

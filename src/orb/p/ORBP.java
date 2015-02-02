@@ -10,14 +10,12 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.io.File;
 import javax.swing.JFrame;
 import orb.p.panels.PersonSetupPanel;
 import orb.p.panels.GamePanel;
 import orb.p.panels.LDPanel;
 import orb.p.panels.MPanel;
 import orb.p.panels.MenuPanel;
-import orb.p.panels.PreGamePanel;
 import orb.p.panels.StartWizardPanel;
 
 /**
@@ -119,7 +117,8 @@ public class ORBP {
         } else if (currentCanvas.compareToIgnoreCase("play") == 0) {
             canvas = new GamePanel();
         } else if (currentCanvas.compareToIgnoreCase("scrap") == 0) {
-            canvas = new PreGamePanel();
+            //canvas = new PreGamePanel();
+            System.out.println("SCRAPYARD SELECTED");
         } else if (currentCanvas.compareToIgnoreCase("chars") == 0) {
             canvas = new PersonSetupPanel();
         } else if (currentCanvas.compareToIgnoreCase(StartWizardPanel.PANEL_ID) == 0) {

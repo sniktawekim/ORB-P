@@ -7,6 +7,7 @@ import orb.p.core.Board;
 import orb.p.sounds.Music;
 import orb.p.ORBP;
 import orb.p.OnScreenObjects.*;
+import orb.p.Properties;
 
 /**
  *
@@ -59,7 +60,7 @@ public abstract class LevelPanel extends MPanel {
     protected void checkClick() {
 
         super.checkClick();//checks hud clicking
-        if (anyClicked) {
+        if (anyClicked&&!didDrag) {
             if (!hudclicked) {//if hud wasn't clicked
                 int xClicked = myClick.getEX() - xOffset;
                 int yClicked = myClick.getEY() - yOffset;
@@ -72,10 +73,13 @@ public abstract class LevelPanel extends MPanel {
                 }
             }
         }
+
     }
 
     protected void checkKey() {
         super.checkKey();
+        
+        /** OLD DRAGGING METHOD
         if (myPress.getKeyPressed("left")) {
             shift(10, 0);
         }
@@ -87,7 +91,7 @@ public abstract class LevelPanel extends MPanel {
         }
         if (myPress.getKeyPressed("down")) {
             shift(0, -10);
-        }
+        }*/
 
     }
 
@@ -135,7 +139,6 @@ public abstract class LevelPanel extends MPanel {
     }
 
     private void shift(int x, int y) {
-
         if (!(-1 * xOffset + canvasWidth > currentBoard.getRightBarrier()) && x < 0) {//RIGHT ARROW PRESSED, SHIFTING BOARD LEFT
             xOffset += x;
             backgrounds.shift((double) x, 0);
@@ -160,6 +163,39 @@ public abstract class LevelPanel extends MPanel {
         if (!music.isPlaying()) {
             playMusic();
         }
+    }
+
+    @Override
+    protected boolean handleDrag() {
+        boolean didDrag = false;
+        int xShift = myClick.getXDrag();
+        int yShift = myClick.getYDrag();
+        int posThresh = Properties.DRAG_THRESHOLD;
+        int negThresh = -1 * posThresh;
+        int shiftSpeed = Properties.SHIFT_SPEED;
+        int negShiftSpeed = -1 * shiftSpeed;
+
+        if (xShift < negThresh) {
+            xShift = negShiftSpeed;
+        } else if (xShift > posThresh) {
+            xShift = shiftSpeed;
+        } else {
+            xShift = 0;
+        }
+        if (yShift < negThresh) {
+            yShift = negShiftSpeed;
+        } else if (yShift > posThresh) {
+            yShift = shiftSpeed;
+        } else {
+            yShift = 0;
+        }
+
+        if (Math.abs(xShift) > 0 || Math.abs(yShift) > 0) {
+            didDrag = true;
+            shift(xShift, yShift);
+        }
+        myClick.resetDrag();
+        return didDrag;
     }
 
 }

@@ -51,6 +51,12 @@ public class MenuPanel extends MPanel{
         protected void buildUM(){
         //THIS PLEASES ME
         }
+
+    @Override
+    protected boolean handleDrag() {
+       //GET FUCKED, MPANEL
+        return false;
+    }
     
 
 

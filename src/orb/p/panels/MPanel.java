@@ -39,6 +39,7 @@ public abstract class MPanel extends JPanel {
     IPress myPress;
     boolean hudclicked = false;
     boolean anyClicked = false;
+    boolean didDrag = false;
     protected String status = "good";
     boolean um = false;
 
@@ -120,8 +121,16 @@ public abstract class MPanel extends JPanel {
 
     protected void checkClick() {
         anyClicked = false;
+        didDrag = false;
         anyClicked = myClick.getClicked();
-        if (anyClicked) {//check if you clicked and resets click status
+        if (myClick.getDragged()) {
+            if(handleDrag())
+                didDrag = true;
+                return;
+        }
+        
+        
+        if (anyClicked&&!didDrag) {//check if you clicked and resets click status
             hudclicked = false;
             int xClicked = myClick.getEX();
             int yClicked = myClick.getEY();
@@ -151,7 +160,7 @@ public abstract class MPanel extends JPanel {
                 if (current.getVisible() == true) {
                     if (current.isWithin(xClicked, yClicked) && !(current.getAction().compareToIgnoreCase("") == 0)) {
                         hudAction(current);
-                       // System.out.println(current.getAction() + "clicked");
+                        // System.out.println(current.getAction() + "clicked");
                         hudclicked = true;
                         return;
                     } else if (current.isWithin(xClicked, yClicked)) {
@@ -207,6 +216,9 @@ public abstract class MPanel extends JPanel {
 
     protected void buildUM() {
         universalMenu = HUDArt.displayUM("thisdoesnothingyet");
+    }
+    protected boolean handleDrag(){
+        return false;
     }
 
 }

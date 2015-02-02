@@ -49,8 +49,8 @@ public class PersonSetupPanel extends MPanel {
 
     @Override
     protected void checkClick() {
-            super.checkClick();
-        
+        super.checkClick();
+
     }
 
     @Override
@@ -205,7 +205,7 @@ public class PersonSetupPanel extends MPanel {
                 remainingBars++;
             }
         }
-        System.out.println("Remaining Stats:" + remainingBars);       
+        System.out.println("Remaining Stats:" + remainingBars);
     }
 
     private void buildModelPreviewer() {
@@ -247,10 +247,15 @@ public class PersonSetupPanel extends MPanel {
 
     private void saveCharacter() {
 
-        PersonStats newCharacter = new PersonStats(JOptionPane.showInputDialog("Name your character:"), moveStat, attackStat, defenseStat, drawStat, hpStat,1,1,100, modelPath.substring(0, modelPath.length()-6));
+        PersonStats newCharacter = new PersonStats(JOptionPane.showInputDialog("Name your character:"), moveStat, attackStat, defenseStat, drawStat, hpStat, 1, 1, 100, modelPath.substring(0, modelPath.length() - 6));
         newCharacter.save(status);
         status = "menu";
     }
 
+    @Override
+    protected boolean handleDrag() {
+        ///GET FUCKED MPANEL
+        return false;
+    }
 
 }

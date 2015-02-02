@@ -117,7 +117,7 @@ public class GamePanel extends LevelPanel {
 
     @Override
     protected void handleClickedTile(Tile clicked) {
-        if (moveMode) {
+        if (moveMode&&!didDrag) {
             movePerson(localPlayerId, clicked.xLoc, clicked.yLoc);
             if (!isLocal) {
                 comm.sendMessage(localPlayerId + "," + clicked.xLoc + "," + clicked.yLoc);
