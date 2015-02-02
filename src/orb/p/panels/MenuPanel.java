@@ -1,6 +1,8 @@
 package orb.p.panels;
 
+import java.util.ArrayList;
 import orb.p.OnScreenObjects.*;
+import orb.p.art.HUDArt;
 
 
 
@@ -17,33 +19,38 @@ public class MenuPanel extends MPanel{
 
 @Override
     protected void buildHUD() {
-        HudObject chars = new HudObject(canvasWidth/2-200, 0, 400, 200,"pics/hud/titlemenu/options/Characters.png", "chars");
-        HudObject ld = new HudObject(canvasWidth/2-200, 200, 400, 200,"pics/hud/titlemenu/options/LevelDesigner.png", "ld");
-        HudObject play = new HudObject(canvasWidth/2-200,400, 400, 200,"pics/hud/titlemenu/options/Play.png", StartWizardPanel.PANEL_ID);
-        HudObject shop = new HudObject(canvasWidth/2-200,600, 400, 200,"pics/hud/titlemenu/options/Shop.png", "shop");
-        
-        hudObjects.add(ld);        
-        hudObjects.add(shop);
-        hudObjects.add(play);
-        hudObjects.add(chars);
+        ArrayList<HudObject> MM = new ArrayList<>();//to store main menu
+        MM = HUDArt.displayMainMenu("lolzfailcode");
+        for(int i = 0; i<MM.size();i++){
+            hudObjects.add(MM.get(i));
+        }
     }
 
     @Override
     protected void hudAction(HudObject hudOb) {
         super.hudAction(hudOb);
+        System.out.println(hudOb.getAction());
         if (hudOb.matches("ld")) {
             status = "ld";
         }
         if (hudOb.matches("chars")) {
             status = "chars";
         }
-        if (hudOb.matches("shop")) {
-            status = "shop";
+        if (hudOb.matches("scrap")) {
+            status = "scrap";
         }
         if (hudOb.matches(StartWizardPanel.PANEL_ID)) {
             status = StartWizardPanel.PANEL_ID;
         }
     }
+    @Override
+        protected void checkKey() {
+        //GIVE NO FUCKS!     
+    }
+    @Override
+        protected void buildUM(){
+        //THIS PLEASES ME
+        }
     
 
 

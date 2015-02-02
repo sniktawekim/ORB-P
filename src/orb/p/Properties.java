@@ -22,8 +22,9 @@ public class Properties {
     public static final int CHARY = 13;
 
     //screen size properties
-    public static final int FRAME_WIDTH = 1357;
-    public static final int FRAME_HEIGHT = 800;
+    public static final int FRAME_WIDTH = 1366;
+    public static final int FRAME_HEIGHT_MARGIN = 80;
+    public static final int FRAME_HEIGHT = 768;
     public static final int SCREEN_X_START = 808;
     public static final int SCREEN_Y_START = 40;
     public static final int SCREEN_WIDTH = 1300;

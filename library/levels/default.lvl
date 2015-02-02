@@ -201,3 +201,7 @@
 <tile>24,19</tile>
 </overwrite>
 </board>
+<seeds>
+<person>15,8</person>
+<person>14,14</person>
+</seeds>

@@ -25,14 +25,16 @@ public abstract class LevelPanel extends MPanel {
     Music music;
     boolean repeatMusic = true;
     Parallaxer backgrounds;
+    protected ArrayList<Tile> seeds;
 
     LevelPanel() {
         super();
-
+        seeds = new ArrayList<>();
         currentBoard = new Board(ORBP.libraryPath + "levels/default.lvl");
         tiles = new ArrayList<>();
         music = new Music("test");//might be mistake
         loadBoard(currentBoard);
+        seeds = currentBoard.getSeeds();
     }
 
     public void playMusic() {
@@ -87,12 +89,11 @@ public abstract class LevelPanel extends MPanel {
             shift(0, -10);
         }
 
-
     }
 
     @Override
     protected void buildHUD() {
-       // super.buildHUD();
+        // super.buildHUD();
     }
 
     protected abstract void handleClickedTile(Tile clicked);
@@ -160,6 +161,5 @@ public abstract class LevelPanel extends MPanel {
             playMusic();
         }
     }
-
 
 }

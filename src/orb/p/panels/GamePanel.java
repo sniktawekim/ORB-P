@@ -26,6 +26,7 @@ public class GamePanel extends LevelPanel {
     private boolean moveMode = false;
     private boolean resetMoves = false;
     private String localPlayerId;
+    private int seedIndex = 0;
     private ArrayList<Person> persons;//arraylist of all persons
     private ArrayList<String> personsToLoad;//populated from the setup panel
     private ArrayList<String> namesToLoad;//populated from setup panel, parallel to personsToLoad
@@ -191,7 +192,12 @@ public class GamePanel extends LevelPanel {
 
         Tile startingTile;
 
-        startingTile = currentBoard.getTile(x, y);
+        startingTile = getStartTile();
+        
+        if(startingTile == null){
+            System.out.println("ERROR: NULL START");
+            System.exit(0);
+        }
 
         Person newChar = new Person(playerId, startingTile, CHARArt.CLOUD);
         startingTile.setOnTop(newChar);
@@ -221,7 +227,7 @@ public class GamePanel extends LevelPanel {
         for (int i = 0; i < personsToLoad.size(); i++) {
             //arbitrarily assigned starting tile, want to add
             //start locations to the level xml in the future.
-            Tile start = currentBoard.getTile(Properties.CHARX, Properties.CHARY);
+            Tile start = getStartTile();
             Person toAdd = new Person(namesToLoad.get(i), start, personsToLoad.get(i));
             start.setOnTop(toAdd);
             onlinePlayers.put(namesToLoad.get(i), toAdd);
@@ -233,4 +239,13 @@ public class GamePanel extends LevelPanel {
         System.out.println("SAVING GAME...NOT!");
     }
 
+    private Tile getStartTile() {
+        Tile toReturn = null;
+
+        if (seedIndex < seeds.size()) {
+            toReturn = seeds.get(seedIndex);
+            seedIndex++;
+        }
+        return toReturn;
+    }
 }

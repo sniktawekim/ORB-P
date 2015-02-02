@@ -131,17 +131,19 @@ public abstract class MPanel extends JPanel {
                     if (current.getVisible() == true) {
                         if (current.isWithin(xClicked, yClicked) && !(current.getAction().compareToIgnoreCase("") == 0)) {
                             hudAction(current);
-                            //Clear the state of the click listener                    
+                            //System.out.println(current.getAction() + "clicked");
+                            //Clear the state of the click listener                             
                             hudclicked = true;
                             return;
                         } else if (current.isWithin(xClicked, yClicked)) {
-                            // System.out.println("lame UM clicked");
-                            hudclicked = true;                          
+                            //System.out.println("lame UM clicked");
+                            hudclicked = true;
                         }
                     }
                 }
             }
-            if(hudclicked){//if the UM was clicked
+            //System.out.println("UM IS " + um + " hudclicked is " + hudclicked);
+            if (hudclicked) {//if the UM was clicked
                 return; //return
             }
             for (int i = 0; i < hudObjects.size(); i++) {
@@ -149,15 +151,17 @@ public abstract class MPanel extends JPanel {
                 if (current.getVisible() == true) {
                     if (current.isWithin(xClicked, yClicked) && !(current.getAction().compareToIgnoreCase("") == 0)) {
                         hudAction(current);
-                        //Clear the state of the click listener                    
+                       // System.out.println(current.getAction() + "clicked");
                         hudclicked = true;
                         return;
                     } else if (current.isWithin(xClicked, yClicked)) {
-                        // System.out.println("lame hud clicked");
+                        //System.out.println("lame hud clicked");
                         hudclicked = true;
-                        return;
                     }
                 }
+            }
+            if (hudclicked) {//if the UM was clicked
+                return; //return
             }
 
         }
@@ -201,7 +205,7 @@ public abstract class MPanel extends JPanel {
         }
     }
 
-    private void buildUM() {
+    protected void buildUM() {
         universalMenu = HUDArt.displayUM("thisdoesnothingyet");
     }
 

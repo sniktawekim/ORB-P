@@ -1,8 +1,5 @@
 package orb.p.core;
 
-
-
-
 import java.util.ArrayList;
 import orb.p.ORBP;
 import orb.p.OnScreenObjects.Tile;
@@ -16,13 +13,12 @@ public class Board {
 
     Tile tiles[][];
     int board[][];
-    
+
     static ArrayList<String> currentFile;
     static ArrayList<Tile> tiledef;
     final int canvasWidth = 1175;
-    
 
-    String bgi = ORBP.libraryPath+"pics/backgrounds/gamePanel.png";
+    String bgi = ORBP.libraryPath + "pics/backgrounds/gamePanel.png";
     String filepath = "levels/default.lvl";
 
     public String title = "Level";
@@ -30,15 +26,15 @@ public class Board {
     boolean fill = false;
     int tilesLeft = 10;
     int tilesRight = 10;
+    public ArrayList<Tile> seeds;
 
     public Board(String levelFilePath) {
+        seeds = new ArrayList<>();
         currentFile = new ArrayList<>();
         tiledef = new ArrayList<>();
         filepath = levelFilePath;
         levelLoader();
     }
-
-    
 
     private void setBGI(String path) {
         bgi = ORBP.libraryPath + path;
@@ -60,7 +56,7 @@ public class Board {
     }
 
     private void levelLoader() {
-
+        boolean madeTiles = false;
         try {
             currentFile = Properties.readFile(filepath);
         } catch (Exception ex) {
@@ -75,9 +71,13 @@ public class Board {
             }
             if (cLine.contains("<board>")) {
                 i = buildBoard(i);
+                makeTiles();
+                madeTiles = true;
+            } if (cLine.contains("<seeds>")) {
+                i = seed(i);
             }
         }
-        makeTiles();
+        
     }
 
     private int buildDef(int i) {
@@ -124,7 +124,7 @@ public class Board {
             }
             if (cLine.contains("<overwrite>")) {
                 i = overWrite(i);
-            }
+            }           
 
             i++;
             cLine = currentFile.get(i);
@@ -180,7 +180,7 @@ public class Board {
                 toAdd.setID(board[i][j]);
                 toAdd.setXMin(canvasWidth / 2 - (j * 60) + (i * 60));
                 toAdd.setYMin(-15 + (35 * j) + (i * (50 - 15)));
-                toAdd.setLoc(i+1,tilesRight - j);                
+                toAdd.setLoc(i + 1, tilesRight - j);
                 tiles[i][j] = toAdd;
             }
         }
@@ -195,10 +195,10 @@ public class Board {
     }
 
     public Tile getTile(int x, int y) {
-        try{
-        return tiles[x-1][tilesLeft - y];
-        } catch(Exception e){
-            System.out.println("TILE OUT OF BOUNDS: ("+x+","+y+")");
+        try {
+            return tiles[x - 1][tilesLeft - y];
+        } catch (Exception e) {
+            System.out.println("TILE OUT OF BOUNDS: (" + x + "," + y + ")");
             System.exit(0);
             return null;
         }
@@ -241,38 +241,72 @@ public class Board {
     public String getBGI() {
         return bgi;
     }
-    public int getLeftBarrier(){
-        Tile left = getTile(1,1);
+
+    public int getLeftBarrier() {
+        Tile left = getTile(1, 1);
         int leftmost = left.getXMin() - 20;
         return leftmost;
     }
-    public int getRightBarrier(){
-        Tile right = getTile(tilesLeft,tilesLeft);
-        int rightmost = right.getXMax() +20;
+
+    public int getRightBarrier() {
+        Tile right = getTile(tilesLeft, tilesLeft);
+        int rightmost = right.getXMax() + 20;
         return rightmost;
     }
-    public int getWidth(){
+
+    public int getWidth() {
         //calc how many tiles on the hypotenuse
-        Tile right = getTile(tilesLeft,tilesLeft);
-        Tile left = getTile(1,1);
-        return right.getXMax()-left.getXMin();
+        Tile right = getTile(tilesLeft, tilesLeft);
+        Tile left = getTile(1, 1);
+        return right.getXMax() - left.getXMin();
     }
-    public int getUpperBarrier(){
-        Tile top = getTile(1,tilesRight);   
+
+    public int getUpperBarrier() {
+        Tile top = getTile(1, tilesRight);
         int topmost = top.getYMin() + 20;
         return topmost;
     }
-    public int getLowerBarrier(){
-        Tile bot = getTile(tilesLeft,1);
-        int bottommost = bot.getYMax() +20;
+
+    public int getLowerBarrier() {
+        Tile bot = getTile(tilesLeft, 1);
+        int bottommost = bot.getYMax() + 20;
         return bottommost;
     }
-    public void clearHighlights(){
-        for(int i=0;i<tilesLeft;i++){
-            for(int j=0; j<tilesRight; j++){
+
+    public void clearHighlights() {
+        for (int i = 0; i < tilesLeft; i++) {
+            for (int j = 0; j < tilesRight; j++) {
                 tiles[i][j].setHighlight(false);
             }
         }
+    }
+
+    public ArrayList<Tile> getSeeds() {
+        return seeds;
+    }
+
+    private int seed(int i) {
+        int type = defaultTile;
+        String cLine = currentFile.get(i);
+        while (!cLine.contains("</seeds>")) {
+            if (cLine.contains("<item>")) {
+                cLine = Properties.removeXML(cLine);
+                String[] coords = cLine.split(",");
+                setIndTile(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), type);
+            }
+            if (cLine.contains("<person>")) {
+                cLine = Properties.removeXML(cLine);
+                String[] coords = cLine.split(",");
+                int xcoord = Integer.parseInt(coords[0]);
+                int ycoord = Integer.parseInt(coords[1]);
+                Tile toSeed = getTile(xcoord, ycoord);
+                seeds.add(toSeed);
+            }
+
+            i++;
+            cLine = currentFile.get(i);
+        }
+        return i;
     }
 
 }

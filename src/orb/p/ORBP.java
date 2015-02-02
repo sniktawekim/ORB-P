@@ -83,15 +83,15 @@ public class ORBP {
         screenWidth = width;
         //in the future, once we have background images, 
         //we can test and implement supporting multpile resolutions
-        screenWidth = 1357;
-        screenHeight = 880;
+        screenWidth = Properties.FRAME_WIDTH;
+        screenHeight = Properties.FRAME_HEIGHT;
     }
 
     private static void buildCanvas() {
         determineCanvas();
         frame = new JFrame("ORB-P");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(screenWidth - 50, screenHeight - 50);
+        frame.setSize(screenWidth, screenHeight);
         frame.setResizable(false);//lock game resolution
         frame.setContentPane(canvas);
         frame.setVisible(true);
@@ -118,7 +118,7 @@ public class ORBP {
             canvas = new LDPanel();
         } else if (currentCanvas.compareToIgnoreCase("play") == 0) {
             canvas = new GamePanel();
-        } else if (currentCanvas.compareToIgnoreCase("shop") == 0) {
+        } else if (currentCanvas.compareToIgnoreCase("scrap") == 0) {
             canvas = new PreGamePanel();
         } else if (currentCanvas.compareToIgnoreCase("chars") == 0) {
             canvas = new PersonSetupPanel();
