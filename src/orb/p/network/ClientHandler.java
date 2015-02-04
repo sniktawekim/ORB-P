@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import orb.p.panels.GamePanel;
 import orb.p.OnScreenObjects.*;
+import orb.p.network.messages.MoveMessage;
 
 /**
  *
@@ -38,25 +39,22 @@ public class ClientHandler implements Runnable {
             while (connection != null && connection.isConnected()) {
 
                 message = inFromClient.readLine();
+                MoveMessage moveMessage = MoveMessage.fromString(message);
                 if (!playerConnected) {
-                    playerConnected = true;                    
+                    playerConnected = true;
                     for (String playerId : gPanel.onlinePlayers.keySet()) {
                         Person player = gPanel.onlinePlayers.get(playerId);
-                        server.sendMessage(playerId + "," + player.getCurrentTile().xLoc+ "," +player.getCurrentTile().yLoc);
-                        //Ghetto work around until I find out why it's not working
-                        Thread.sleep(2000);
+                        MoveMessage newMessage = new MoveMessage(playerId, player.getCurrentTile().xLoc, player.getCurrentTile().yLoc);
+                        server.sendMessage(newMessage.toString());
+                                //Ghetto work around until I find out why it's not working
+                                Thread.sleep(2000);
                     }
-                    server.loadPerson(message, 12, 12);
-                    server.sendMessage(message+ "," + 12+ "," + 12);
+                   
+                    server.loadPerson(moveMessage.getPlayerId(), moveMessage.getxLoc(), moveMessage.getyLoc());
+                    server.sendMessage(moveMessage.toString());
                 } else {
-                    //Needs to be done in a separate class
-                    String[] values = message.split(",");
-
-                    String charId = values[0];
-                    int x = Integer.parseInt(values[1]);
-                    int y = Integer.parseInt(values[2]);
-                    server.movePerson(charId, x, y);
-                    server.sendMessage(message+ "," + x+ "," + y);
+                    server.movePerson(moveMessage.getPlayerId(), moveMessage.getxLoc(), moveMessage.getyLoc());
+                    server.sendMessage(moveMessage.toString());
                 }
             }
         } catch (Exception e) {

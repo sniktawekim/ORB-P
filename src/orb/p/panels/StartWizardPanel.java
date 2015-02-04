@@ -1,10 +1,9 @@
 package orb.p.panels;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import orb.p.ORBP;
 import orb.p.art.HUDArt;
@@ -38,29 +37,32 @@ public class StartWizardPanel extends MPanel{
     protected void buildHUD() {
         //Create Buttons
         HudObject play = new HudObject(canvasWidth-400,canvasHeight-300, 400, 200,HUDArt.PLAY, "play");
-       
-        
-        JPanel controlPanel = new JPanel();
-        controlPanel.setBounds(15, 200, 400, 140);
-        controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
-        
+                
         Font labelFont =  new Font("Serif", Font.BOLD, 30);
-        ip = new JTextField(10);
-        ip.setFont(labelFont);
         JLabel ipLabel = new JLabel("IP (Leave Blank to Host): ");
         ipLabel.setFont(labelFont);
+        ipLabel.setBounds(20,150,400,60);
+        ipLabel.setForeground(Color.white);
+       
+        ip = new JTextField(40);
+        ip.setFont(labelFont);
+        ip.setBounds(20,210,400,60);
         
-        playerName = new JTextField(10);
-        playerName.setFont(labelFont);
         JLabel playerNameLabel = new JLabel("Name: ");
+        playerNameLabel.setBounds(20,260,200,60);
         playerNameLabel.setFont(labelFont);
+        playerNameLabel.setForeground(Color.white);
         
-        controlPanel.add(ipLabel);
-        controlPanel.add(ip);
-        controlPanel.add(playerNameLabel);
-        controlPanel.add(playerName);
+        playerName = new JTextField(80);
+        playerName.setFont(labelFont);
+        playerName.setBounds(20,310,400,60);        
+ 
+        this.setLayout(null);
+        this.add(ipLabel);
+        this.add(ip);
+        this.add(playerNameLabel);
+        this.add(playerName);
         
-        this.add(controlPanel);
         //Add Objects
         hudObjects.add(play);
         ArrayList<HudObject> panel = new ArrayList<>();
@@ -85,16 +87,16 @@ public class StartWizardPanel extends MPanel{
             status = "play";
         }
         else if (hudOb.matches("network"))
-        {
-             //System.out.println("network"); 
+        { 
              resetHighlights();
              hudOb.setHighlight(true);
-            // local.setHighlight(false);//now old
+             local = false;
         }
         else if (hudOb.matches("local"))
         {
-             resetHighlights();
+             resetHighlights();           
              hudOb.setHighlight(true);
+             local = true;
         }
     }
 
@@ -110,7 +112,7 @@ public class StartWizardPanel extends MPanel{
     }
 
     private void resetHighlights() {
-        System.out.println("RESETTED");
+        System.out.println("RESET");
         for(int i=0;i<hudObjects.size();i++){
             hudObjects.get(i).setHighlight(false);
         }

@@ -11,6 +11,7 @@ import orb.p.core.PersonStats;
 import orb.p.network.Client;
 import orb.p.network.Server;
 import orb.p.network.Communicator;
+import orb.p.network.messages.MoveMessage;
 
 import orb.p.network.temp.TempNetworkStarter;
 
@@ -120,7 +121,7 @@ public class GamePanel extends LevelPanel {
         if (moveMode&&!didDrag) {
             movePerson(localPlayerId, clicked.xLoc, clicked.yLoc);
             if (!isLocal) {
-                comm.sendMessage(localPlayerId + "," + clicked.xLoc + "," + clicked.yLoc);
+                comm.sendMessage(new MoveMessage(localPlayerId,clicked.xLoc ,clicked.yLoc).toString());
             }
         }
     }
@@ -181,9 +182,9 @@ public class GamePanel extends LevelPanel {
         } //Join Game
         else {
             comm = new Client(this, host);
-            comm.sendMessage(localPlayerId);
+            comm.sendMessage(new MoveMessage(localPlayerId,Properties.CHARX, Properties.CHARY).toString());
             comm.start();
-            testPerson(localPlayerId, 13, 14);
+            //testPerson(localPlayerId, Properties.CHARX, Properties.CHARY);
         }
 
     }
@@ -191,15 +192,21 @@ public class GamePanel extends LevelPanel {
     synchronized public void testPerson(String playerId, int x, int y) {
 
         Tile startingTile;
-
-        startingTile = getStartTile();
+        if(isLocal)
+        {
+          startingTile = getStartTile();
+        }
+        else
+        {
+          startingTile = currentBoard.getTile(x, y);
+        }
         
         if(startingTile == null){
             System.out.println("ERROR: NULL START");
             System.exit(0);
         }
 
-        Person newChar = new Person(playerId, startingTile, CHARArt.CLOUD);
+        Person newChar = new Person(playerId, startingTile, CHARArt.CLOUD);       
         startingTile.setOnTop(newChar);
         onlinePlayers.put(playerId, newChar);
 

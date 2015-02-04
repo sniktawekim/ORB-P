@@ -9,7 +9,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import java.util.ArrayList;
+import orb.p.network.messages.MoveMessage;
 import orb.p.panels.GamePanel;
 
 /**
@@ -65,20 +65,14 @@ public class Client extends Communicator {
                         = new BufferedReader(new InputStreamReader(getSocket().getInputStream()));
                 message = inFromClient.readLine();
                 //Create class to handle message types 
-                String[] values = message.split(",");
+                 MoveMessage newMoveMessage = MoveMessage.fromString(message);
 
-                String charId = values[0];
-                if (!gPanel.onlinePlayers.containsKey(charId)) {
-                    int x = Integer.parseInt(values[1]);
-                    int y = Integer.parseInt(values[2]);
-                    gPanel.testPerson(charId, x, y);
-                    //connctedPlayerNames.add(charId);
-                }
+                if (!gPanel.onlinePlayers.containsKey(newMoveMessage.getPlayerId())) {
 
-               else if (values.length >= 3) {
-                    int x = Integer.parseInt(values[1]);
-                    int y = Integer.parseInt(values[2]);
-                    gPanel.movePerson(charId, x, y);
+                    gPanel.testPerson(newMoveMessage.getPlayerId(), newMoveMessage.getxLoc(), newMoveMessage.getyLoc());
+
+                } else {
+                    gPanel.movePerson(newMoveMessage.getPlayerId(), newMoveMessage.getxLoc(), newMoveMessage.getyLoc());
                 }
 
             } catch (Exception e) {
