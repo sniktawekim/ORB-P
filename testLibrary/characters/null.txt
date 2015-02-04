@@ -1,8 +1,0 @@
-<character>
-<name>null</name>
-<movement>5</movement>
-<attack>3</attack>
-<defense>2</defense>
-<draw>1</draw>
-<hp>1</hp>
-<root>pics/character/testLady</root>

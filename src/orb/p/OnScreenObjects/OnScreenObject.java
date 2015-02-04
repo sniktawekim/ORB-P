@@ -45,7 +45,7 @@ public abstract class OnScreenObject {
 
     private boolean hovered = false;
 
-    OnScreenObject(int x, int y, int sizeX, int sizeY) {
+    public OnScreenObject(int x, int y, int sizeX, int sizeY) {
         xmin = x;
         ymin = y;
         xsize = sizeX;
@@ -61,7 +61,7 @@ public abstract class OnScreenObject {
 
         visible = true;
     }
-      OnScreenObject(int x, int y, int sizeX, int sizeY, boolean visible) {
+      public OnScreenObject(int x, int y, int sizeX, int sizeY, boolean visible) {
         xmin = x;
         ymin = y;
         xsize = sizeX;

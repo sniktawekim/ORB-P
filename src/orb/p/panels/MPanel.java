@@ -33,6 +33,7 @@ public abstract class MPanel extends JPanel {
     ArrayList<HudObject> hudObjects;
     ArrayList<HudObject> universalMenu;
     ArrayList<HudString> hudFonts;
+    ArrayList<MInteger> mInts;
     protected ImageIcon bgIcon;
     protected Image bgImage;
     IClick myClick;//mouse listener, useful for menu options
@@ -58,6 +59,7 @@ public abstract class MPanel extends JPanel {
         universalMenu = new ArrayList<>();
         hudObjects = new ArrayList<>();
         hudFonts = new ArrayList<>();
+        mInts = new ArrayList<>();
         myClick = new IClick();
         myPress = new IPress();
         this.addKeyListener(myPress);
@@ -110,6 +112,10 @@ public abstract class MPanel extends JPanel {
             HudString current = hudFonts.get(i);
             current.paint(0, 17, g, this);
         }
+        for (int i = 0; i < mInts.size(); i++) {
+            MInteger current = mInts.get(i);
+            current.paint(i, i, g, this, myClick);
+        }
         if (um) {
             for (int i = 0; i < universalMenu.size(); i++) {
                 HudObject current = universalMenu.get(i);
@@ -126,18 +132,18 @@ public abstract class MPanel extends JPanel {
         if (myClick.getDragged()) {
             if (handleDrag()) {
                 didDrag = true;
-                System.out.println("drag");
+                //  System.out.println("drag");
                 return;
             }
         }
 
         if (anyClicked && !didDrag) {//check if you clicked and resets click status
-            System.out.println("recognizes non-drag");
+            // System.out.println("recognizes non-drag");
             hudclicked = false;
             int xClicked = myClick.getX();
             int yClicked = myClick.getY();
             if (um) {
-                System.out.println("thinks its a universal menu click");
+                // System.out.println("thinks its a universal menu click");
                 for (int i = 0; i < universalMenu.size(); i++) {
                     HudObject current = universalMenu.get(i);
                     if (current.getVisible() == true) {
@@ -156,7 +162,7 @@ public abstract class MPanel extends JPanel {
             }
             //System.out.println("UM IS " + um + " hudclicked is " + hudclicked);
             if (hudclicked) {//if the UM was clicked
-                System.out.println("um return");
+                //  System.out.println("um return");
                 return; //return
             }
             for (int i = 0; i < hudObjects.size(); i++) {
@@ -164,15 +170,15 @@ public abstract class MPanel extends JPanel {
                 if (current.getVisible() == true) {
                     if (current.isWithin(xClicked, yClicked) && !(current.getAction().compareToIgnoreCase("") == 0)) {
                         hudAction(current);
-                        System.out.println(current.getAction() + "clicked");
+                        //   System.out.println(current.getAction() + "clicked");
                         hudclicked = true;
                         return;
                     } else if (current.isWithin(xClicked, yClicked)) {
-                        System.out.println("lame hud clicked:"+xClicked+","+yClicked);
+                        //    System.out.println("lame hud clicked:"+xClicked+","+yClicked);
                         hudclicked = true;
-                    } else{
+                    } else {
                         //not within the object
-                        System.out.println(+xClicked+","+yClicked);
+                        //     System.out.println(+xClicked+","+yClicked);
                     }
                 }
             }

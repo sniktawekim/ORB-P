@@ -39,8 +39,8 @@ public class MenuPanel extends MPanel{
         if (hudOb.matches("scrap")) {
             status = "scrap";
         }
-        if (hudOb.matches(StartWizardPanel.PANEL_ID)) {
-            status = StartWizardPanel.PANEL_ID;
+        if (hudOb.matches(SkirmishSetupPanel.PANEL_ID)) {
+            status = SkirmishSetupPanel.PANEL_ID;
         }
     }
     @Override

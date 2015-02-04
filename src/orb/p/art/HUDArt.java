@@ -8,7 +8,7 @@ package orb.p.art;
 import java.util.ArrayList;
 import orb.p.OnScreenObjects.HudObject;
 import orb.p.Properties;
-import orb.p.panels.StartWizardPanel;
+import orb.p.panels.SkirmishSetupPanel;
 
 /**
  *
@@ -110,7 +110,8 @@ public class HUDArt {
     public static final String MM_SCRAPYARD = MM + "scrapyardButton.png";
     public static final String MM_LEVELS = MM + "levelsButton.png";
 
-// </editor-fold>       
+// </editor-fold>     
+// <editor-fold defaultstate="collapsed" desc=" Skirmish Setup Panel ">
     //network panel
     public static final int NP_PAD = 15;
     public static final String NP = "pics/hud/networkPanel/";//root
@@ -120,21 +121,25 @@ public class HUDArt {
     public static final int NP_BG_W = 700;//width
     public static final int NP_BG_H = 100;//height
 
-    
-   //y offset
-    public static final int NP_B_YO = NP_BG_YO+NP_PAD;//y offset for buttons
-    public static final String NP_B_HG = "buttonH.png";//highlight graphic for buttons
+    //y offset
+    public static final int NP_B_YO = NP_BG_YO + NP_PAD;//y offset for buttons
+    public static final String NP_B_HG = NP + "button.png";//highlight graphic for buttons
 
     //button 1
     public static final String NP_B1 = NP + "localButton.png";
-    public static final int NP_B1_XO = NP_BG_XO+NP_PAD;//background image x offset
-    
-    
+    public static final int NP_B1_XO = NP_BG_XO + NP_PAD;//background image x offset
+
     //button 2
     public static final String NP_B2 = NP + "networkButton.png";
-    public static final int NP_B2_XO = NP_B1_XO+UM_B_W+NP_PAD;//background image x offset
+    public static final int NP_B2_XO = NP_B1_XO + UM_B_W + NP_PAD;//background image x offset
 
-    //network panel buttons
+// </editor-fold>
+    public static final String STYLE_PREFIX = "pics/hud/numbers/";
+    
+    public static final String SK_CC = STYLE_PREFIX+"45.png";
+    public static final int SK_CC_DW = 45;
+    public static final int SK_CC_H = 57;
+
     public static ArrayList<HudObject> displayUM(String code) {
         ArrayList<HudObject> toReturn = new ArrayList();
         HudObject buttonBg = new HudObject(UM_BG_XO, UM_BG_YO, UM_BG_W, UM_BG_H, UM_BG, "");
@@ -152,7 +157,7 @@ public class HUDArt {
     public static ArrayList<HudObject> displayMainMenu(String code) {
         ArrayList<HudObject> toReturn = new ArrayList();
         HudObject buttonBg = new HudObject(UM_BG_XO, UM_BG_YO, UM_BG_W, UM_BG_H, MM_BG, "");
-        HudObject skirmishButton = new HudObject(UM_B_XO, UM_1_YO, UM_B_W, UM_B_H, MM_SKIRMISH, StartWizardPanel.PANEL_ID);
+        HudObject skirmishButton = new HudObject(UM_B_XO, UM_1_YO, UM_B_W, UM_B_H, MM_SKIRMISH, SkirmishSetupPanel.PANEL_ID);
         HudObject charButton = new HudObject(UM_B_XO, UM_2_YO, UM_B_W, UM_B_H, MM_CHARACTERS, "chars");
         HudObject levelsButton = new HudObject(UM_B_XO, UM_3_YO, UM_B_W, UM_B_H, MM_LEVELS, "ld");
         HudObject scrapButton = new HudObject(UM_B_XO, UM_4_YO, UM_B_W, UM_B_H, MM_SCRAPYARD, "scrap");
@@ -179,4 +184,53 @@ public class HUDArt {
         toReturn.add(networkButton);
         return toReturn;
     }
+
+    public static int getNumberOfDigits(int n) {
+        if (n < 100000) {
+            // 5 or less
+            if (n < 100) {
+                // 1 or 2
+                if (n < 10) {
+                    return 1;
+                } else {
+                    return 2;
+                }
+            } else {
+                // 3 or 4 or 5
+                if (n < 1000) {
+                    return 3;
+                } else {
+                    // 4 or 5
+                    if (n < 10000) {
+                        return 4;
+                    } else {
+                        return 5;
+                    }
+                }
+            }
+        } else {
+            // 6 or more
+            if (n < 10000000) {
+                // 6 or 7
+                if (n < 1000000) {
+                    return 6;
+                } else {
+                    return 7;
+                }
+            } else {
+                // 8 to 10
+                if (n < 100000000) {
+                    return 8;
+                } else {
+                    // 9 or 10
+                    if (n < 1000000000) {
+                        return 9;
+                    } else {
+                        return 10;
+                    }
+                }
+            }
+        }
+    }
+
 }

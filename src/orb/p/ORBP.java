@@ -16,7 +16,7 @@ import orb.p.panels.GamePanel;
 import orb.p.panels.LDPanel;
 import orb.p.panels.MPanel;
 import orb.p.panels.MenuPanel;
-import orb.p.panels.StartWizardPanel;
+import orb.p.panels.SkirmishSetupPanel;
 
 /**
  *
@@ -121,8 +121,8 @@ public class ORBP {
             System.out.println("SCRAPYARD SELECTED");
         } else if (currentCanvas.compareToIgnoreCase("chars") == 0) {
             canvas = new PersonSetupPanel();
-        } else if (currentCanvas.compareToIgnoreCase(StartWizardPanel.PANEL_ID) == 0) {
-            canvas = new StartWizardPanel();
+        } else if (currentCanvas.compareToIgnoreCase(SkirmishSetupPanel.PANEL_ID) == 0) {
+            canvas = new SkirmishSetupPanel();
         }
         else {
             System.out.println(currentCanvas);
