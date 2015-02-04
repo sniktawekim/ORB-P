@@ -8,10 +8,10 @@ import orb.p.art.HUDArt;
 import orb.p.OnScreenObjects.*;
 import orb.p.Properties;
 import orb.p.core.PersonStats;
-import orb.p.network.Client;
-import orb.p.network.Server;
 import orb.p.network.Communicator;
+import orb.p.network.client.Client;
 import orb.p.network.messages.MoveMessage;
+import orb.p.network.server.Server;
 
 import orb.p.network.temp.TempNetworkStarter;
 
@@ -101,7 +101,7 @@ public class GamePanel extends LevelPanel {
             characterToMove.resetMoves();
             resetMoves = false;
         }
-        if (characterToMove.getMoves() != 0) {
+        if (characterToMove.getMoves() != 0 || !characterId.equalsIgnoreCase(localPlayerId)) {
             if (checkMoveLegal(characterToMove, currentTile)) {
                 //Two way reference
                 characterToMove.handleMove(0);

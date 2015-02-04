@@ -1,9 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * ClientHandler - This class handles all communication from the clients.
+ *
  */
-package orb.p.network;
+package orb.p.network.server;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -40,19 +39,22 @@ public class ClientHandler implements Runnable {
 
                 message = inFromClient.readLine();
                 MoveMessage moveMessage = MoveMessage.fromString(message);
+                
                 if (!playerConnected) {
                     playerConnected = true;
+                    //Send all of the current locations to the new player
                     for (String playerId : gPanel.onlinePlayers.keySet()) {
                         Person player = gPanel.onlinePlayers.get(playerId);
                         MoveMessage newMessage = new MoveMessage(playerId, player.getCurrentTile().xLoc, player.getCurrentTile().yLoc);
                         server.sendMessage(newMessage.toString());
-                                //Ghetto work around until I find out why it's not working
-                                Thread.sleep(2000);
+                        //Ghetto work around until I find out why it's not working
+                        Thread.sleep(2000);
                     }
-                   
+                    //Add the new player to the current session
                     server.loadPerson(moveMessage.getPlayerId(), moveMessage.getxLoc(), moveMessage.getyLoc());
                     server.sendMessage(moveMessage.toString());
                 } else {
+                    //Update player's locations
                     server.movePerson(moveMessage.getPlayerId(), moveMessage.getxLoc(), moveMessage.getyLoc());
                     server.sendMessage(moveMessage.toString());
                 }

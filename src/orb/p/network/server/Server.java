@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package orb.p.network;
+package orb.p.network.server;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -11,6 +11,7 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import orb.p.network.Communicator;
 import orb.p.panels.GamePanel;
 
 /**

@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package orb.p.network;
+package orb.p.network.client;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import orb.p.network.Communicator;
 import orb.p.network.messages.MoveMessage;
 import orb.p.panels.GamePanel;
 
@@ -18,23 +19,19 @@ import orb.p.panels.GamePanel;
  */
 public class Client extends Communicator {
 
-    private boolean isPlayerConnected = false;
-    private boolean isRunning = true;
-    Socket clientSocket;
-    //ArrayList<String> connctedPlayerNames = new ArrayList<String>();
+    private final boolean isRunning = true;
+    private Socket clientSocket;
     //Host Address
-    private String host;
-    GamePanel gPanel;
+    private final String host;
+    
+    private GamePanel gPanel;
 
     public Client(GamePanel gPanel, String host) {
         this.gPanel = gPanel;
         this.host = host;
     }
 
-    public Client(GamePanel aThis, String host, boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    @Override
     public void sendMessage(String message) {
         try {
             DataOutputStream outToServer = new DataOutputStream(getSocket().getOutputStream());
@@ -45,7 +42,11 @@ public class Client extends Communicator {
             e.printStackTrace();
         }
     }
-
+    /**
+     * getSocket() - connects to the server if the socket is closed or null
+     * @return
+     * @throws Exception 
+     */
     private Socket getSocket() throws Exception {
         if (clientSocket == null || !clientSocket.isConnected()) {
             clientSocket = new Socket(host, 9001);
@@ -54,10 +55,11 @@ public class Client extends Communicator {
         return clientSocket;
     }
 
+    @Override
     public void run() {
 
-        String message = null;
-
+        String message;
+        
         while (isRunning) {
             try {
 
@@ -72,7 +74,11 @@ public class Client extends Communicator {
                     gPanel.testPerson(newMoveMessage.getPlayerId(), newMoveMessage.getxLoc(), newMoveMessage.getyLoc());
 
                 } else {
-                    gPanel.movePerson(newMoveMessage.getPlayerId(), newMoveMessage.getxLoc(), newMoveMessage.getyLoc());
+                    //Do not move the local player... I am not sure if this check is necessary 
+                    if(!newMoveMessage.getPlayerId().equalsIgnoreCase(gPanel.getLocalPlayerId()))
+                    {
+                        gPanel.movePerson(newMoveMessage.getPlayerId(), newMoveMessage.getxLoc(), newMoveMessage.getyLoc());
+                    }
                 }
 
             } catch (Exception e) {

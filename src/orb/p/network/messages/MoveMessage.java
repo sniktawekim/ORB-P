@@ -1,7 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * MoveMessage - Handles player movements over the network
+ * Currently only handles X and Y, but more player information can be sent. .
+ * 
+ *
+ * ARRAY VALUES
+ * index[0] = playerId
+ * index[1] = xLoc
+ * index[2] = yLoc
  */
 package orb.p.network.messages;
 
@@ -23,21 +28,27 @@ public class MoveMessage extends Message {
         this.xLoc = xLoc;
         this.yLoc = yLoc;
     }
-
+    
+    /**
+     * @param message
+     * @return 
+     */
     public static MoveMessage fromString(String message) {
         MoveMessage newMessage = new MoveMessage();
         String[] values = message.split(DELIMITER);
 
         if (values.length >= 3) {
             newMessage.setPlayerId(values[0]);
-
             newMessage.setxLoc(Integer.parseInt(values[1]));
-            newMessage.setyLoc(Integer.parseInt(values[1]));
+            newMessage.setyLoc(Integer.parseInt(values[2]));
         }
         return newMessage;
     }
 
     @Override
+    /**
+     *  Generates a String to represent the data stored in this class
+     */
     public String toString() {
         String returnString = "";
 

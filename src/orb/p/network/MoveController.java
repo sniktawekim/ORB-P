@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import orb.p.OnScreenObjects.Person;
 import orb.p.network.messages.MoveMessage;
+import orb.p.network.server.Server;
 import orb.p.panels.GamePanel;
 
 /**
