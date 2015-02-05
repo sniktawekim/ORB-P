@@ -3,7 +3,12 @@ package orb.p.panels;
 import orb.p.OnScreenObjects.MInteger;
 import java.awt.Color;
 import java.awt.Font;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -25,6 +30,7 @@ public class SkirmishSetupPanel extends MPanel {
     //Hud Objects
     JTextField ip;
     JTextField playerName;
+    JTextField publicIp;
     boolean local = true;
 
     public SkirmishSetupPanel() {
@@ -47,6 +53,16 @@ public class SkirmishSetupPanel extends MPanel {
         ip = new JTextField(40);
         ip.setFont(labelFont);
         ip.setBounds(20, 210, 400, 60);
+        
+        JLabel publicIpLabel = new JLabel("Internet IP: ");
+        publicIpLabel.setFont(labelFont);
+        publicIpLabel.setBounds(600, 150, 400, 60);
+        publicIpLabel.setForeground(Color.white);
+        
+        publicIp = new JTextField(40);
+        publicIp.setFont(labelFont);
+        publicIp.setBounds(600, 210, 400, 60);
+        publicIp.setEditable(false);
 
         JLabel playerNameLabel = new JLabel("Name: ");
         playerNameLabel.setBounds(20, 260, 200, 60);
@@ -60,6 +76,8 @@ public class SkirmishSetupPanel extends MPanel {
         this.setLayout(null);
         this.add(ipLabel);
         this.add(ip);
+        this.add(publicIpLabel);
+        this.add(publicIp);
         this.add(playerNameLabel);
         this.add(playerName);
 
@@ -71,25 +89,32 @@ public class SkirmishSetupPanel extends MPanel {
             hudObjects.add(panel.get(i));
         }
 
-        String sIP="0.0";
+        //Obtain Public IP Address using Amazon's WS
         try {
-            sIP = InetAddress.getLocalHost().getHostAddress();
+            URL amazonCheckIp = new URL("http://checkip.amazonaws.com");
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    amazonCheckIp.openStream()));
+            publicIp.setText(in.readLine());
         } catch (UnknownHostException ex) {
             System.out.println("IP READ ERROR");
             Logger.getLogger(SkirmishSetupPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String[] parts = sIP.split("\\.");
-        String combineParts = "";
-        if(parts.length==0){
-            System.out.println(sIP);
-            System.out.println("NO PARTS");
-        }
-        for (int i = 0; i < parts.length; i++) {
-            combineParts += parts[i];
-        }
-        int strippedIP = Integer.parseInt(combineParts);
-        MInteger testMInt = new MInteger(1000, 200,strippedIP, HUDArt.SK_CC);
-        mInts.add(testMInt);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(SkirmishSetupPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SkirmishSetupPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }  
+//        String[] parts = sIP.split("\\.");
+//        String combineParts = "";
+//        if (parts.length == 0) {
+//            System.out.println(sIP);
+//            System.out.println("NO PARTS");
+//        }
+//        for (int i = 0; i < parts.length; i++) {
+//            combineParts += parts[i];
+//        }
+//        int strippedIP = Integer.parseInt(combineParts);
+//        MInteger testMInt = new MInteger(1000, 200, strippedIP, HUDArt.SK_CC);
+//        mInts.add(testMInt);
     }
 
     private void setNetworkValues() {
@@ -107,7 +132,7 @@ public class SkirmishSetupPanel extends MPanel {
         } else if (hudOb.matches("network")) {
             resetHighlights();
             hudOb.setHighlight(true);
-           // System.out.println(hudOb.getAction() + " is highlighted");
+            // System.out.println(hudOb.getAction() + " is highlighted");
             local = false;
         } else if (hudOb.matches("local")) {
             resetHighlights();
