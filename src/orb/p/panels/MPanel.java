@@ -5,6 +5,7 @@ package orb.p.panels;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import orb.p.OnScreenObjects.MInteger;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;

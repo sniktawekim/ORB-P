@@ -1,5 +1,6 @@
 package orb.p.panels;
 
+import orb.p.OnScreenObjects.MInteger;
 import java.awt.Color;
 import java.awt.Font;
 import java.net.InetAddress;
@@ -106,12 +107,12 @@ public class SkirmishSetupPanel extends MPanel {
         } else if (hudOb.matches("network")) {
             resetHighlights();
             hudOb.setHighlight(true);
-            System.out.println(hudOb.getAction() + " is highlighted");
+           // System.out.println(hudOb.getAction() + " is highlighted");
             local = false;
         } else if (hudOb.matches("local")) {
             resetHighlights();
             hudOb.setHighlight(true);
-            System.out.println(hudOb.getAction() + " is highlighted");
+            //System.out.println(hudOb.getAction() + " is highlighted");
             local = true;
         }
     }
@@ -128,7 +129,7 @@ public class SkirmishSetupPanel extends MPanel {
     }
 
     private void resetHighlights() {
-        System.out.println("RESET");
+        //System.out.println("RESET");
         for (int i = 0; i < hudObjects.size(); i++) {
             hudObjects.get(i).setHighlight(false);
         }

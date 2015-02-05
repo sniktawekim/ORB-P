@@ -2,7 +2,7 @@
  * Here comes the text of your license
  * Each line should be prefixed with  * 
  */
-package orb.p.panels;
+package orb.p.OnScreenObjects;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -86,11 +86,18 @@ public class MInteger extends OnScreenObject {
             System.out.println(ex.getMessage() + " on: " + ORBP.libraryPath + style);
             return;
         }
-
         for (int i = 0; i < HUDArt.getNumberOfDigits(magnitude); i++) {
-            int xStart = (getDigit(HUDArt.getNumberOfDigits(magnitude)-i)-1) * widthPerCharacter;
+            int currDigit = getDigit(HUDArt.getNumberOfDigits(magnitude)-i);
+            
+            
+            int xStart = (currDigit) * widthPerCharacter+1;
             int yStart = 0;
-            numbers.add(bigImg.getSubimage(xStart, yStart, widthPerCharacter, height));
+            try{
+            numbers.add(bigImg.getSubimage(xStart, yStart, widthPerCharacter-1, height));
+            //System.out.println(magnitude + " xStart=" + xStart+" currDigit:" + currDigit);
+            } catch(Exception e){
+             //   System.out.println(magnitude + " xStart=" + xStart+" currDigit:" + currDigit);
+            }
         }
         numString = numbers;
         

@@ -29,7 +29,6 @@ public class MenuPanel extends MPanel{
     @Override
     protected void hudAction(HudObject hudOb) {
         super.hudAction(hudOb);
-        System.out.println(hudOb.getAction());
         if (hudOb.matches("ld")) {
             status = "ld";
         }

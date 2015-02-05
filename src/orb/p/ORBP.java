@@ -73,7 +73,7 @@ public class ORBP {
         int width = (int) screenSize.getWidth();
         int height = (int) screenSize.getHeight();
         setResolution(width, height);
-        System.out.println("width: " + width + ", height: " + height);
+        System.out.println("RESOLUTION{" + width + "," + height + "}");
     }
 
     private static void setResolution(int width, int height) {
@@ -125,7 +125,7 @@ public class ORBP {
             canvas = new SkirmishSetupPanel();
         }
         else {
-            System.out.println(currentCanvas);
+            System.out.println(currentCanvas + "not recognized as panel");
         }
     }
 
