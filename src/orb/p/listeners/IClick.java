@@ -1,6 +1,7 @@
 package orb.p.listeners;
 
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import javax.swing.event.MouseInputAdapter;
 
 public class IClick extends MouseInputAdapter {
@@ -15,7 +16,11 @@ public class IClick extends MouseInputAdapter {
     int clickedY;
     boolean clicked;
     int whichClicked = 0;
+    boolean leftButton = false;
+    boolean middleButton = false;
+    boolean rightButton = false;
     private boolean pressed = false;
+    int recentScroll = 0;
 
     public IClick() {
         clicked = false;
@@ -31,24 +36,45 @@ public class IClick extends MouseInputAdapter {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            leftButton = true;
+        }
+        if (e.getButton() == MouseEvent.BUTTON2) {
+            middleButton = true;
+        }
+        if (e.getButton() == MouseEvent.BUTTON3) {
+            rightButton = true;
+        }
         eventX = e.getX();
         eventY = e.getY();
     }
 
     public void mouseDragged(MouseEvent e) {
-        pressed = true;
+        if (rightButton) {
+            pressed = true;
 
-        x = e.getX();
-        y = e.getY();
-        newDrag(x-eventX, y-eventY);
-
+            x = e.getX();
+            y = e.getY();
+            newDrag(x - eventX, y - eventY);
+        } else {
+            //   System.out.println(leftButton+" " + middleButton + " " + rightButton);
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-       // clicked = false;
+        // clicked = false;
         pressed = false;
         whichClicked = e.getButton();
+        if (e.getButton() == MouseEvent.BUTTON1) {//left
+            leftButton = false;
+        }
+        if (e.getButton() == MouseEvent.BUTTON2) {
+            middleButton = false;
+        }
+        if (e.getButton() == MouseEvent.BUTTON3) {
+            rightButton = false;
+        }
 
     }
 
@@ -122,6 +148,20 @@ public class IClick extends MouseInputAdapter {
 
     public boolean getDragged() {
         return !(xdrag == 0 && ydrag == 0);
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent mwe) {
+        recentScroll = mwe.getScrollAmount();
+        getScroll();
+    }
+
+
+    public int getScroll() {
+        int toreturn = recentScroll;
+        System.out.println("SCROLLED WHEEL:");
+        recentScroll = 0;
+        return toreturn;
     }
 
 }
