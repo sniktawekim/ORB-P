@@ -134,11 +134,19 @@ public class HUDArt {
     public static final int NP_B2_XO = NP_B1_XO + UM_B_W + NP_PAD;//background image x offset
 
 // </editor-fold>
+    
+    
+    
     public static final String STYLE_PREFIX = "pics/hud/numbers/";
     
     public static final String SK_CC = STYLE_PREFIX+"45.png";
     public static final int SK_CC_DW = 45;
     public static final int SK_CC_H = 57;
+    
+    
+    
+    
+    
 
     public static ArrayList<HudObject> displayUM(String code) {
         ArrayList<HudObject> toReturn = new ArrayList();

@@ -47,6 +47,7 @@ public class ORBP {
     public static void init() {
         configureLibrary();
         getResolution();
+        frame = new JFrame("ORB-P");
         buildCanvas();
 
 
@@ -87,7 +88,7 @@ public class ORBP {
 
     private static void buildCanvas() {
         determineCanvas();
-        frame = new JFrame("ORB-P");
+        //frame = new JFrame("ORB-P");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(screenWidth, screenHeight);
         frame.setResizable(false);//lock game resolution
@@ -103,8 +104,8 @@ public class ORBP {
             pause();
         }
         currentCanvas = canvas.update();
-        frame.dispose();
-        frame = null;
+        //frame.dispose();
+       // frame = null;
         buildCanvas();
        
     }
