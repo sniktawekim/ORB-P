@@ -7,8 +7,8 @@ import java.awt.event.KeyListener;
 
 public class IPress implements KeyListener {
 
-    boolean left, right, up, down, delete, clear, fill, esc;
-    int kUp = 87, kLeft = 65, kDown = 83, kRight = 68, kDelete = 127, kQ=81, kE=69, kEsc=27;
+    boolean left, right, up, down, delete, clear, fill, esc, space;
+    int kUp = 38, kLeft = 37, kDown = 40, kRight = 39, kDelete = 127, kQ=81, kE=69, kEsc=27, kSpace = 32;
 
     //keycodes:
     //87 = w
@@ -27,11 +27,13 @@ public class IPress implements KeyListener {
         clear = false;
         fill = false;
         esc = false;
+        space = false;
 
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
+        
     }
 
     @Override
@@ -51,13 +53,15 @@ public class IPress implements KeyListener {
         if(e.getKeyCode() == kEsc){
             esc = true;
         }
-        
-
+        if(e.getKeyCode() == kSpace){
+            space = true;
+        }
+       // System.out.println(e.getKeyCode());
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == 87 || e.getKeyCode() == 65 || e.getKeyCode() == 83 || e.getKeyCode() == 68) {
+        if (e.getKeyCode() == kLeft || e.getKeyCode() == kRight || e.getKeyCode() == kDown || e.getKeyCode() == kUp) {
             directionalRelease(e.getKeyCode());
         }
 
@@ -112,6 +116,13 @@ public class IPress implements KeyListener {
             case "esc":
                 if (esc) {
                     esc = false;                 
+                    return true;
+                } else {
+                    return false;
+                }
+            case "space":
+                if (space) {
+                    space = false;                 
                     return true;
                 } else {
                     return false;

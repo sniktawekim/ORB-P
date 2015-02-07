@@ -328,6 +328,6 @@ public abstract class OnScreenObject {
     }
 
     protected boolean calcHoveredStatus(int xOffset, int yOffset, IClick mouse) {
-        return isWithin(mouse.getX() - xOffset, mouse.getY() - yOffset) && !mouse.getPress();
+        return isWithin(mouse.getX() - xOffset, mouse.getY() - yOffset) && !mouse.getLeft();
     }
 }

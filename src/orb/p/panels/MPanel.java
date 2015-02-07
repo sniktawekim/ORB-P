@@ -138,11 +138,13 @@ public abstract class MPanel extends JPanel {
             }
         }
 
-        if (anyClicked && !didDrag) {//check if you clicked and resets click status
+        if (anyClicked && !myClick.getRight()) {//check if you clicked and resets click status
             // System.out.println("recognizes non-drag");
             hudclicked = false;
             int xClicked = myClick.getX();
             int yClicked = myClick.getY();
+// <editor-fold defaultstate="collapsed" desc=" Universal Menu Check ">
+           
             if (um) {
                 // System.out.println("thinks its a universal menu click");
                 for (int i = 0; i < universalMenu.size(); i++) {
@@ -161,11 +163,14 @@ public abstract class MPanel extends JPanel {
                     }
                 }
             }
+
+
             //System.out.println("UM IS " + um + " hudclicked is " + hudclicked);
             if (hudclicked) {//if the UM was clicked
                 //  System.out.println("um return");
                 return; //return
             }
+            // </editor-fold>
             for (int i = 0; i < hudObjects.size(); i++) {
                 HudObject current = hudObjects.get(i);
                 if (current.getVisible() == true) {
@@ -187,6 +192,8 @@ public abstract class MPanel extends JPanel {
                 return; //return
             }
 
+        } else if(anyClicked && myClick.getRight()){
+            anyClicked = false;
         }
     }
 

@@ -56,10 +56,11 @@ public abstract class LevelPanel extends MPanel {
         super.paintObjects(g);
     }
 
+    @Override
     protected void checkClick() {
 
         super.checkClick();//checks hud clicking
-        if (anyClicked&&!didDrag) {
+        if (anyClicked&&!myClick.getRight()) {
             if (!hudclicked) {//if hud wasn't clicked
                 int xClicked = myClick.getEX() - xOffset;
                 int yClicked = myClick.getEY() - yOffset;
@@ -78,7 +79,7 @@ public abstract class LevelPanel extends MPanel {
     protected void checkKey() {
         super.checkKey();
         
-        /** OLD DRAGGING METHOD
+
         if (myPress.getKeyPressed("left")) {
             shift(10, 0);
         }
@@ -90,7 +91,7 @@ public abstract class LevelPanel extends MPanel {
         }
         if (myPress.getKeyPressed("down")) {
             shift(0, -10);
-        }*/
+        }
 
     }
 
@@ -137,7 +138,7 @@ public abstract class LevelPanel extends MPanel {
         super.hudAction(hudOb);
     }
 
-    private void shift(int x, int y) {
+    protected void shift(int x, int y) {
         if (!(-1 * xOffset + canvasWidth > currentBoard.getRightBarrier()) && x < 0) {//RIGHT ARROW PRESSED, SHIFTING BOARD LEFT
             xOffset += x;
             backgrounds.shift((double) x, 0);

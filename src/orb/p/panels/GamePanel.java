@@ -53,6 +53,7 @@ public class GamePanel extends LevelPanel {
         //Load Communicator     
         loadPersons();// this method adds characters from the personsToLoad arraylist
         PersonStats testLoader = new PersonStats(CHARArt.D_CHAR);
+        centerCamera();
     }
 
     @Override
@@ -118,10 +119,12 @@ public class GamePanel extends LevelPanel {
 
     @Override
     protected void handleClickedTile(Tile clicked) {
-        if (moveMode&&!didDrag) {
+        if (moveMode&&!didDrag&&!myClick.getRight()) {
             movePerson(localPlayerId, clicked.xLoc, clicked.yLoc);
             if (!isLocal) {
                 comm.sendMessage(new MoveMessage(localPlayerId,clicked.xLoc ,clicked.yLoc).toString());
+            } else{
+               // movePerson(localPlayerId, clicked.xLoc, clicked.yLoc);
             }
         }
     }
@@ -254,5 +257,22 @@ public class GamePanel extends LevelPanel {
             seedIndex++;
         }
         return toReturn;
+    }
+    
+        protected void checkKey() {
+        super.checkKey();
+        if (myPress.getKeyPressed("space")) {
+            centerCamera();
+        }
+    }
+
+    private void centerCamera() {
+        Person characterToMove = onlinePlayers.get(localPlayerId);
+
+         int xShift = -1*xOffset - (characterToMove.getCurrentTile().getXMin())+ ((Properties.SCREEN_WIDTH-characterToMove.getXSize())/2);
+       
+        int yShift = -1*yOffset - ((characterToMove.getCurrentTile().getYMin()) - ((Properties.SCREEN_HEIGHT-characterToMove.getYSize())/2));
+        // yShift = yOffset - (characterToMove.getCurrentTile().getYMin()) + ((Properties.SCREEN_HEIGHT)/2);
+        shift(xShift,yShift);
     }
 }

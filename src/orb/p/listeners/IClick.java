@@ -19,7 +19,6 @@ public class IClick extends MouseInputAdapter {
     boolean leftButton = false;
     boolean middleButton = false;
     boolean rightButton = false;
-    private boolean pressed = false;
     int recentScroll = 0;
 
     public IClick() {
@@ -28,10 +27,14 @@ public class IClick extends MouseInputAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        clicked = true;
-        x = e.getX();
-        y = e.getY();
-        whichClicked = e.getButton();
+        /**
+        if (!rightButton) {
+            clicked = true;
+
+            x = e.getX();
+            y = e.getY();
+            whichClicked = e.getButton();
+        }*/
     }
 
     @Override
@@ -49,10 +52,9 @@ public class IClick extends MouseInputAdapter {
         eventY = e.getY();
     }
 
+    @Override
     public void mouseDragged(MouseEvent e) {
         if (rightButton) {
-            pressed = true;
-
             x = e.getX();
             y = e.getY();
             newDrag(x - eventX, y - eventY);
@@ -64,9 +66,9 @@ public class IClick extends MouseInputAdapter {
     @Override
     public void mouseReleased(MouseEvent e) {
         // clicked = false;
-        pressed = false;
         whichClicked = e.getButton();
         if (e.getButton() == MouseEvent.BUTTON1) {//left
+            clicked = true;
             leftButton = false;
         }
         if (e.getButton() == MouseEvent.BUTTON2) {
@@ -75,6 +77,7 @@ public class IClick extends MouseInputAdapter {
         if (e.getButton() == MouseEvent.BUTTON3) {
             rightButton = false;
         }
+        
 
     }
 
@@ -122,8 +125,8 @@ public class IClick extends MouseInputAdapter {
         return y;
     }
 
-    public boolean getPress() {
-        return pressed;
+    public boolean getLeft() {
+        return leftButton;
     }
 
     private void newDrag(int xslide, int yslide) {
@@ -156,7 +159,6 @@ public class IClick extends MouseInputAdapter {
         getScroll();
     }
 
-
     public int getScroll() {
         int toreturn = recentScroll;
         System.out.println("SCROLLED WHEEL:");
@@ -164,4 +166,7 @@ public class IClick extends MouseInputAdapter {
         return toreturn;
     }
 
+    public boolean getRight() {
+        return rightButton;
+    }
 }

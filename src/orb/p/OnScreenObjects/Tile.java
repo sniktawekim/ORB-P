@@ -111,7 +111,7 @@ public class Tile extends OnScreenObject {
     @Override
     protected void calcHighlightStatus(IClick mouse) {
         //if the mouse is currently pressed and we are on the level designer panel
-        if (mouse.getPress() && ORBP.currentCanvas.compareToIgnoreCase("ld") == 0) {
+        if (mouse.getLeft() && ORBP.currentCanvas.compareToIgnoreCase("ld") == 0) {
             setHighlight(true);
         }
     }
@@ -121,7 +121,7 @@ public class Tile extends OnScreenObject {
         if (ORBP.currentCanvas.compareToIgnoreCase("ld") == 0) {
             return inThisTile;
         } else {
-            return (inThisTile && !mouse.getPress() && terrainCost > 0);
+            return (inThisTile && !mouse.getLeft() && terrainCost > 0);
         }
 
     }
