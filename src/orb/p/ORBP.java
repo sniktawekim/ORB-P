@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import orb.p.panels.PersonSetupPanel;
 import orb.p.panels.GamePanel;
+import orb.p.panels.HostSetupPanel;
 import orb.p.panels.LDPanel;
 import orb.p.panels.MPanel;
 import orb.p.panels.MenuPanel;
@@ -118,8 +119,7 @@ public class ORBP {
         } else if (currentCanvas.compareToIgnoreCase("play") == 0) {
             canvas = new GamePanel();
         } else if (currentCanvas.compareToIgnoreCase("scrap") == 0) {
-            //canvas = new PreGamePanel();
-            System.out.println("SCRAPYARD SELECTED");
+            canvas = new HostSetupPanel();
         } else if (currentCanvas.compareToIgnoreCase("chars") == 0) {
             canvas = new PersonSetupPanel();
         } else if (currentCanvas.compareToIgnoreCase(SkirmishSetupPanel.PANEL_ID) == 0) {
