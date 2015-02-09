@@ -14,8 +14,8 @@ public class HostSetupPanel extends MPanel{
 
     @Override
     protected void buildHUD() {
-      MTextBox test = new MTextBox(50,50,300,50,"","tbClicked");
-      hudObjects.add(test);
+      MTextBox charName = new MTextBox(50,50,300,50,"","tbClicked", this, "Character Name:");
+      hudObjects.add(charName);
     }
     
 }
